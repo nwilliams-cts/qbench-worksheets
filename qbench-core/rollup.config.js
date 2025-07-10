@@ -17,7 +17,10 @@ export default [
         targets: [
           { src: 'src/styles/*.css', dest: 'dist/styles' },
           { src: 'src/styles/qbench-core.css', dest: 'dist', rename: 'qbench-core.css' },
-          { src: 'examples/*', dest: 'dist/examples' }
+          { src: 'examples/*', dest: 'dist/examples' },
+          { src: 'azure-cdn-test.html', dest: 'dist' },
+          { src: 'cdn-test.html', dest: 'dist' },
+          { src: 'index.html', dest: 'dist' }
         ]
       })
     ]

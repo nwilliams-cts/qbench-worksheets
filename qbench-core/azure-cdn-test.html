@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QBench Worksheet Core - Azure CDN Test</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .status {
+            padding: 10px 15px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .info { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+        }
+        code {
+            background: #f8f9fa;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 12px;
+        }
+        .url-input {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .test-button {
+            background: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 10px 5px 0 0;
+        }
+        .test-button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🧪 QBench Worksheet Core - Azure CDN Test</h1>
+        
+        <div class="status info">
+            <strong>📋 Instructions:</strong><br>
+            1. Enter your Azure Static Web App URL below<br>
+            2. Click "Test CDN" to verify your deployment<br>
+            3. If tests pass, copy the CDN URLs for use in your worksheets
+        </div>
+
+        <div class="test-section">
+            <h3>🔗 Azure Static Web App URL</h3>
+            <p>Enter your Azure Static Web App URL (from the Azure Portal):</p>
+            <input type="url" id="base-url" class="url-input" 
+                   placeholder="https://your-app-name.azurestaticapps.net"
+                   value="">
+            <button class="test-button" onclick="testCDN()">🧪 Test CDN</button>
+            <button class="test-button" onclick="copyUrls()" style="background: #28a745;">📋 Copy CDN URLs</button>
+        </div>
+
+        <div id="test-results" style="display: none;">
+            <div class="test-section">
+                <h3>📊 Core Module Test</h3>
+                <div id="core-test-result">🔄 Testing...</div>
+            </div>
+
+            <div class="test-section">
+                <h3>🎨 CSS Framework Test</h3>
+                <div id="css-test-result">🔄 Testing...</div>
+            </div>
+
+            <div class="test-section">
+                <h3>📋 Your CDN URLs</h3>
+                <p>Use these URLs in your QBench worksheets:</p>
+                <div id="cdn-urls"></div>
+            </div>
+        </div>
+
+        <div id="overall-status" class="status info">
+            <strong>Status:</strong> Enter your Azure Static Web App URL above to begin testing.
+        </div>
+    </div>
+
+    <script>
+        let testResults = {
+            core: false,
+            css: false
+        };
+
+        async function testCDN() {
+            const baseUrl = document.getElementById('base-url').value.trim();
+            
+            if (!baseUrl) {
+                alert('Please enter your Azure Static Web App URL first.');
+                return;
+            }
+
+            // Normalize URL (remove trailing slash)
+            const normalizedUrl = baseUrl.replace(/\/$/, '');
+            
+            document.getElementById('test-results').style.display = 'block';
+            document.getElementById('overall-status').innerHTML = '<strong>Status:</strong> Running CDN tests...';
+            document.getElementById('overall-status').className = 'status info';
+
+            // Test Core Module
+            await testCoreModule(normalizedUrl);
+            
+            // Test CSS
+            await testCSS(normalizedUrl);
+            
+            // Update CDN URLs display
+            updateCDNUrls(normalizedUrl);
+            
+            // Update overall status
+            updateOverallStatus();
+        }
+
+        async function testCoreModule(baseUrl) {
+            try {
+                const jsUrl = `${baseUrl}/qbench-worksheet.esm.min.js`;
+                const response = await fetch(jsUrl);
+                
+                if (response.ok) {
+                    const content = await response.text();
+                    if (content.includes('QBenchWorksheet') || content.length > 1000) {
+                        document.getElementById('core-test-result').innerHTML = `✅ JavaScript module loaded successfully<br><code>${jsUrl}</code>`;
+                        testResults.core = true;
+                    } else {
+                        throw new Error('JavaScript file found but may not contain expected content');
+                    }
+                } else {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+            } catch (error) {
+                document.getElementById('core-test-result').innerHTML = `❌ Failed to load JavaScript module: ${error.message}`;
+                testResults.core = false;
+            }
+        }
+
+        async function testCSS(baseUrl) {
+            try {
+                const cssUrl = `${baseUrl}/qbench-core.css`;
+                const response = await fetch(cssUrl);
+                
+                if (response.ok) {
+                    const content = await response.text();
+                    if (content.length > 100) {
+                        document.getElementById('css-test-result').innerHTML = `✅ CSS framework loaded successfully<br><code>${cssUrl}</code>`;
+                        testResults.css = true;
+                    } else {
+                        throw new Error('CSS file found but appears to be empty or too small');
+                    }
+                } else {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+            } catch (error) {
+                document.getElementById('css-test-result').innerHTML = `❌ Failed to load CSS framework: ${error.message}`;
+                testResults.css = false;
+            }
+        }
+
+        function updateCDNUrls(baseUrl) {
+            const jsUrl = `${baseUrl}/qbench-worksheet.esm.min.js`;
+            const cssUrl = `${baseUrl}/qbench-core.css`;
+            
+            document.getElementById('cdn-urls').innerHTML = `
+                <p><strong>JavaScript:</strong><br><code>${jsUrl}</code></p>
+                <p><strong>CSS:</strong><br><code>${cssUrl}</code></p>
+                <p><em>Copy these URLs and use them in your QBench worksheets.</em></p>
+            `;
+        }
+
+        function updateOverallStatus() {
+            const passedTests = Object.values(testResults).filter(result => result).length;
+            const totalTests = Object.keys(testResults).length;
+            
+            const statusEl = document.getElementById('overall-status');
+            
+            if (passedTests === totalTests) {
+                statusEl.innerHTML = `<strong>✅ All tests passed!</strong> (${passedTests}/${totalTests}) Your Azure CDN is working perfectly.`;
+                statusEl.className = 'status success';
+            } else if (passedTests > 0) {
+                statusEl.innerHTML = `<strong>⚠️ Partial success:</strong> ${passedTests}/${totalTests} tests passed. Check the GitHub Actions build log for issues.`;
+                statusEl.className = 'status error';
+            } else {
+                statusEl.innerHTML = `<strong>❌ Tests failed.</strong> Check the GitHub Actions build log. The build may still be in progress.`;
+                statusEl.className = 'status error';
+            }
+        }
+
+        function copyUrls() {
+            const baseUrl = document.getElementById('base-url').value.trim();
+            if (!baseUrl) {
+                alert('Please enter your Azure Static Web App URL and test it first.');
+                return;
+            }
+
+            const normalizedUrl = baseUrl.replace(/\/$/, '');
+            const jsUrl = `${normalizedUrl}/qbench-worksheet.esm.min.js`;
+            const cssUrl = `${normalizedUrl}/qbench-core.css`;
+            
+            const urlText = `QBench Worksheet Core CDN URLs:
+
+JavaScript: ${jsUrl}
+CSS: ${cssUrl}
+
+Use these in your HTML:
+<link rel="stylesheet" href="${cssUrl}">
+<script type="module" src="${jsUrl}"></script>`;
+
+            navigator.clipboard.writeText(urlText).then(() => {
+                alert('✅ CDN URLs copied to clipboard!');
+            }).catch(err => {
+                prompt('Copy these CDN URLs:', urlText);
+            });
+        }
+
+        // Auto-fill common Azure Static Web App URL patterns
+        window.addEventListener('load', function() {
+            const urlInput = document.getElementById('base-url');
+            urlInput.addEventListener('input', function() {
+                const value = this.value.toLowerCase();
+                if (value.includes('azurestaticapps.net') && !value.startsWith('https://')) {
+                    this.value = 'https://' + this.value;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

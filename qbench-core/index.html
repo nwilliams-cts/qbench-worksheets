@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QBench Worksheet Core - CDN</title>
+    <link rel="stylesheet" href="qbench-core.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 40px;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .hero {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 8px;
+        }
+        .cdn-urls {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+        .cdn-urls code {
+            background: #e9ecef;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Courier New', monospace;
+        }
+        .link-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            margin: 5px;
+            transition: background-color 0.2s;
+        }
+        .link-button:hover {
+            background: #0056b3;
+        }
+        .secondary {
+            background: #6c757d;
+        }
+        .secondary:hover {
+            background: #545b62;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hero">
+            <h1>🧪 QBench Worksheet Core</h1>
+            <p>Modular CDN-hosted worksheet system for QBench LIMS</p>
+        </div>
+
+        <h2>📡 CDN Resources</h2>
+        <div class="cdn-urls">
+            <p><strong>JavaScript Module:</strong><br>
+            <code id="js-url">Loading...</code></p>
+            
+            <p><strong>CSS Stylesheet:</strong><br>
+            <code id="css-url">Loading...</code></p>
+        </div>
+
+        <h2>🧪 Test & Examples</h2>
+        <p>Use these tools to test your CDN deployment and see implementation examples:</p>
+        
+        <div style="margin: 20px 0;">
+            <a href="azure-cdn-test.html" class="link-button">🧪 Test CDN</a>
+            <a href="examples/cannabinoids-worksheet.html" class="link-button secondary">📊 Cannabinoids Example</a>
+            <a href="examples/migration-example.html" class="link-button secondary">🔄 Migration Example</a>
+        </div>
+
+        <h2>📚 Quick Start</h2>
+        <p>To use QBench Worksheet Core in your worksheets:</p>
+        
+        <pre><code>&lt;!-- Include CSS --&gt;
+&lt;link rel="stylesheet" href="<span id="css-url-example">LOADING...</span>"&gt;
+
+&lt;!-- Include JavaScript module --&gt;
+&lt;script type="module"&gt;
+import QBenchWorksheet from '<span id="js-url-example">LOADING...</span>';
+
+// Configure for your site
+const config = {
+    fieldMappings: {
+        sampleId: 'input[name="sample_id"]',
+        instrumentResults: 'textarea[name="ws_instrument_results"]'
+    },
+    features: {
+        multiUnit: true,
+        dataIntegrity: true,
+        uncertaintyReporting: true
+    }
+};
+
+// Initialize
+const worksheet = new QBenchWorksheet(config);
+&lt;/script&gt;</code></pre>
+
+        <h2>🔗 Integration</h2>
+        <p>This CDN provides:</p>
+        <ul>
+            <li>✅ <strong>Configuration-driven</strong> worksheet initialization</li>
+            <li>✅ <strong>Multi-unit output</strong> support (ppb, ppm, mg/g, %, etc.)</li>
+            <li>✅ <strong>Data integrity protection</strong> with deviation logging</li>
+            <li>✅ <strong>Moisture correction</strong> calculations</li>
+            <li>✅ <strong>RSD monitoring</strong> and statistical analysis</li>
+            <li>✅ <strong>Professional styling</strong> with responsive design</li>
+        </ul>
+
+        <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #dee2e6; color: #6c757d; text-align: center;">
+            <p><small>QBench Worksheet Core v1.0.0 | Hosted on Azure Static Web Apps</small></p>
+        </div>
+    </div>
+
+    <script>
+        // Auto-populate CDN URLs based on current location
+        window.addEventListener('load', function() {
+            const baseUrl = window.location.origin;
+            const jsUrl = `${baseUrl}/qbench-worksheet.esm.min.js`;
+            const cssUrl = `${baseUrl}/qbench-core.css`;
+            
+            // Update display URLs
+            document.getElementById('js-url').textContent = jsUrl;
+            document.getElementById('css-url').textContent = cssUrl;
+            document.getElementById('js-url-example').textContent = jsUrl;
+            document.getElementById('css-url-example').textContent = cssUrl;
+        });
+    </script>
+</body>
+</html>

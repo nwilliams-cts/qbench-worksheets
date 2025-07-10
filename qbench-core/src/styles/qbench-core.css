@@ -1,0 +1,588 @@
+/**
+ * QBench Worksheet Core Styles
+ * Modular CSS for the QBench worksheet system
+ */
+
+/* Reset and base styles */
+.qbench-worksheet * {
+    box-sizing: border-box;
+}
+
+.qbench-worksheet {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #333;
+}
+
+/* Layout and containers */
+.qbench-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.qbench-section {
+    margin-bottom: 30px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.qbench-section-header {
+    background: #f8f9fa;
+    padding: 15px 20px;
+    border-bottom: 1px solid #e9ecef;
+    font-weight: 600;
+    color: #495057;
+}
+
+.qbench-section-content {
+    padding: 20px;
+}
+
+/* Tabs */
+.qbench-tabs {
+    display: flex;
+    background: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.qbench-tab {
+    padding: 15px 25px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    color: #6c757d;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.qbench-tab:hover {
+    background: #e9ecef;
+    color: #495057;
+}
+
+.qbench-tab.active {
+    color: #007bff;
+    border-bottom-color: #007bff;
+    background: #fff;
+}
+
+.qbench-tab-content {
+    display: none;
+    padding: 20px;
+}
+
+.qbench-tab-content.active {
+    display: block;
+}
+
+/* Tables */
+.qbench-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0;
+    background: #fff;
+}
+
+.qbench-table th,
+.qbench-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #e9ecef;
+    vertical-align: top;
+}
+
+.qbench-table th {
+    background: #f8f9fa;
+    font-weight: 600;
+    color: #495057;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.qbench-table tbody tr:hover {
+    background: #f8f9fa;
+}
+
+.qbench-table .numeric {
+    text-align: right;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+}
+
+.qbench-table .sortable {
+    cursor: pointer;
+    position: relative;
+}
+
+.qbench-table .sortable::after {
+    content: '↕';
+    opacity: 0.3;
+    margin-left: 8px;
+}
+
+.qbench-table .sortable.asc::after {
+    content: '↑';
+    opacity: 1;
+}
+
+.qbench-table .sortable.desc::after {
+    content: '↓';
+    opacity: 1;
+}
+
+/* Forms and inputs */
+.qbench-form-group {
+    margin-bottom: 20px;
+}
+
+.qbench-label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: #495057;
+}
+
+.qbench-input,
+.qbench-select,
+.qbench-textarea {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.qbench-input:focus,
+.qbench-select:focus,
+.qbench-textarea:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.qbench-input.error,
+.qbench-select.error,
+.qbench-textarea.error {
+    border-color: #dc3545;
+}
+
+.qbench-input.readonly {
+    background: #f8f9fa;
+    color: #6c757d;
+}
+
+/* Buttons */
+.qbench-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 5px;
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.qbench-btn:hover {
+    background: #0056b3;
+    transform: translateY(-1px);
+}
+
+.qbench-btn:active {
+    transform: translateY(0);
+}
+
+.qbench-btn.secondary {
+    background: #6c757d;
+}
+
+.qbench-btn.secondary:hover {
+    background: #545b62;
+}
+
+.qbench-btn.success {
+    background: #28a745;
+}
+
+.qbench-btn.success:hover {
+    background: #1e7e34;
+}
+
+.qbench-btn.warning {
+    background: #ffc107;
+    color: #212529;
+}
+
+.qbench-btn.warning:hover {
+    background: #e0a800;
+}
+
+.qbench-btn.danger {
+    background: #dc3545;
+}
+
+.qbench-btn.danger:hover {
+    background: #c82333;
+}
+
+.qbench-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Multi-unit controls */
+.qbench-unit-selector {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin: 15px 0;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 4px;
+}
+
+.qbench-unit-option {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.qbench-unit-option input[type="radio"] {
+    margin-right: 5px;
+}
+
+/* Data integrity indicators */
+.qbench-integrity-status {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.qbench-integrity-status.locked {
+    background: #28a745;
+    color: #fff;
+}
+
+.qbench-integrity-status.modified {
+    background: #ffc107;
+    color: #212529;
+}
+
+.qbench-integrity-status.deviation {
+    background: #dc3545;
+    color: #fff;
+}
+
+/* Deviation tracking */
+.qbench-deviation {
+    padding: 10px;
+    margin: 10px 0;
+    border-left: 4px solid #ffc107;
+    background: #fff3cd;
+    border-radius: 0 4px 4px 0;
+}
+
+.qbench-deviation.critical {
+    border-left-color: #dc3545;
+    background: #f8d7da;
+}
+
+.qbench-deviation-header {
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.qbench-deviation-details {
+    font-size: 13px;
+    color: #6c757d;
+}
+
+/* Tooltips */
+.qbench-tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.qbench-tooltip .tooltip-content {
+    visibility: hidden;
+    position: absolute;
+    z-index: 1000;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.qbench-tooltip .tooltip-content::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #333 transparent transparent transparent;
+}
+
+.qbench-tooltip:hover .tooltip-content {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Modals */
+.qbench-modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.qbench-modal.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.qbench-modal-content {
+    background: #fff;
+    border-radius: 8px;
+    padding: 0;
+    max-width: 800px;
+    max-height: 90vh;
+    overflow: auto;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    animation: modalSlideIn 0.3s ease;
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.qbench-modal-header {
+    padding: 20px 25px;
+    border-bottom: 1px solid #e9ecef;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.qbench-modal-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.qbench-modal-close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #6c757d;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.qbench-modal-close:hover {
+    color: #dc3545;
+}
+
+.qbench-modal-body {
+    padding: 25px;
+}
+
+.qbench-modal-footer {
+    padding: 20px 25px;
+    border-top: 1px solid #e9ecef;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+/* Alerts and messages */
+.qbench-alert {
+    padding: 15px 20px;
+    margin: 15px 0;
+    border-radius: 4px;
+    border: 1px solid transparent;
+}
+
+.qbench-alert.info {
+    background: #d1ecf1;
+    border-color: #bee5eb;
+    color: #0c5460;
+}
+
+.qbench-alert.success {
+    background: #d4edda;
+    border-color: #c3e6cb;
+    color: #155724;
+}
+
+.qbench-alert.warning {
+    background: #fff3cd;
+    border-color: #ffeaa7;
+    color: #856404;
+}
+
+.qbench-alert.error {
+    background: #f8d7da;
+    border-color: #f5c6cb;
+    color: #721c24;
+}
+
+/* Loading states */
+.qbench-loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid #007bff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.qbench-loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .qbench-container {
+        padding: 10px;
+    }
+    
+    .qbench-tabs {
+        flex-wrap: wrap;
+    }
+    
+    .qbench-tab {
+        flex: 1;
+        text-align: center;
+        padding: 12px 15px;
+    }
+    
+    .qbench-table {
+        font-size: 13px;
+    }
+    
+    .qbench-table th,
+    .qbench-table td {
+        padding: 8px 10px;
+    }
+    
+    .qbench-modal-content {
+        margin: 20px;
+        max-width: calc(100% - 40px);
+    }
+}
+
+/* Print styles */
+@media print {
+    .qbench-btn,
+    .qbench-modal,
+    .qbench-tooltip .tooltip-content {
+        display: none !important;
+    }
+    
+    .qbench-section {
+        box-shadow: none;
+        border: 1px solid #ccc;
+    }
+    
+    .qbench-table {
+        border: 1px solid #000;
+    }
+    
+    .qbench-table th,
+    .qbench-table td {
+        border: 1px solid #000;
+    }
+}
+
+/* Dark theme support */
+@media (prefers-color-scheme: dark) {
+    .qbench-worksheet {
+        color: #e9ecef;
+    }
+    
+    .qbench-section {
+        background: #343a40;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    
+    .qbench-section-header,
+    .qbench-table th {
+        background: #495057;
+        color: #e9ecef;
+    }
+    
+    .qbench-input,
+    .qbench-select,
+    .qbench-textarea {
+        background: #495057;
+        border-color: #6c757d;
+        color: #e9ecef;
+    }
+    
+    .qbench-input.readonly {
+        background: #6c757d;
+    }
+    
+    .qbench-modal-content {
+        background: #343a40;
+    }
+}

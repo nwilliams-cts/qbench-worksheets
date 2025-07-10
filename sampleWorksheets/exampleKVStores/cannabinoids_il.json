@@ -1,0 +1,303 @@
+{
+  "action_limit_units": "%",
+  "allowed_units": [
+    "%",
+    "mg/g",
+    "mg/serving",
+    "mg/package"
+  ],
+  "cbc_ccv_target": 40,
+  "cbc_ccv_tolerance": 0.2,
+  "cbc_display_name": "CBC",
+  "cbc_icv_target": 40,
+  "cbc_icv_tolerance": 0.2,
+  "cbc_lod_in_vial": 0.5,
+  "cbc_loq_in_vial": 1,
+  "cbc_mb_target": null,
+  "cbc_uncertainty": 7.9,
+  "cbca_ccv_target": 40,
+  "cbca_ccv_tolerance": 0.2,
+  "cbca_display_name": "CBCA",
+  "cbca_icv_target": 40,
+  "cbca_icv_tolerance": 0.2,
+  "cbca_lod_in_vial": 0.5,
+  "cbca_loq_in_vial": 1,
+  "cbca_mb_target": null,
+  "cbca_uncertainty": 8.5,
+  "cbd_ccv_target": 40,
+  "cbd_ccv_tolerance": 0.2,
+  "cbd_display_name": "CBD",
+  "cbd_icv_target": 40,
+  "cbd_icv_tolerance": 0.2,
+  "cbd_lod_in_vial": 0.5,
+  "cbd_loq_in_vial": 1,
+  "cbd_mb_target": null,
+  "cbd_uncertainty": 8,
+  "cbda_ccv_target": 40,
+  "cbda_ccv_tolerance": 0.2,
+  "cbda_display_name": "CBDA",
+  "cbda_icv_target": 40,
+  "cbda_icv_tolerance": 0.2,
+  "cbda_lod_in_vial": 0.5,
+  "cbda_loq_in_vial": 1,
+  "cbda_mb_target": null,
+  "cbda_uncertainty": 9,
+  "cbdv_ccv_target": 40,
+  "cbdv_ccv_tolerance": 0.2,
+  "cbdv_display_name": "CBDV",
+  "cbdv_icv_target": 40,
+  "cbdv_icv_tolerance": 0.2,
+  "cbdv_lod_in_vial": 0.5,
+  "cbdv_loq_in_vial": 1,
+  "cbdv_mb_target": null,
+  "cbdv_uncertainty": 8.1,
+  "cbdva_ccv_target": 40,
+  "cbdva_ccv_tolerance": 0.2,
+  "cbdva_display_name": "CBDVA",
+  "cbdva_icv_target": 40,
+  "cbdva_icv_tolerance": 0.2,
+  "cbdva_lod_in_vial": 0.5,
+  "cbdva_loq_in_vial": 1,
+  "cbdva_mb_target": null,
+  "cbdva_uncertainty": 9.4,
+  "cbg_ccv_target": 40,
+  "cbg_ccv_tolerance": 0.2,
+  "cbg_display_name": "CBG",
+  "cbg_icv_target": 40,
+  "cbg_icv_tolerance": 0.2,
+  "cbg_lod_in_vial": 0.5,
+  "cbg_loq_in_vial": 1,
+  "cbg_mb_target": null,
+  "cbg_uncertainty": 9.4,
+  "cbga_ccv_target": 40,
+  "cbga_ccv_tolerance": 0.2,
+  "cbga_display_name": "CBGA",
+  "cbga_icv_target": 40,
+  "cbga_icv_tolerance": 0.2,
+  "cbga_lod_in_vial": 0.5,
+  "cbga_loq_in_vial": 1,
+  "cbga_mb_target": null,
+  "cbga_uncertainty": 9.1,
+  "cbn_ccv_target": 40,
+  "cbn_ccv_tolerance": 0.2,
+  "cbn_display_name": "CBN",
+  "cbn_icv_target": 40,
+  "cbn_icv_tolerance": 0.2,
+  "cbn_lod_in_vial": 0.5,
+  "cbn_loq_in_vial": 1,
+  "cbn_mb_target": null,
+  "cbn_uncertainty": 7.8,
+  "d8_thc_ccv_target": 40,
+  "d8_thc_ccv_tolerance": 0.2,
+  "d8_thc_display_name": "&Delta;8-THC",
+  "d8_thc_icv_target": 40,
+  "d8_thc_icv_tolerance": 0.2,
+  "d8_thc_lod_in_vial": 0.5,
+  "d8_thc_loq_in_vial": 1,
+  "d8_thc_mb_target": null,
+  "d8_thc_uncertainty": 6.9,
+  "d8_thcv_ccv_target": 40,
+  "d8_thcv_ccv_tolerance": 0.2,
+  "d8_thcv_display_name": "&Delta;8-THCV",
+  "d8_thcv_icv_target": 40,
+  "d8_thcv_icv_tolerance": 0.2,
+  "d8_thcv_lod_in_vial": 0.5,
+  "d8_thcv_loq_in_vial": 1,
+  "d8_thcv_mb_target": null,
+  "d8_thcv_uncertainty": 9.2,
+  "d9_thc_ccv_target": 40,
+  "d9_thc_ccv_tolerance": 0.2,
+  "d9_thc_display_name": "&Delta;9-THC",
+  "d9_thc_icv_target": 40,
+  "d9_thc_icv_tolerance": 0.2,
+  "d9_thc_lod_in_vial": 0.5,
+  "d9_thc_loq_in_vial": 1,
+  "d9_thc_mb_target": null,
+  "d9_thc_uncertainty": 8,
+  "data_columns_to_analytes": {
+    "&Delta;8-THC": "d8_thc",
+    "&Delta;8-THCV": "d8_thc",
+    "&Delta;9-THC": "d9_thc",
+    "CBC": "cbc",
+    "CBCA": "cbca",
+    "CBD": "cbd",
+    "CBDA": "cbda",
+    "CBDV": "cbdv",
+    "CBDVA": "cbdva",
+    "CBG": "cbg",
+    "CBGA": "cbga",
+    "CBN": "cbn",
+    "THCA": "thca",
+    "THCV": "thcv",
+    "THCVA": "thcva"
+  },
+  "default_units": [
+    "%",
+    "mg/g",
+    "mg/serving",
+    "mg/package"
+  ],
+  "isomers_map": {
+    "total_cannabinoids": [
+      {
+        "analyte": "cbd",
+        "factor": 1
+      },
+      {
+        "analyte": "cbda",
+        "factor": 1
+      },
+      {
+        "analyte": "cbdv",
+        "factor": 1
+      },
+      {
+        "analyte": "cbg",
+        "factor": 1
+      },
+      {
+        "analyte": "cbga",
+        "factor": 1
+      },
+      {
+        "analyte": "cbn",
+        "factor": 1
+      },
+      {
+        "analyte": "d8_thc",
+        "factor": 1
+      },
+      {
+        "analyte": "d8_thcv",
+        "factor": 1
+      },
+      {
+        "analyte": "d9_thc",
+        "factor": 1
+      },
+      {
+        "analyte": "thca",
+        "factor": 1
+      },
+      {
+        "analyte": "thcv",
+        "factor": 1
+      },
+      {
+        "analyte": "cbc",
+        "factor": 1
+      },
+      {
+        "analyte": "cbca",
+        "factor": 1
+      },
+      {
+        "analyte": "cbdva",
+        "factor": 1
+      },
+      {
+        "analyte": "thcva",
+        "factor": 1
+      }
+    ],
+    "total_cbd": [
+      {
+        "analyte": "cbda",
+        "factor": 0.877
+      },
+      {
+        "analyte": "cbd",
+        "factor": 1
+      }
+    ],
+    "total_thc": [
+      {
+        "analyte": "thca",
+        "factor": 0.877
+      },
+      {
+        "analyte": "d9_thc",
+        "factor": 1
+      }
+    ]
+  },
+  "qc_types": [
+    "ccv"
+  ],
+  "report_analytes": [
+    "cbc",
+    "cbca",
+    "cbdv",
+    "cbdva",
+    "cbd",
+    "cbda",
+    "cbg",
+    "cbga",
+    "cbn",
+    "d8_thc",
+    "d8_thcv",
+    "d9_thc",
+    "thcv",
+    "thcva",
+    "thca",
+    "total_thc",
+    "total_cbd",
+    "total_cannabinoids"
+  ],
+  "thca_ccv_target": 40,
+  "thca_ccv_tolerance": 0.2,
+  "thca_display_name": "THCA",
+  "thca_icv_target": 40,
+  "thca_icv_tolerance": 0.2,
+  "thca_lod_in_vial": 0.5,
+  "thca_loq_in_vial": 1,
+  "thca_mb_target": null,
+  "thca_uncertainty": 7.9,
+  "thcv_ccv_target": 40,
+  "thcv_ccv_tolerance": 0.2,
+  "thcv_display_name": "&Delta;9-THCV",
+  "thcv_icv_target": 40,
+  "thcv_icv_tolerance": 0.2,
+  "thcv_lod_in_vial": 0.5,
+  "thcv_loq_in_vial": 1,
+  "thcv_mb_target": null,
+  "thcv_uncertainty": 7.2,
+  "thcva_ccv_target": 40,
+  "thcva_ccv_tolerance": 0.2,
+  "thcva_display_name": "THCVA",
+  "thcva_icv_target": 40,
+  "thcva_icv_tolerance": 0.2,
+  "thcva_lod_in_vial": 0.5,
+  "thcva_loq_in_vial": 1,
+  "thcva_mb_target": null,
+  "thcva_uncertainty": 9.1,
+  "total_cannabinoids_display_name": "Total Cannabinoids",
+  "total_cannabinoids_uncertainty": 30.25,
+  "total_cbd_display_name": "Total CBD",
+  "total_cbd_uncertainty": 11.24,
+  "total_thc_action_limit": 0.3,
+  "total_thc_display_name": "Total THC",
+  "total_thc_uncertainty": 10.58,
+  "use_moisture_correction": true,
+  "default_compliance": false,
+  "worksheet_analytes": [
+    "cbc",
+    "cbca",
+    "cbdv",
+    "cbdva",
+    "cbd",
+    "cbda",
+    "cbg",
+    "cbga",
+    "cbn",
+    "d8_thc",
+    "d8_thcv",
+    "d9_thc",
+    "thcv",
+    "thcva",
+    "thca",
+    "total_thc",
+    "total_cbd",
+    "total_cannabinoids"
+  ]
+}

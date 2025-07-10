@@ -1,0 +1,4891 @@
+<style>
+/* Smithers Corporate Color Scheme */
+:root {
+  --smithers-navy-dark: #0a2240;
+  --smithers-navy: #003a70;
+  --smithers-blue: #236092;
+  --smithers-yellow: #f6cd3e;
+  --smithers-yellow-light: #fedb54;
+  --smithers-gray-dark: #48484a;
+  --smithers-gray: #cdcfd0;
+  --smithers-gray-light: #e7eaec;
+}
+
+/* Container Styling */
+.qbench-worksheet-container #ws-tabs {
+  margin-bottom: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  background: var(--smithers-gray-light);
+  border-radius: 8px 8px 0 0;
+  padding: 5px 5px 0 5px;
+}
+
+/* Tab Buttons */
+.qbench-worksheet-container .ws-tab-btn {
+  float: left; 
+  padding: 12px 24px; 
+  text-decoration: none;
+  margin-right: 2px;
+  
+  /* Smithers colors */ 
+  color: white;
+  background: var(--smithers-navy-dark); 
+  cursor: pointer;
+  font-weight: 500;
+  border: none;
+  border-radius: 8px 8px 0 0;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.qbench-worksheet-container .ws-tab-btn:hover {
+  background: var(--smithers-blue);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+}
+
+.qbench-worksheet-container .ws-tab-btn.active {
+  background: var(--smithers-navy);
+  font-weight: 700;
+  z-index: 3;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+/* Tab Container */
+.qbench-worksheet-container .ws-tab-container {
+  background: white;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  padding: 20px;
+}
+
+/* Table Defaults */
+.qbench-worksheet-container .ws-tab-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+}
+
+.qbench-worksheet-container .ws-tab-content th,
+.qbench-worksheet-container .ws-tab-content td {
+  border: 1px solid #ccc;
+  padding: 8px 12px;
+  text-align: center;
+}
+
+.qbench-worksheet-container .ws-tab-content th {
+  background: var(--smithers-gray-light);
+  color: var(--smithers-navy-dark);
+  font-weight: 600;
+  white-space: nowrap;
+  border-bottom: 2px solid var(--smithers-gray);
+}
+
+.qbench-worksheet-container .ws-tab-content td input[type="number"] {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 6px 8px;
+  border: 1px solid var(--smithers-gray);
+  border-radius: 4px;
+  transition: border-color 0.3s ease;
+}
+
+.qbench-worksheet-container .ws-tab-content td input[type="number"]:focus {
+  outline: none;
+  border-color: var(--smithers-blue);
+  box-shadow: 0 0 0 2px rgba(35, 96, 146, 0.2);
+}
+
+/* Row Highlighting */
+.qbench-worksheet-container tr[data-ws-analyte]:hover {
+  background-color: #f0f8ff;
+}
+
+/* Overall Status Banner */
+.qbench-worksheet-container .overall-status-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+  margin: 10px 0 20px 0;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 1rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+  width: 75%;
+  margin: 20px auto;
+}
+
+.qbench-worksheet-container .overall-status-banner.pass {
+  background: #d4f6d4;
+  border: 1px solid #28a745;
+  color: #155724;
+}
+
+.qbench-worksheet-container .overall-status-banner.warning {
+  background: #fff9c4;
+  border: 1px solid #ffc107;
+  color: #856404;
+}
+
+.qbench-worksheet-container .overall-status-banner.fail {
+  background: #f8d7da;
+  border: 1px solid #dc3545;
+  color: #721c24;
+}
+
+.qbench-worksheet-container .compliance-badge {
+  padding: 4px 10px;
+  border-radius: 16px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.qbench-worksheet-container .compliance-badge.compliant {
+  background: #28a745;
+  color: white;
+}
+
+.qbench-worksheet-container .compliance-badge.pending {
+  background: #ffc107;
+  color: #333;
+}
+
+.qbench-worksheet-container .compliance-badge.non-compliant {
+  background: #dc3545;
+  color: white;
+}
+
+.qbench-worksheet-container .compliance-badge.info {
+  background: #6c757d;
+  color: white;
+}
+
+/* Status Icons */
+.qbench-worksheet-container .status-icon {
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+.qbench-worksheet-container .status-icon.pass { color: #28a745; }
+.qbench-worksheet-container .status-icon.fail { color: #dc3545; }
+.qbench-worksheet-container .status-icon.warning { color: #ffc107; }
+.qbench-worksheet-container .status-icon.unknown { color: #6c757d; }
+
+/* Status Cell Styling */
+.qbench-worksheet-container .status-pass {
+  background: #d4edda !important;
+  color: #155724 !important;
+  font-weight: 600;
+}
+
+.qbench-worksheet-container .status-warning {
+  background: #fff3cd !important;
+  color: #856404 !important;
+  font-weight: 600;
+}
+
+.qbench-worksheet-container .status-fail {
+  background: #f8d7da !important;
+  color: #721c24 !important;
+  font-weight: 600;
+}
+
+.qbench-worksheet-container .status-unknown {
+  background: #e2e3e5 !important;
+  color: #6c757d !important;
+  font-weight: 600;
+}
+
+/* RSD Status Styling */
+.qbench-worksheet-container .rsd-pass {
+  background: #d4edda !important;
+  color: #155724 !important;
+}
+
+.qbench-worksheet-container .rsd-warning {
+  background: #fff3cd !important;
+  color: #856404 !important;
+}
+
+.qbench-worksheet-container .rsd-fail {
+  background: #f8d7da !important;
+  color: #721c24 !important;
+}
+
+/* RSD Tooltip Styling */
+.qbench-worksheet-container .rsd-tooltip {
+  position: relative;
+  border-bottom: 1px dotted #666;
+}
+
+.qbench-worksheet-container .rsd-tooltip:hover {
+  background-color: rgba(0, 123, 255, 0.1);
+  border-radius: 3px;
+}
+
+/* Enhanced tooltip for better visibility */
+.qbench-worksheet-container .rsd-tooltip[title]:hover::after {
+  content: '';
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid #333;
+  z-index: 1001;
+}
+
+/* Result Type Styling */
+.qbench-worksheet-container .result-nt {
+  background: #e2e3e5 !important;
+  color: #383d41 !important;
+  font-style: italic;
+}
+
+.qbench-worksheet-container .result-nd {
+  background: #d1ecf1 !important;
+  color: #0c5460 !important;
+  font-style: italic;
+}
+
+.qbench-worksheet-container .result-loq {
+  background: #fff3cd !important;
+  color: #856404 !important;
+  font-style: italic;
+}
+
+/* Critical Value Highlighting */
+.qbench-worksheet-container .critical-value {
+  background: #28a745 !important;
+  color: white !important;
+  font-weight: bold;
+}
+
+/* Summary Table Highlight */
+#ws-tab-summary table th,
+#ws-tab-summary table td {
+  text-align: right;
+}
+#ws-tab-summary table td:first-child {
+  font-weight: 600;
+  text-align: left;
+}
+
+/* Statistics Table Styling */
+#ws-tab-statistics table th,
+#ws-tab-statistics table td {
+  text-align: right;
+  font-size: 0.9rem;
+}
+#ws-tab-statistics table td:first-child {
+  font-weight: 600;
+  text-align: left;
+}
+#ws-tab-statistics table th {
+  font-size: 0.85rem;
+  background-color: #e9ecef;
+}
+
+/* Unit Selector */
+#unit-selector {
+  margin: 0.5rem 0;
+  padding: 8px 12px;
+  border: 2px solid var(--smithers-gray);
+  border-radius: 6px;
+  background: white;
+  color: var(--smithers-navy-dark);
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+#unit-selector:focus {
+  outline: none;
+  border-color: var(--smithers-blue);
+  box-shadow: 0 0 0 3px rgba(35, 96, 146, 0.2);
+}
+
+/* Multi-Unit Output Selector */
+.multi-unit-selector-group {
+  margin: 15px 0;
+  padding: 15px;
+  border: 1px solid var(--smithers-gray);
+  border-radius: 8px;
+  background: #f8f9fa;
+}
+
+.multi-unit-selector-group h4 {
+  margin: 0 0 10px 0;
+  color: var(--smithers-navy-dark);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.multi-unit-selector-group .unit-checkboxes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.multi-unit-selector-group .unit-checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 80px;
+}
+
+.multi-unit-selector-group input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--smithers-blue);
+  cursor: pointer;
+}
+
+.multi-unit-selector-group label {
+  color: var(--smithers-navy-dark);
+  font-weight: 500;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Buttons */
+.qbench-worksheet-container button {
+  background: linear-gradient(135deg, var(--smithers-blue) 0%, var(--smithers-navy) 100%);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.qbench-worksheet-container button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.qbench-worksheet-container button:active {
+  transform: translateY(0);
+}
+
+.qbench-worksheet-container button:disabled {
+  background: var(--smithers-gray);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Primary Button (Yellow) */
+.qbench-worksheet-container button.btn-primary, .qbench-worksheet-container #unlock-data-btn {
+  background: linear-gradient(135deg, var(--smithers-yellow) 0%, var(--smithers-yellow-light) 100%);
+  color: var(--smithers-navy-dark);
+  font-weight: 600;
+}
+
+/* Danger Button */
+.qbench-worksheet-container button.btn-danger, .qbench-worksheet-container #lock-data-btn {
+  background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+}
+
+/* Moisture Settings in Settings Tab */
+.qbench-worksheet-container .moisture-settings-group {
+  background: #f8f9fa;
+  border: 1px solid var(--smithers-gray);
+  border-radius: 6px;
+  padding: 16px;
+  margin: 16px 0;
+}
+
+.qbench-worksheet-container .moisture-settings-group h4 {
+  margin: 0 0 12px 0;
+  color: var(--smithers-navy-dark);
+  font-size: 1rem;
+}
+
+.qbench-worksheet-container .moisture-settings-group label {
+  display: block;
+  margin: 8px 0;
+  font-weight: normal;
+}
+
+.qbench-worksheet-container .moisture-settings-group input[type="checkbox"] {
+  margin-right: 8px;
+}
+
+/* Settings Form Controls */
+.ws-tab-content input[type="number"],
+.ws-tab-content select,
+.ws-tab-content input[type="text"] {
+  border: 1px solid var(--smithers-gray);
+  border-radius: 4px;
+  padding: 6px 8px;
+  transition: border-color 0.3s ease;
+}
+
+.ws-tab-content input:focus,
+.ws-tab-content select:focus {
+  outline: none;
+  border-color: var(--smithers-blue);
+  box-shadow: 0 0 0 2px rgba(35, 96, 146, 0.2);
+}
+
+/* Data Integrity Controls */
+.data-integrity-controls {
+  background: var(--smithers-gray-light);
+  border: 2px solid var(--smithers-gray);
+  border-radius: 8px;
+  padding: 15px;
+  margin: 15px 0;
+}
+
+.data-integrity-controls h4 {
+  color: var(--smithers-navy-dark);
+  margin-top: 0;
+  border-bottom: 2px solid var(--smithers-gray);
+  padding-bottom: 8px;
+}
+
+.protection-status {
+  margin-left: 10px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+
+.protection-status.locked {
+  background: #dc3545;
+  color: white;
+}
+
+.protection-status.unlocked {
+  background: #ffc107;
+  color: #333;
+}
+
+/* Legend Section */
+.legend-section {
+  background: var(--smithers-gray-light);
+  border: 1px solid var(--smithers-gray);
+  border-radius: 8px;
+  padding: 15px;
+  margin: 20px 0;
+}
+
+.legend-section h4 {
+  color: var(--smithers-navy-dark);
+  margin-top: 0;
+  border-bottom: 2px solid var(--smithers-gray);
+  padding-bottom: 8px;
+}
+
+.legend-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin-top: 15px;
+}
+
+.legend-grid > div {
+  background: white;
+  padding: 15px;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  line-height: 1.6;
+}
+
+.legend-grid strong {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--smithers-navy-dark);
+}
+
+.legend-grid span {
+  margin-right: 8px;
+  margin-bottom: 4px;
+  display: inline-block;
+}
+
+/* Sample Information Section */
+.sample-info-section {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border: 1px solid var(--smithers-gray);
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.sample-info-section h3 {
+  margin: 0 0 15px 0;
+  color: var(--smithers-navy-dark);
+  font-size: 1.3rem;
+  font-weight: 600;
+  border-bottom: 2px solid var(--smithers-blue);
+  padding-bottom: 8px;
+}
+
+.sample-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.sample-info-card {
+  background: white;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  padding: 15px;
+}
+
+.sample-info-card h4 {
+  margin: 0 0 12px 0;
+  color: var(--smithers-navy);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.sample-info-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 8px 0;
+  padding: 6px 0;
+  border-bottom: 1px solid #f8f9fa;
+}
+
+.sample-info-item:last-child {
+  border-bottom: none;
+}
+
+.sample-info-label {
+  font-weight: 500;
+  color: var(--smithers-navy-dark);
+}
+
+.sample-info-value {
+  font-weight: 600;
+  color: var(--smithers-navy);
+}
+
+.sample-info-value.missing {
+  color: #dc3545;
+  font-style: italic;
+}
+
+.sample-info-value.available {
+  color: #28a745;
+}
+
+.unit-availability-note {
+  background: #fff3cd;
+  border: 1px solid #ffeaa7;
+  border-radius: 4px;
+  padding: 10px;
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: #856404;
+}
+
+/* Buttons */
+.qbench-worksheet-container button {
+  background: linear-gradient(135deg, var(--smithers-blue) 0%, var(--smithers-navy) 100%);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.qbench-worksheet-container button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.qbench-worksheet-container button:active {
+  transform: translateY(0);
+}
+
+.qbench-worksheet-container button:disabled {
+  background: var(--smithers-gray);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Primary Button (Yellow) */
+.qbench-worksheet-container button.btn-primary, .qbench-worksheet-container #unlock-data-btn {
+  background: linear-gradient(135deg, var(--smithers-yellow) 0%, var(--smithers-yellow-light) 100%);
+  color: var(--smithers-navy-dark);
+  font-weight: 600;
+}
+
+/* Danger Button */
+button.btn-danger, #lock-data-btn {
+  background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+}
+
+/* Settings Form Controls */
+.ws-tab-content input[type="number"],
+.ws-tab-content select,
+.ws-tab-content input[type="text"] {
+  border: 1px solid var(--smithers-gray);
+  border-radius: 4px;
+  padding: 6px 8px;
+  transition: border-color 0.3s ease;
+}
+
+.ws-tab-content input:focus,
+.ws-tab-content select:focus {
+  outline: none;
+  border-color: var(--smithers-blue);
+  box-shadow: 0 0 0 2px rgba(35, 96, 146, 0.2);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .ws-tab-content table,
+  .ws-tab-content th,
+  .ws-tab-content td {
+    font-size: 0.85rem;
+  }
+}
+
+/* Table sorting styles */
+.summary-sortable,
+.stats-sortable {
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  padding-right: 20px !important;
+}
+
+.summary-sortable:hover,
+.stats-sortable:hover {
+  background-color: #e9ecef;
+}
+
+.summary-sortable::after,
+.stats-sortable::after {
+  content: '↕';
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.3;
+  font-size: 12px;
+}
+
+.summary-sortable.sort-asc::after,
+.stats-sortable.sort-asc::after {
+  content: '↑';
+  opacity: 1;
+  color: #0066cc;
+}
+
+.summary-sortable.sort-desc::after,
+.stats-sortable.sort-desc::after {
+  content: '↓';
+  opacity: 1;
+  color: #0066cc;
+}
+
+/* RSD Status Styling */
+.rsd-pass {
+  background-color: #d4edda !important;
+  color: #155724 !important;
+}
+
+.rsd-warning {
+  background-color: #fff3cd !important;
+  color: #856404 !important;
+}
+
+.rsd-fail {
+  background-color: #f8d7da !important;
+  color: #721c24 !important;
+  font-weight: bold !important;
+}
+
+.rsd-status-indicator {
+  font-size: 0.8em;
+  font-weight: bold;
+  margin-left: 5px;
+}
+
+/* Enhanced Status Styling */
+.status-pass {
+  background-color: #d4edda !important;
+  color: #155724 !important;
+  font-weight: bold !important;
+}
+
+.status-fail {
+  background-color: #f8d7da !important;
+  color: #721c24 !important;
+  font-weight: bold !important;
+}
+
+.status-unknown {
+  background-color: #e2e3e5 !important;
+  color: #383d41 !important;
+}
+
+/* Result Type Indicators */
+.result-nt {
+  background: var(--smithers-gray) !important;
+  color: var(--smithers-navy-dark) !important;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.result-nd {
+  background: var(--smithers-blue) !important;
+  color: white !important;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.result-loq {
+  background: var(--smithers-yellow) !important;
+  color: var(--smithers-navy-dark) !important;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+/* RSD Status Indicators */
+.rsd-pass {
+  background: #28a745 !important;
+  color: white !important;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.rsd-warning {
+  background: var(--smithers-yellow) !important;
+  color: var(--smithers-navy-dark) !important;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.rsd-fail {
+  background: #dc3545 !important;
+  color: white !important;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+/* Limit Warning Indicators */
+.limit-warning {
+  background: linear-gradient(135deg, var(--smithers-yellow-light) 0%, var(--smithers-yellow) 100%) !important;
+  color: var(--smithers-navy-dark) !important;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.critical-value {
+  background: linear-gradient(135deg, #ff6b6b 0%, #dc3545 100%) !important;
+  color: white !important;
+  border-radius: 4px;
+  font-weight: 600;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.7; }
+  100% { opacity: 1; }
+}
+
+/* LOQ QC Warning - when LOQ exceeds action limit */
+.loq-qc-warning {
+  background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%) !important;
+  color: white !important;
+  border-radius: 4px;
+  font-weight: 600;
+  border: 2px solid #e65100 !important;
+  animation: qc-alert 3s infinite;
+}
+
+@keyframes qc-alert {
+  0% { box-shadow: 0 0 0 0 rgba(255, 152, 0, 0.7); }
+  50% { box-shadow: 0 0 0 4px rgba(255, 152, 0, 0.3); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 152, 0, 0); }
+}
+
+/* Data Integrity Protection */
+.data-locked {
+  background: var(--smithers-gray-light) !important;
+  border: 2px solid var(--smithers-gray) !important;
+  color: var(--smithers-gray-dark) !important;
+  cursor: not-allowed !important;
+  opacity: 0.8;
+}
+
+.data-locked:hover {
+  background: #dcdfe2 !important;
+  border-color: var(--smithers-gray-dark) !important;
+}
+
+.data-locked::after {
+  content: '🔒';
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px;
+  color: #dc3545;
+  pointer-events: none;
+}
+
+/* Locked checkbox styling */
+input[type="checkbox"].data-locked {
+  opacity: 0.6 !important;
+  cursor: not-allowed !important;
+  pointer-events: auto !important;
+}
+
+input[type="checkbox"].data-locked + label {
+  opacity: 0.6 !important;
+  cursor: not-allowed !important;
+  color: var(--smithers-gray-dark) !important;
+}
+
+/* Special styling for locked checkbox containers */
+th input[type="checkbox"].data-locked,
+td input[type="checkbox"].data-locked {
+  position: relative;
+}
+
+th input[type="checkbox"].data-locked::after,
+td input[type="checkbox"].data-locked::after {
+  content: '🔒';
+  position: absolute;
+  right: -18px;
+  top: -2px;
+  font-size: 10px;
+  color: #dc3545;
+  pointer-events: none;
+}
+
+.data-deviation-required {
+  background: #fff3cd !important;
+  border: 2px solid var(--smithers-yellow) !important;
+}
+
+.data-deviation-logged {
+  background: #d1ecf1 !important;
+  border: 2px solid var(--smithers-blue) !important;
+}
+
+.deviation-modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(10, 34, 64, 0.8);
+  backdrop-filter: blur(2px);
+}
+
+.deviation-modal-content {
+  background: white;
+  margin: 5% auto;
+  padding: 30px;
+  border: none;
+  border-radius: 12px;
+  width: 85%;
+  max-width: 650px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  position: relative;
+  animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.deviation-close {
+  color: var(--smithers-gray);
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.deviation-close:hover {
+  color: var(--smithers-navy);
+}
+
+.deviation-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.deviation-form label {
+  font-weight: 600;
+  color: var(--smithers-navy);
+  margin-bottom: 5px;
+}
+
+.deviation-form input,
+.deviation-form select,
+.deviation-form textarea {
+  padding: 10px 12px;
+  border: 2px solid var(--smithers-gray);
+  border-radius: 6px;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.deviation-form input:focus,
+.deviation-form select:focus,
+.deviation-form textarea:focus {
+  outline: none;
+  border-color: var(--smithers-blue);
+  box-shadow: 0 0 0 3px rgba(35, 96, 146, 0.2);
+}
+
+.deviation-form textarea {
+  min-height: 80px;
+  resize: vertical;
+  font-family: inherit;
+}
+
+.deviation-form small {
+  color: var(--smithers-gray-dark);
+  font-size: 0.8rem;
+  margin-top: 5px;
+}
+
+.deviation-close:hover {
+  color: black;
+}
+
+.deviation-form {
+  margin-top: 20px;
+}
+
+.deviation-form label {
+  display: block;
+  margin: 10px 0 5px 0;
+  font-weight: bold;
+}
+
+.deviation-form input,
+.deviation-form textarea,
+.deviation-form select {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.deviation-form textarea {
+  height: 80px;
+  resize: vertical;
+}
+
+.data-integrity-controls {
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 5px;
+  padding: 15px;
+  margin: 10px 0;
+}
+
+.protection-status {
+  display: inline-block;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-left: 10px;
+  transition: all 0.3s ease;
+}
+
+.protection-status.locked {
+  background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+  color: white;
+  box-shadow: 0 2px 6px rgba(220, 53, 69, 0.3);
+}
+
+.protection-status.unlocked {
+  background: linear-gradient(135deg, var(--smithers-yellow) 0%, var(--smithers-yellow-light) 100%);
+  color: var(--smithers-navy-dark);
+  box-shadow: 0 2px 6px rgba(246, 205, 62, 0.3);
+}
+
+/* Data Integrity Controls Section */
+.data-integrity-controls {
+  background: linear-gradient(135deg, var(--smithers-gray-light) 0%, #f0f2f5 100%);
+  border: 2px solid var(--smithers-gray);
+  border-radius: 10px;
+  padding: 25px;
+  margin: 20px 0;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.data-integrity-controls h4 {
+  color: var(--smithers-navy);
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.data-integrity-controls h4::before {
+  content: '🔒';
+  font-size: 1.1rem;
+}
+
+/* Settings Tab Styling */
+#ws-tab-settings {
+  background: white;
+  padding: 25px;
+  border-radius: 8px;
+}
+
+#ws-tab-settings > div {
+  margin-bottom: 20px;
+  padding: 15px;
+  background: var(--smithers-gray-light);
+  border-radius: 6px;
+  border-left: 4px solid var(--smithers-blue);
+}
+
+#ws-tab-settings label {
+  font-weight: 600;
+  color: var(--smithers-navy);
+  display: block;
+  margin-bottom: 8px;
+}
+
+/* Deviation Review Styling */
+.deviation-list {
+  max-height: 400px;
+  overflow-y: auto;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  background: white;
+}
+
+.deviation-item {
+  border-bottom: 1px solid #e9ecef;
+  padding: 15px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.deviation-item:hover {
+  background-color: #f8f9fa;
+}
+
+.deviation-item:last-child {
+  border-bottom: none;
+}
+
+.deviation-item.deviation-completed {
+  background-color: #f8f9fa;
+  border-left: 4px solid #28a745;
+}
+
+.deviation-item.deviation-active {
+  background-color: #fff3cd;
+  border-left: 4px solid #ffc107;
+}
+
+.deviation-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.deviation-id {
+  color: #495057;
+  font-family: monospace;
+  background: #e9ecef;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+.deviation-status {
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.8em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.deviation-completed .deviation-status {
+  background: #d4edda;
+  color: #155724;
+}
+
+.deviation-active .deviation-status {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.deviation-time {
+  color: #6c757d;
+  font-size: 0.9em;
+  font-weight: normal;
+}
+
+.deviation-summary {
+  color: #495057;
+  font-size: 0.9em;
+  line-height: 1.4;
+}
+
+.deviation-details {
+  margin-top: 15px;
+  border-top: 1px solid #e9ecef;
+  padding-top: 15px;
+}
+
+.deviation-review-close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  line-height: 1;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.deviation-review-close:hover {
+  color: #000;
+}
+
+/* Legend Section */
+.legend-section {
+  background: linear-gradient(135deg, #f8f9fa 0%, var(--smithers-gray-light) 100%);
+  border: 1px solid var(--smithers-gray);
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 25px;
+}
+
+.legend-section h4 {
+  color: var(--smithers-navy);
+  margin-top: 0;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.legend-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 15px;
+  font-size: 0.9em;
+}
+
+.legend-grid > div {
+  background: white;
+  padding: 12px;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.legend-grid strong {
+  color: var(--smithers-navy);
+  display: block;
+  margin-bottom: 8px;
+  font-size: 0.95em;
+}
+
+/* Table Sorting Styles */
+.summary-sortable,
+.stats-sortable {
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  padding-right: 20px !important;
+  transition: background-color 0.3s ease;
+}
+
+.summary-sortable:hover,
+.stats-sortable:hover {
+  background-color: var(--smithers-blue) !important;
+  color: white;
+}
+
+.summary-sortable::after,
+.stats-sortable::after {
+  content: '↕';
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.6;
+  font-size: 0.8em;
+}
+
+.summary-sortable.sort-asc::after,
+.stats-sortable.sort-asc::after {
+  content: '↑';
+  opacity: 1;
+}
+
+.summary-sortable.sort-desc::after,
+.stats-sortable.sort-desc::after {
+  content: '↓';
+  opacity: 1;
+}
+
+/* RSD Status Indicator */
+.rsd-status-indicator {
+  margin-left: 4px;
+  font-weight: bold;
+}
+
+/* Pulse Animation for Critical Values */
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    background-color: #28a745;
+  }
+  50% {
+    transform: scale(1.05);
+    background-color: #dc3545;
+  }
+}
+
+.critical-value {
+  animation: pulse 2s infinite;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .ws-tab-content table,
+  .ws-tab-content th,
+  .ws-tab-content td {
+    font-size: 0.85rem;
+  }
+  
+  .ws-tab-btn {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+  }
+  
+  .overall-status-banner {
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
+    padding: 8px 12px;
+  }
+  
+  .legend-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .data-integrity-controls {
+    padding: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .ws-tab-content {
+    padding: 10px;
+  }
+  
+  .ws-tab-content th,
+  .ws-tab-content td {
+    padding: 4px;
+    font-size: 0.8rem;
+  }
+  
+  .qbench-worksheet-container button {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+  }
+}
+</style>
+
+
+{% set worksheet = tmp_worksheet_data if tmp_worksheet_data else tests[0].get_worksheet_data() %}
+{% set worksheet = worksheet if worksheet else {} %}
+{% set assay = tests[0].assay %}
+{% set kvstore_id = assay.assay_params or "" %}
+{% set kvstore = kvstore_id|get_kvstore_json if kvstore_id else {} %}
+{% set analytes = kvstore.get('worksheet_analytes') or [] %}
+{% set allowed_units = kvstore.get('allowed_units') %}
+{% set input_unit = assay.qc_units %}
+{% set limit_unit = kvstore.get('action_limit_units') %}
+{% set instrument_data = worksheet.get('ws_instrument_results') or {} %}
+{% set live_data = worksheet.get('ws_live_results') or {} %}
+
+<!-- Moisture Correction Setup -->
+{% set use_moisture_correction = kvstore.get('use_moisture_correction') or false %}
+{% set moisture_assay_id = kvstore.get('moisture_assay_id') %}
+{% set assay_name = kvstore.get('assay_name') or '' %}
+{% set assay_display_name = assay.title or ''%}
+{% set ns = namespace() %}
+{% set ns.moisture_value = 0.0 %}
+{% set ns.moisture_found = false %}
+
+{% if use_moisture_correction and moisture_assay_id %}
+  {% set all_tests = tests[0].sample.tests %}
+  {% for my_test in all_tests %}
+    {% if my_test.state == "COMPLETED" and my_test.assay_id == moisture_assay_id %}
+      {% set ns.moisture_value = my_test.get_worksheet_data()|extract_worksheet_value("moisture_result_reported") or 0.0 %}
+      {% set ns.moisture_found = true %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+<!-- QBench Worksheet Container - Scoped for multi-instance support -->
+<div class="qbench-worksheet-container">
+
+<!-- Data Fields for LIMS Save -->
+<div style="display:none;">__(textarea, ws_instrument_results, default_value="{}")__</div>
+<div style="display:none;">__(textarea, ws_live_results, default_value="{}")__</div>
+<div style="display:none;">__(textarea, ws_final_results, default_value="{}")__</div>
+<div style="display:none;">__(textarea, ws_deviations, default_value="[]")__</div>
+
+<br><br>
+<!-- JSON Config -->
+<script type="application/json" id="ws-unit-config">
+  {
+    "allowed_units": {{ allowed_units | tojson }},
+    "default_units": {{ (kvstore.get('default_units') or ['ppb']) | tojson }},
+    "input_unit": "{{ input_unit }}",
+    "limit_unit": "{{ limit_unit }}",
+    "report_units": "{{ kvstore.get('report_units') or 'ppb' }}",
+    "rsd_warning_limit": {{ kvstore.get('rsd_warning_limit') or 15 }},
+    "rsd_fail_limit": {{ kvstore.get('rsd_fail_limit') or 25 }},
+    "rsd_check_enabled": {{ (kvstore.get('rsd_check_enabled') or 'true') | tojson }},
+    "use_moisture_correction": {{ use_moisture_correction | tojson }},
+    "moisture_value": {{ ns.moisture_value | tojson }},
+    "moisture_found": {{ ns.moisture_found | tojson }},
+    "assay_name": "{{ assay_name }}",
+    "assay_display_name": "{{ assay_display_name }}",
+    "default_compliance": {{ (kvstore.get('default_compliance') if kvstore.get('default_compliance') is not none else true) | tojson }},
+    "uncertainty_data": {
+      {% for analyte in analytes %}
+        "{{ analyte}}_uncertainty": {{ kvstore.get(analyte + '_uncertainty', 0.0)}}{% if not loop.last %},{% endif %}
+      {% endfor %}
+    }
+  }
+</script>
+<script type="application/json" id="ws-instrument-json">{{ instrument_data | tojson }}</script>
+<script type="application/json" id="ws-live-json">{{ live_data | tojson }}</script>
+<script type="application/json" id="ws-isomers-map">{{ kvstore.get("isomers_map") | tojson }}</script>
+<script type="application/json" id="ws-sample-info">
+  {
+    "sample_id": "{{ tests[0].sample.cc_id if tests[0].sample.cc_id else tests[0].sample.custom_formatted_id }}",
+    "sample_name": "{{ tests[0].sample.description if tests[0].sample.description else '' }}",
+    "sample_qbn_id": {{ tests[0].sample.id if tests[0].sample.id else 'null' }},
+    "serving_weight": {{ tests[0].sample.unit_weight if tests[0].sample.unit_weight else 0 }},
+    "servings_per_package": {{ tests[0].sample.units_per_package if tests[0].sample.units_per_package else 0 }}
+  }
+</script>
+
+<div id="ws-tabs">
+  <button type="button" class="ws-tab-btn active" data-ws-tab="summary">Summary</button>
+  {% for t in tests %}
+    <button type="button" class="ws-tab-btn" data-ws-tab="{{ t.id }}">Test {{ t.id }}</button>
+  {% endfor %}
+    <button type="button" class="ws-tab-btn" data-ws-tab="statistics">Statistics</button>
+    <button type="button" class="ws-tab-btn" data-ws-tab="sample-info">Sample Info</button>
+    <button type="button" class="ws-tab-btn" data-ws-tab="settings">Settings</button>
+</div>
+
+<div class="ws-tab-content ws-tab-container" id="ws-tab-summary">
+  <h4>Summary Statistics</h4>
+  <div id="overall-status-banner" class="overall-status-banner">
+    <span id="overall-status-text">Calculating overall status...</span>
+    <span id="overall-compliance-badge" class="compliance-badge pending">Pending</span>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th class="summary-sortable">Analyte</th>
+        <th class="summary-sortable" name="lod-header">LOD ({{ current_display_unit }})</th>
+        <th class="summary-sortable" name="loq-header">LOQ ({{ current_display_unit }})</th>
+        <th class="summary-sortable" name="final-header">Result ({{ current_display_unit }})</th>
+        <th class="summary-sortable" name="limit-header">Limit</th>
+        <th class="summary-sortable">Status</th>
+        <th class="summary-sortable">RSD %</th>
+      </tr>
+    </thead>
+    <tbody id="ws-summary-body">
+      {% for analyte in analytes %}
+        {% set display_name = kvstore.get(analyte ~ '_display_name') %}
+        <tr data-ws-analyte="{{ analyte }}">
+          <td>{{ display_name }}</td>
+          <td class="ws-summary-lod" name="ws_lod_{{ analyte }}"></td>
+          <td class="ws-summary-loq" name="ws_loq_{{ analyte }}"></td>
+          <td class="ws-summary-mean" name="ws_mean_{{ analyte }}"></td>
+          <td class="ws-summary-limit" name="ws_limit_{{ analyte }}"></td>
+          <td class="ws-summary-status" name="ws_status_{{ analyte }}"></td>
+          <td class="ws-summary-rsd"></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<div class="ws-tab-content ws-tab-container" id="ws-tab-statistics" style="display:none">
+  <h4>Detailed Statistics</h4>
+  <table>
+    <thead>
+      <tr>
+        <th class="stats-sortable">Analyte</th>
+        <th class="stats-sortable" name="stats-mean-header">Mean ({{ current_display_unit }})</th>
+        <th class="stats-sortable" name="stats-std-header">Std Dev ({{ current_display_unit }})</th>
+        <th class="stats-sortable" name="stats-rsd-header">RSD %</th>
+        <th class="stats-sortable" name="stats-min-header">Min ({{ current_display_unit }})</th>
+        <th class="stats-sortable" name="stats-max-header">Max ({{ current_display_unit }})</th>
+        <th class="stats-sortable">Count</th>
+        <th class="stats-sortable" name="stats-median-header">Median ({{ current_display_unit }})</th>
+        <th class="stats-sortable" name="stats-range-header">Range ({{ current_display_unit }})</th>
+      </tr>
+    </thead>
+    <tbody id="ws-statistics-body">
+      {% for analyte in analytes %}
+        {% set display_name = kvstore.get(analyte ~ '_display_name') %}
+        <tr data-ws-analyte="{{ analyte }}">
+          <td>{{ display_name }}</td>
+          <td class="ws-stats-mean" name="ws_stats_mean_{{ analyte }}"></td>
+          <td class="ws-stats-std" name="ws_stats_std_{{ analyte }}"></td>
+          <td class="ws-stats-rsd" name="ws_stats_rsd_{{ analyte }}"></td>
+          <td class="ws-stats-min" name="ws_stats_min_{{ analyte }}"></td>
+          <td class="ws-stats-max" name="ws_stats_max_{{ analyte }}"></td>
+          <td class="ws-stats-count" name="ws_stats_count_{{ analyte }}"></td>
+          <td class="ws-stats-median" name="ws_stats_median_{{ analyte }}"></td>
+          <td class="ws-stats-range" name="ws_stats_range_{{ analyte }}"></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<div class="ws-tab-content ws-tab-container" id="ws-tab-sample-info" style="display:none">
+  <h2>📋 Sample & Assay Information</h2>
+  <div class="sample-info-grid">
+    <div class="sample-info-card">
+      <h4>Sample Details</h4>
+      <div class="sample-info-item">
+        <span class="sample-info-label">Sample ID:</span>
+        <span class="sample-info-value" id="display-sample-id">-</span>
+      </div>
+      <div class="sample-info-item">
+        <span class="sample-info-label">Sample Name:</span>
+        <span class="sample-info-value" id="display-sample-name">-</span>
+      </div>
+      <div class="sample-info-item">
+        <span class="sample-info-label">QBN ID:</span>
+        <span class="sample-info-value" id="display-sample-qbn-id">-</span>
+      </div>
+      <div class="sample-info-item">
+        <span class="sample-info-label">Assay:</span>
+        <span class="sample-info-value" id="display-assay-name">-</span>
+      </div>
+    </div>
+    
+    <div class="sample-info-card">
+      <h4>Product Information</h4>
+      <div class="sample-info-item">
+        <span class="sample-info-label">Serving Weight:</span>
+        <span class="sample-info-value" id="display-serving-weight">-</span>
+      </div>
+      <div class="sample-info-item">
+        <span class="sample-info-label">Servings per Package:</span>
+        <span class="sample-info-value" id="display-servings-per-package">-</span>
+      </div>
+      <div class="sample-info-item">
+        <span class="sample-info-label">Moisture Content:</span>
+        <span class="sample-info-value" id="display-moisture-content">-</span>
+      </div>
+      <div class="sample-info-item">
+        <span class="sample-info-label">Selected Units:</span>
+        <span class="sample-info-value" id="display-selected-units">-</span>
+      </div>
+      <div id="unit-availability-warning" class="unit-availability-note" style="display: none;">
+        <strong>Note:</strong> <span id="unit-warning-text"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="ws-tab-content ws-tab-container" id="ws-tab-settings" style="display:none">
+  <h2>Settings</h2>
+  <div>
+      <!-- Multi-Unit Output Selector -->
+      <div class="multi-unit-selector-group">
+        <h4>📊 Output Units Selection</h4>
+        <div class="unit-checkboxes" id="multi-unit-checkboxes">
+          <!-- Unit checkboxes will be populated by JavaScript -->
+        </div>
+        <small style="display: block; margin-top: 8px; color: #6c757d; font-style: italic;">
+          Select which units to include in final results output. At least one unit must be selected.
+        </small>
+      </div>
+      
+      <!-- Display Unit Selector -->
+      <div>
+        <label for="display-unit-selector">Table Display Units:</label>
+        <select id="display-unit-selector" style="margin-left: 20px; width: 120px;">
+          <!-- Options will be populated by JavaScript -->
+        </select>
+        <small style="display: block; margin-top: 4px; color: #6c757d; font-style: italic;">
+          Choose which unit to display in worksheet tables and headers.
+        </small>
+      </div>
+      
+      <div>
+      	<label for="sig-fig-input">Displayed Sig Figs:</label>
+    	<input type="number" id="sig-fig-input" min="0" max="5" step="1" value="3" style="margin-left: 20px; width: 100px;">
+      </div>
+      <div>
+      	<label for="compliance-checkbox">Is Compliance:</label>
+        <input type="checkbox" id="compliance-checkbox" style="margin-left: 20px;">
+      </div>
+      <div>
+      	<label for="uncertainty-checkbox">Use Uncertainty:</label>
+        <input type="checkbox" id="uncertainty-checkbox" style="margin-left: 20px;">
+        <small style="display: block; margin-top: 4px; color: #6c757d; font-style: italic;">
+          Show measurement uncertainty for cannabinoids (USDA hemp compliance).
+        </small>
+      </div>
+      
+      {% if use_moisture_correction %}
+      <div class="moisture-settings-group">
+        <h4>📊 Moisture Correction - {{ assay_name|title }}</h4>
+        <div style="margin-left: 20px;">
+          {% if ns.moisture_found %}
+            <div style="margin-bottom: 10px;">
+              <strong>Moisture Content:</strong> 
+              <span id="moisture-value" style="color: var(--smithers-blue); font-weight: bold;">{{ "%.2f"|format(ns.moisture_value|float) }}%</span>
+              <span style="color: #28a745; margin-left: 8px;">✓ Available</span>
+            </div>
+            <div>
+              <label for="moisture-correction-enabled">
+                <input type="checkbox" id="moisture-correction-enabled" checked> 
+                Apply moisture correction to calculations
+              </label>
+            </div>
+            <div>
+              <label for="moisture-reporting-enabled">
+                <input type="checkbox" id="moisture-reporting-enabled" checked> 
+                Apply moisture correction to final reporting
+              </label>
+            </div>
+            <small style="display: block; margin-top: 8px; color: #6c757d; font-style: italic;">
+              Converts results from "as-tested" to "dry weight" basis using: Result ÷ (1 - Moisture% ÷ 100)
+            </small>
+          {% else %}
+            <div style="color: #dc3545; margin-bottom: 10px;">
+              <strong>Moisture Content:</strong> ⚠️ Not Available
+              <small style="display: block;">Complete moisture analysis first</small>
+            </div>
+            <div>
+              <label for="moisture-correction-enabled">
+                <input type="checkbox" id="moisture-correction-enabled" disabled> 
+                Apply moisture correction to calculations
+              </label>
+            </div>
+            <div>
+              <label for="moisture-reporting-enabled">
+                <input type="checkbox" id="moisture-reporting-enabled" disabled> 
+                Apply moisture correction to final reporting
+              </label>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+      {% endif %}
+      
+      <div>
+      	<label for="rsd-warning-limit">RSD Warning Limit (%):</label>
+        <input type="number" id="rsd-warning-limit" min="0" max="100" step="1" value="15" style="margin-left: 20px; width: 80px;">
+        <br><small style="margin-left: 20px; color: #666;">Yellow warning threshold for RSD values</small>
+      </div>
+      <div>
+      	<label for="rsd-fail-limit">RSD Fail Limit (%):</label>
+        <input type="number" id="rsd-fail-limit" min="0" max="100" step="1" value="25" style="margin-left: 20px; width: 80px;">
+        <br><small style="margin-left: 20px; color: #666;">Red failure threshold for RSD values</small>
+      </div>
+      <div>
+      	<label for="rsd-check-enabled">Enable RSD Checking:</label>
+        <input type="checkbox" id="rsd-check-enabled" style="margin-left: 20px;" checked>
+        <br><small style="margin-left: 20px; color: #666;">Show RSD status indicators and color coding</small>
+      </div>
+      
+      <div class="data-integrity-controls">
+        <h4>Data Integrity Protection</h4>
+        <div>
+          <label for="data-protection-enabled">Lock Instrument Data & Analyte Inclusion:</label>
+          <input type="checkbox" id="data-protection-enabled" style="margin-left: 20px;" checked>
+          <span id="protection-status" class="protection-status locked">LOCKED</span>
+          <br><small style="margin-left: 20px; color: #666;">Prevent unauthorized changes to instrument results and analyte inclusion/exclusion</small>
+        </div>
+        <div>
+          <button id="unlock-data-btn" style="margin: 10px 20px 10px 0; background-color: #ffc107; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer;">Request Data Unlock</button>
+          <button id="lock-data-btn" style="margin: 10px 0; background-color: #dc3545; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer;" disabled>Lock Data</button>
+        </div>
+        <div id="deviation-summary" style="margin-top: 10px; font-size: 0.9em; color: #666;">
+          No deviations logged.
+        </div>
+        <div style="margin-top: 10px;">
+          <button id="review-deviations-btn" style="background-color: #17a2b8; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer;">📋 Review Deviations</button>
+          <small style="margin-left: 10px; color: #666;">View all logged data integrity deviations</small>
+        </div>
+      </div>
+      
+      <div>
+        <button id="restore-batch-data-btn">Restore Batch Data</button>
+        <button id="generate-final-results-btn" style="margin-left: 10px;">Generate Final Results</button>
+        <button id="view-final-results-btn" style="margin-left: 10px;">View Final Results</button>
+      </div>
+      
+      <div class="legend-section">
+        <h4>📊 Visual Indicators Legend</h4>
+        <div class="legend-grid">
+          <div>
+            <strong>Status Icons:</strong>
+            <span class="status-icon pass">✓</span> Pass<br>
+            <span class="status-icon fail">✗</span> Fail<br>
+            <span class="status-icon warning">⚠</span> Warning<br>
+            <span class="status-icon unknown">–</span> Unknown<br>
+            🌿 Moisture Corrected (Dry Weight)
+          </div>
+          <div>
+            <strong>Result Types:</strong>
+            <span class="result-nt" style="padding: 2px 6px;">NT</span> Not Tested<br>
+            <span class="result-nd" style="padding: 2px 6px;">ND</span> Not Detected<br>
+            <span class="result-loq" style="padding: 2px 6px;">&lt;LOQ</span> Below LOQ
+          </div>
+          <div>
+            <strong>RSD Status:</strong>
+            <span class="rsd-pass" style="padding: 2px 6px;">Good</span> ≤ Warning Limit<br>
+            <span class="rsd-warning" style="padding: 2px 6px;">Caution</span> Warning-Fail Range<br>
+            <span class="rsd-fail" style="padding: 2px 6px;">Poor</span> > Fail Limit
+          </div>
+          <div>
+            <strong>Quality Control:</strong>
+            <span class="limit-warning" style="padding: 2px 6px;">Near Limit</span> > 80% of limit<br>
+            <span class="critical-value" style="padding: 2px 6px;">Critical</span> > 95% of limit<br>
+            <span class="loq-qc-warning" style="padding: 2px 6px;">QC Warning</span> LOQ > Action Limit
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+{% for t in tests %}
+  {% set test_id = t.id %}
+  <div class="ws-tab-content" id="ws-tab-{{ test_id }}" style="display:none">
+    <h4>Test {{ test_id }} | {{ t.sample.custom_formatted_id }}</h4>
+    
+    <!--Test Info Table-->
+    <table>
+    	<tr><th>Extraction Volume (mL)</th><td id="extraction">{{ t.v_ext }}</td></tr>
+    	<tr><th>Dilution Factor</th><td id="dilution">{{ t.dilution }}</td></tr>
+    	<tr><th>Sample Weight (g)</th><td id="weight">{{ t.testing_weight }}</td></tr>
+     	<tr><th>Inhalable Type</th><td id="inhalable">{{ t.sample.inhalable}}</td></tr>
+  	</table>
+      
+    <table>
+      <thead>
+          <tr>
+            <th>Include <input type="checkbox" class="ws-include-all" name="ws_include_all_{{ test_id }}" checked></th>
+            <th class="test-sortable" data-column="0">Analyte</th>
+            <th name="instrument-header" data-column="1">Instrument Result ({{ input_unit }})</th>
+            
+            <th name="lod-header" class="test-sortable" data-column="2">LOD</th>
+            <th name="loq-header" class="test-sortable" data-column="3">LOQ</th>
+            <th name="final-header" class="test-sortable" data-column="4">Final Result ({{ current_display_unit }})</th>
+            <th name="limit-header" class="test-sortable" data-column="5">Limit ({{ current_display_unit }})</th>
+            <th class="sortable" data-column="6">Status</th>
+          </tr>
+        </thead>
+      <tbody id="analyte-body">
+        {% for analyte in analytes %}
+          {% set limit_key = analyte ~ ('_action_limit_inhaled' if t.sample.inhalable == 'Inhaled' else '_action_limit_ingested') %}
+          {% set limit = kvstore.get(limit_key) %}
+          {% if limit is none %}
+            {% set limit_key = analyte ~ '_action_limit' %}
+            {% set limit = kvstore.get(limit_key) %}
+          {% endif %}
+          {% set lod = kvstore.get(analyte ~ '_lod_in_vial') %}
+          {% set loq = kvstore.get(analyte ~ '_loq_in_vial') %}
+          {% set display_name = kvstore.get(analyte ~ '_display_name') %}
+          <tr data-ws-analyte="{{ analyte }}" data-ws-test="{{ test_id }}">
+              <td>
+              <input type="checkbox" class="ws-include" name="ws_include_{{ analyte }}_{{ test_id }}" checked>
+            </td>
+            <td>{{ display_name }}</td>
+            <td>
+              <input type="number" class="ws-instrument" name="ws_instrument_{{ analyte }}_{{ test_id }}">
+            </td>
+            
+            <td class="ws-lod" id="ws_lod_{{ analyte }}_{{ test_id }}" data-ws-raw="{{ lod }}">-</td>
+            <td class="ws-loq" id="ws_loq_{{ analyte }}_{{ test_id }}" data-ws-raw="{{ loq }}">-</td>
+            <td class="ws-final" name="ws_final_{{ analyte }}_{{ test_id }}">NT</td>
+            <td class="ws-limit" id="ws_limit_{{analyte}}_{{test_id}}" data-ws-raw="{{ limit or 0 }}">-</td>
+            <td class="ws-status" name="ws_status_{{ analyte }}_{{ test_id }}">-</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endfor %}
+
+<!-- Data Deviation Modal -->
+<div id="deviation-modal" class="deviation-modal">
+  <div class="deviation-modal-content">
+    <span class="deviation-close">&times;</span>
+    <h3 style="color: #dc3545; margin-top: 0;">🔒 Data Integrity Deviation Request</h3>
+    <p><strong>Warning:</strong> You are requesting permission to modify instrument data or analyte inclusion settings. This action requires proper documentation and justification.</p>
+    
+    <form class="deviation-form" id="deviation-form">
+      <label for="analyst-name">Analyst Name:</label>
+      <input type="text" id="analyst-name" required>
+      
+      <label for="deviation-reason">Reason for Data Modification:</label>
+      <select id="deviation-reason" required>
+        <option value="">Select a reason...</option>
+        <optgroup label="Instrument Data Changes">
+          <option value="instrument_malfunction">Instrument Malfunction</option>
+          <option value="export_failure">Data Export Failure</option>
+          <option value="integration_error">Integration Error</option>
+          <option value="peak_manual_integration">Manual Peak Integration Required</option>
+        </optgroup>
+        <optgroup label="Analyte Inclusion Changes">
+          <option value="analyte_interference">Analyte Interference Detected</option>
+          <option value="sample_contamination">Sample Contamination</option>
+          <option value="matrix_effect">Severe Matrix Effect</option>
+          <option value="qc_failure">QC Criteria Not Met</option>
+          <option value="analytical_issue">Analytical Method Issue</option>
+        </optgroup>
+        <optgroup label="Other">
+          <option value="other">Other (specify below)</option>
+        </optgroup>
+      </select>
+      
+      <label for="deviation-description">Detailed Description:</label>
+      <textarea id="deviation-description" placeholder="Provide detailed explanation of the issue and why manual data entry or analyte exclusion is necessary. Include scientific justification, QC impact assessment, and any corrective actions taken..." required></textarea>
+      
+      <div style="text-align: right; margin-top: 20px;">
+        <button type="button" id="cancel-deviation">Cancel</button>
+        <button type="submit" style="background-color: #ffc107; margin-left: 10px;">Log Deviation & Unlock</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Deviation Review Modal -->
+<div id="deviation-review-modal" class="deviation-modal">
+  <div class="deviation-modal-content" style="max-width: 900px; width: 90%;">
+    <span class="deviation-review-close">&times;</span>
+    <h3 style="color: #17a2b8; margin-top: 0;">📋 Data Integrity Deviation Review</h3>
+    <p>Review all logged data integrity deviations for quality assurance and audit purposes.</p>
+    
+    <div id="deviation-review-content">
+      <!-- Content will be populated dynamically -->
+    </div>
+    
+    <div style="text-align: right; margin-top: 20px;">
+      <button type="button" id="export-deviations-btn" style="background-color: #28a745; color: white; border: none; padding: 8px 16px; border-radius: 4px; margin-right: 10px;">📥 Export Deviations</button>
+      <button type="button" id="close-deviation-review">Close</button>
+    </div>
+  </div>
+</div>
+
+<script>
+
+// QBench Worksheet Scoping Helper - Find elements within this worksheet instance
+function getWorksheetContainer() {
+  // Find the worksheet container that contains this script
+  const scripts = document.querySelectorAll('script');
+  for (let script of scripts) {
+    const container = script.closest('.qbench-worksheet-container');
+    if (container && container.contains(script)) {
+      return container;
+    }
+  }
+  // Fallback to first container if script method fails
+  return document.querySelector('.qbench-worksheet-container');
+}
+
+function getElement(selector) {
+  const container = getWorksheetContainer();
+  return container ? container.querySelector(selector) : document.querySelector(selector);
+}
+
+function getElements(selector) {
+  const container = getWorksheetContainer();
+  return container ? container.querySelectorAll(selector) : document.querySelectorAll(selector);
+}
+
+function getElementById(id) {
+  const container = getWorksheetContainer();
+  return container ? container.querySelector(`#${id}`) : document.getElementById(id);
+}
+
+function getElementsByName(name) {
+  const container = getWorksheetContainer();
+  return container ? container.querySelectorAll(`[name="${name}"]`) : document.getElementsByName(name);
+}
+    
+const wsScaling = {
+  'ppb': 1,
+  'ng/mL': 1,
+  'µg/mL': 1e3,
+  'ppm': 1e3,
+  '%': 1e7,
+  'cfu/g': 1,
+  'mg/g': 1e6,
+  'mg/mL': 1e6,
+  // Note: mg/serving and mg/package are handled specially in wsConvertWithSample
+};
+    
+function wsConvert(value, from, to) {
+  if (!(from in wsScaling) || !(to in wsScaling)) return value;
+  
+  // PPB-normalized approach: convert through ppb for consistency
+  if (from === to) return value;
+  
+  // Convert to ppb first
+  const ppbValue = value * (wsScaling[from] / wsScaling['ppb']);
+  
+  // Convert from ppb to target unit
+  return ppbValue * (wsScaling['ppb'] / wsScaling[to]);
+}
+
+// Enhanced conversion function that handles special units requiring sample metadata
+function wsConvertWithSample(value, fromUnit, toUnit, sampleMetadata = {}) {
+  // Handle special units that require sample metadata
+  if (toUnit === 'mg/serving' || toUnit === 'mg/package') {
+    // First normalize to ppb
+    const ppbValue = wsConvert(value, fromUnit, 'ppb');
+    
+    // Convert ppb to mg/g as base concentration
+    const mgPerG = ppbValue / 1000000;  // 1,000,000 ppb = 1 mg/g
+    
+    if (toUnit === 'mg/serving') {
+      const servingWeight = sampleMetadata.serving_weight || 1;
+      return mgPerG * servingWeight;
+    }
+    
+    if (toUnit === 'mg/package') {
+      const servingWeight = sampleMetadata.serving_weight || 1;
+      const servingsPerPackage = sampleMetadata.servings_per_package || 1;
+      return mgPerG * servingWeight * servingsPerPackage;
+    }
+  }
+  
+  // Handle conversion FROM special units back to regular units
+  if (fromUnit === 'mg/serving') {
+    const servingWeight = sampleMetadata.serving_weight || 1;
+    const mgPerG = value / servingWeight;  // Back to mg/g
+    const ppbValue = mgPerG * 1000000;     // mg/g to ppb
+    return wsConvert(ppbValue, 'ppb', toUnit);
+  }
+  
+  if (fromUnit === 'mg/package') {
+    const servingWeight = sampleMetadata.serving_weight || 1;
+    const servingsPerPackage = sampleMetadata.servings_per_package || 1;
+    const mgPerG = value / (servingWeight * servingsPerPackage);  // Back to mg/g
+    const ppbValue = mgPerG * 1000000;     // mg/g to ppb
+    return wsConvert(ppbValue, 'ppb', toUnit);
+  }
+  
+  // For regular unit conversions, use the standard function
+  return wsConvert(value, fromUnit, toUnit);
+}
+
+// Moisture Correction Functions
+function applyMoistureCorrection(value, moisturePercent) {
+  // Formula: Corrected Result = Raw Result ÷ (1 - Moisture% ÷ 100)
+  // This converts from "as-tested" to "dry weight" basis
+  if (!moisturePercent || moisturePercent <= 0 || moisturePercent >= 100) {
+    return value; // No correction if moisture is invalid
+  }
+  return value / (1 - (moisturePercent / 100));
+}
+
+function getMoistureSettings() {
+  const wsUnitConfig = JSON.parse(getElementById("ws-unit-config")?.textContent || "{}");
+  
+  // Get checkbox states, but only auto-apply if use_moisture_correction is enabled
+  const useMoistureCorrection = wsUnitConfig.use_moisture_correction || false;
+  const moistureFound = wsUnitConfig.moisture_found || false;
+  const moistureValid = moistureFound && wsUnitConfig.moisture_value > 0 && wsUnitConfig.moisture_value < 100;
+  
+  const correctionCheckbox = getElementById("moisture-correction-enabled");
+  const reportingCheckbox = getElementById("moisture-reporting-enabled");
+  
+  // Only apply correction if use_moisture_correction is explicitly enabled
+  const correctionEnabled = useMoistureCorrection && (correctionCheckbox ? 
+    correctionCheckbox.checked : 
+    (moistureValid));
+    
+  const reportingEnabled = useMoistureCorrection && (reportingCheckbox ? 
+    reportingCheckbox.checked : 
+    (moistureValid));
+  
+  return {
+    useMoistureCorrection: useMoistureCorrection,
+    moistureValue: wsUnitConfig.moisture_value || 0,
+    moistureFound: moistureFound,
+    correctionEnabled: correctionEnabled,
+    reportingEnabled: reportingEnabled,
+    assayName: wsUnitConfig.assay_name || ''
+  };
+}
+
+function updateMoistureDisplay() {
+  const moistureSettings = getMoistureSettings();
+  const moistureValueElement = getElementById("moisture-value");
+  
+  if (moistureValueElement && moistureSettings.moistureFound) {
+    moistureValueElement.textContent = `${parseFloat(moistureSettings.moistureValue).toFixed(2)}%`;
+  }
+  
+  // Log moisture correction status for debugging
+  if (moistureSettings.useMoistureCorrection && moistureSettings.moistureFound) {
+    const moistureValid = moistureSettings.moistureValue > 0 && moistureSettings.moistureValue < 100;
+    if (moistureValid) {
+      console.log(`Moisture correction available: ${parseFloat(moistureSettings.moistureValue).toFixed(2)}% from ${moistureSettings.assayName}`);
+      if (moistureSettings.correctionEnabled) {
+        console.log("✓ Moisture correction applied to calculations");
+      }
+      if (moistureSettings.reportingEnabled) {
+        console.log("✓ Moisture correction applied to final reporting");
+      }
+    } else {
+      console.log("⚠️ Moisture value invalid:", moistureSettings.moistureValue);
+    }
+  }
+}
+    
+function wsRecalculate(testId, analyte) {
+  const liveField = getElementsByName('ws_live_results')[0];
+  const wsUpdatedData = JSON.parse(liveField?.value || "{}");
+  const wsUnitConfig = JSON.parse(getElementById("ws-unit-config")?.textContent || "{}");
+  const isomersMap = JSON.parse(getElementById("ws-isomers-map")?.textContent || "{}");
+  const displayUnit = getCurrentDisplayUnit();
+  const sigFigs = parseInt(getElementById("sig-fig-input")?.value) || 3;
+
+  const row = getElement(`tr[data-ws-analyte="${analyte}"][data-ws-test="${testId}"]`);
+  if (!row) return;
+
+  const input = row.querySelector('.ws-instrument');
+
+  // Extract sample metadata
+  const ext = parseFloat(getElementById('extraction')?.textContent) || 1;
+  const dil = parseFloat(getElementById('dilution')?.textContent) || 1;
+  const wt = parseFloat(getElementById('weight')?.textContent) || 1;
+
+  // Handle synthetic analytes (e.g., total_thc, total_cannabinoids)
+  let raw = 0;
+  let isSynthetic = false;
+  if (isomersMap[analyte]) {
+    isSynthetic = true;
+    raw = isomersMap[analyte].reduce((sum, { analyte: sub, factor }) => {
+      const subCheckbox = getElement(`input[name="ws_include_${sub}_${testId}"]`);
+      if (subCheckbox && subCheckbox.checked) {
+          const subInput = getElement(`input[name="ws_instrument_${sub}_${testId}"]`);
+          const subVal = parseFloat(subInput?.value) || 0;
+          return sum + subVal * factor;
+      }
+      else {return sum;}
+    }, 0);
+
+    if (input) {
+      input.value = raw.toFixed(4);
+      input.disabled = true;
+    }
+  } else {
+    raw = parseFloat(input?.value) || 0;
+  }
+
+  // Convert and calculate display values
+  let scaledRaw = wsConvert(raw, wsUnitConfig.input_unit, displayUnit) * ext * dil / wt;
+  let lod = wsConvert(parseFloat(row.querySelector('.ws-lod')?.dataset.wsRaw) || 0, wsUnitConfig.input_unit, displayUnit) * ext * dil / wt;
+  let loq = wsConvert(parseFloat(row.querySelector('.ws-loq')?.dataset.wsRaw) || 0, wsUnitConfig.input_unit, displayUnit) * ext * dil / wt;
+  const limit = wsConvert(parseFloat(row.querySelector('.ws-limit')?.dataset.wsRaw) || 0, wsUnitConfig.limit_unit, displayUnit);
+
+  // Apply moisture correction if enabled
+  const moistureSettings = getMoistureSettings();
+  if (moistureSettings.useMoistureCorrection && moistureSettings.correctionEnabled && moistureSettings.moistureFound && moistureSettings.moistureValue > 0) {
+    // Apply moisture correction to results, LOD, and LOQ (but not limits)
+    scaledRaw = applyMoistureCorrection(scaledRaw, moistureSettings.moistureValue);
+    lod = applyMoistureCorrection(lod, moistureSettings.moistureValue);
+    loq = applyMoistureCorrection(loq, moistureSettings.moistureValue);
+  }
+
+  // Update table cells
+  row.querySelector('.ws-lod').textContent = lod.toFixed(sigFigs);
+  row.querySelector('.ws-loq').textContent = loq.toFixed(sigFigs);
+  
+  // Only show limits if compliance mode is enabled
+  if (isComplianceMode()) {
+    row.querySelector('.ws-limit').textContent = limit > 0 ? limit.toFixed(sigFigs) : "-";
+  } else {
+    row.querySelector('.ws-limit').textContent = "-";
+  }
+
+  // QC Check: LOQ vs Action Limit
+  const loqCell = row.querySelector('.ws-lod');
+  const loqCellLOQ = row.querySelector('.ws-loq');
+  let qcStatus = null;
+  
+  // Remove previous QC warning classes
+  loqCell.classList.remove('loq-qc-warning');
+  loqCellLOQ.classList.remove('loq-qc-warning');
+  
+  if (limit > 0 && loq > limit) {
+    // Critical QC issue: LOQ exceeds action limit
+    loqCellLOQ.classList.add('loq-qc-warning');
+    loqCellLOQ.title = `QC WARNING: LOQ (${loq.toFixed(sigFigs)}) exceeds action limit (${limit.toFixed(sigFigs)}). Method detection capability insufficient for required limit.`;
+    qcStatus = "QC-Warning";
+    console.warn(`QC Issue - ${analyte}: LOQ (${loq.toFixed(sigFigs)}) > Limit (${limit.toFixed(sigFigs)})`);
+  }
+
+  let resultDisplay = "-";
+  let moistureIndicator = "";
+  
+  // Add moisture correction indicator if applied
+  if (moistureSettings.useMoistureCorrection && moistureSettings.correctionEnabled && moistureSettings.moistureFound && moistureSettings.moistureValue > 0) {
+    moistureIndicator = " 🌿"; // Dry weight indicator
+  }
+    
+  // Calculate and display results for all selected units
+  const selectedUnits = getSelectedOutputUnits();
+  const sampleInfo = JSON.parse(getElementById("ws-sample-info")?.textContent || "{}");
+  
+  selectedUnits.forEach(unit => {
+    // Prepare sample metadata for special unit conversions
+    const sampleMetadata = {
+      serving_weight: sampleInfo.serving_weight || 1,
+      servings_per_package: sampleInfo.servings_per_package || 1
+    };
+    
+    // Convert raw value to this specific unit using enhanced conversion
+    const baseFinalValue = raw * ext * dil / wt;
+    let unitScaledRaw = wsConvertWithSample(baseFinalValue, wsUnitConfig.input_unit, unit, sampleMetadata);
+    
+    // Apply moisture correction if enabled for this unit
+    if (moistureSettings.useMoistureCorrection && moistureSettings.correctionEnabled && moistureSettings.moistureFound && moistureSettings.moistureValue > 0) {
+      unitScaledRaw = applyMoistureCorrection(unitScaledRaw, moistureSettings.moistureValue);
+    }
+    
+    // Determine result display for this unit
+    let unitResultDisplay = "-";
+    
+    if (input.value === '' && !isSynthetic) {
+      unitResultDisplay = "NT";
+    } else {
+      unitResultDisplay = unitScaledRaw.toFixed(sigFigs) + moistureIndicator;
+    }
+    
+    // Set the main resultDisplay for the current display unit (for legacy compatibility)
+    if (unit === displayUnit) {
+      resultDisplay = unitResultDisplay;
+    }
+    
+    // Find and update the final result cell for this unit
+    const finalCell = row.querySelector(`[name="ws_final_${analyte}_${testId}_${unit}"]`);
+    if (finalCell) {
+      finalCell.textContent = unitResultDisplay;
+      
+      // Apply result type styling to each cell
+      finalCell.classList.remove('result-nt', 'result-nd', 'result-loq', 'result-normal', 'limit-warning', 'critical-value');
+      finalCell.classList.add(getResultTypeClass(unitResultDisplay));
+    }
+  });
+  
+  // Update the old .ws-final cell for backward compatibility (using display unit)
+  const legacyFinalCell = row.querySelector('.ws-final:not([data-unit])');
+  if (legacyFinalCell) {
+    legacyFinalCell.textContent = resultDisplay;
+    legacyFinalCell.classList.remove('result-nt', 'result-nd', 'result-loq', 'result-normal', 'limit-warning', 'critical-value');
+    legacyFinalCell.classList.add(getResultTypeClass(resultDisplay));
+  }
+  
+  // Enhanced status display with styling for individual tests
+  const statusCell = row.querySelector('.ws-status');
+  let statusText = "–";
+  
+  // Only show Pass/Fail if compliance mode is enabled
+  if (isComplianceMode()) {
+    let valueForComparison = scaledRaw;
+    
+    // If uncertainty mode is enabled, use (value - uncertainty) for pass/fail determination
+    if (isUncertaintyMode() && wsUnitConfig.uncertainty_data && wsUnitConfig.uncertainty_data[`${analyte}_uncertainty`]) {
+      const uncertaintyPercent = wsUnitConfig.uncertainty_data[`${analyte}_uncertainty`];
+      const uncertaintyValue = scaledRaw * uncertaintyPercent / 100;
+      valueForComparison = scaledRaw - uncertaintyValue;
+    }
+    
+    statusText = (limit > 0 && scaledRaw >= 0) ? (valueForComparison <= limit ? "Pass" : "Fail") : "–";
+    
+    // Override status if QC issue detected
+    if (qcStatus === "QC-Warning") {
+      statusText = "Warning";
+    }
+  }
+  
+  statusCell.innerHTML = `${getStatusIcon(statusText)}${statusText}`;
+  applyStatusStyling(statusCell, statusText);
+  
+  // Add limit warnings for individual tests
+  if (limit > 0 && statusText === 'Pass' && !isNaN(scaledRaw) && legacyFinalCell) {
+    let valueForRatio = scaledRaw;
+    
+    // If uncertainty mode is enabled, use (value - uncertainty) for critical value warnings
+    if (isUncertaintyMode() && wsUnitConfig.uncertainty_data && wsUnitConfig.uncertainty_data[`${analyte}_uncertainty`]) {
+      const uncertaintyPercent = wsUnitConfig.uncertainty_data[`${analyte}_uncertainty`];
+      const uncertaintyValue = scaledRaw * uncertaintyPercent / 100;
+      valueForRatio = scaledRaw - uncertaintyValue;
+    }
+    
+    const ratio = valueForRatio / limit;
+    if (ratio > 0.95) {
+      // Critical values get red styling and pulse animation
+      legacyFinalCell.classList.add('critical-value');
+    } else if (ratio > 0.8) {
+      // Warning values get yellow styling
+      legacyFinalCell.classList.add('limit-warning');
+    }
+  }
+
+  // Save to worksheet live JSON
+  if (!wsUpdatedData[analyte]) wsUpdatedData[analyte] = {};
+  wsUpdatedData[analyte][testId] = raw;
+
+  if (liveField) liveField.value = JSON.stringify(wsUpdatedData);
+    
+  // Trigger recalculation of any dependent synthetic analytes
+    Object.entries(isomersMap).forEach(([syntheticAnalyte, components]) => {
+      if (components.some(c => c.analyte === analyte)) {
+        wsRecalculate(testId, syntheticAnalyte);
+      }
+    });
+
+}
+
+function getRSDStatus(rsdValue, wsUnitConfig) {
+  if (!wsUnitConfig.rsd_check_enabled || isNaN(rsdValue)) {
+    return { status: 'unknown', class: '', indicator: '' };
+  }
+  
+  const warningLimit = wsUnitConfig.rsd_warning_limit || 15;
+  const failLimit = wsUnitConfig.rsd_fail_limit || 25;
+  
+  if (rsdValue <= warningLimit) {
+    return { status: 'pass', class: 'rsd-pass', indicator: '✓' };
+  } else if (rsdValue <= failLimit) {
+    return { status: 'warning', class: 'rsd-warning', indicator: '⚠' };
+  } else {
+    return { status: 'fail', class: 'rsd-fail', indicator: '✗' };
+  }
+}
+
+// Create detailed tooltip data for RSD diagnostics
+function createRSDTooltipData(analyte, values, mean, std, rsd, sigFigs) {
+    const currentDisplayUnit = getCurrentDisplayUnit();
+    const testData = [];
+    
+    // Collect individual test data
+    getElements(`.ws-include[name^="ws_include_${analyte}_"]`).forEach((cb, index) => {
+        if (!cb.checked) return;
+        const testId = cb.name.split('_').pop();
+        
+        // Get the actual test result value
+        let valueElement = getElement(`[name="ws_final_${analyte}_${testId}_${currentDisplayUnit}"]`);
+        if (!valueElement) {
+            valueElement = getElement(`.ws-final[name="ws_final_${analyte}_${testId}"]`);
+        }
+        
+        if (valueElement && index < values.length) {
+            const value = values[index];
+            const deviation = value - mean;
+            const deviationPercent = mean !== 0 ? (deviation / mean) * 100 : 0;
+            
+            testData.push({
+                testId: testId,
+                value: value,
+                deviation: deviation,
+                deviationPercent: deviationPercent
+            });
+        }
+    });
+    
+    // Sort test data by value to help identify outliers
+    testData.sort((a, b) => a.value - b.value);
+    
+    return {
+        analyte: analyte,
+        testCount: values.length,
+        mean: mean,
+        std: std,
+        rsd: rsd,
+        min: Math.min(...values),
+        max: Math.max(...values),
+        range: Math.max(...values) - Math.min(...values),
+        testData: testData,
+        unit: currentDisplayUnit,
+        sigFigs: sigFigs
+    };
+}
+
+// Add RSD diagnostic tooltip to a cell
+function addRSDTooltip(cell, tooltipData) {
+    const { analyte, testCount, mean, std, rsd, min, max, range, testData, unit, sigFigs } = tooltipData;
+    
+    // Create detailed tooltip content
+    let tooltipContent = `RSD Analysis: ${analyte}\n\n`;
+    tooltipContent += `Statistics (${unit}):\n`;
+    tooltipContent += `• Count: ${testCount} tests\n`;
+    tooltipContent += `• Mean: ${mean.toFixed(sigFigs)}\n`;
+    tooltipContent += `• Std Dev: ${std.toFixed(sigFigs)}\n`;
+    tooltipContent += `• RSD: ${rsd.toFixed(2)}%\n`;
+    tooltipContent += `• Min: ${min.toFixed(sigFigs)}\n`;
+    tooltipContent += `• Max: ${max.toFixed(sigFigs)}\n`;
+    tooltipContent += `• Range: ${range.toFixed(sigFigs)}\n\n`;
+    
+    tooltipContent += `Individual Test Results:\n`;
+    testData.forEach(test => {
+        const deviationSign = test.deviation >= 0 ? '+' : '';
+        tooltipContent += `• Test ${test.testId}: ${test.value.toFixed(sigFigs)} (${deviationSign}${test.deviationPercent.toFixed(1)}%)\n`;
+    });
+    
+    tooltipContent += `\nTip: Click on individual test tabs to investigate outliers`;
+    
+    // Set the tooltip
+    cell.title = tooltipContent;
+    
+    // Add hover styling to indicate interactive content
+    cell.style.cursor = 'help';
+    cell.classList.add('rsd-tooltip');
+}
+
+function getStatusIcon(status) {
+  switch (status?.toLowerCase()) {
+    case 'pass':
+      return '<span class="status-icon pass">✓</span>';
+    case 'fail':
+      return '<span class="status-icon fail">✗</span>';
+    case 'warning':
+      return '<span class="status-icon warning">⚠</span>';
+    default:
+      return '<span class="status-icon unknown"></span>';
+  }
+}
+
+function getResultTypeClass(resultText) {
+  if (resultText === 'NT') return 'result-nt';
+  if (resultText === 'ND') return 'result-nd';
+  if (resultText.includes('<') || resultText.includes('LOQ')) return 'result-loq';
+  return 'result-normal';
+}
+
+function applyStatusStyling(cell, status) {
+  // Remove existing status classes
+  cell.classList.remove('status-pass', 'status-fail', 'status-unknown');
+  
+  // Apply appropriate status class
+  switch (status?.toLowerCase()) {
+    case 'pass':
+      cell.classList.add('status-pass');
+      break;
+    case 'fail':
+      cell.classList.add('status-fail');
+      break;
+    default:
+      cell.classList.add('status-unknown');
+      break;
+  }
+}
+
+function updateOverallStatus() {
+  const statusBanner = getElementById('overall-status-banner');
+  const statusText = getElementById('overall-status-text');
+  const complianceBadge = getElementById('overall-compliance-badge');
+  
+  if (!statusBanner || !statusText || !complianceBadge) return;
+  
+  // Count pass/fail statuses
+  let passCount = 0;
+  let failCount = 0;
+  let warningCount = 0;
+  let totalCount = 0;
+  let rsdFailures = 0;
+  let qcWarnings = 0;
+  let hasResults = false;
+  
+  getElements('#ws-summary-body tr').forEach(row => {
+    const statusCell = row.querySelector('.ws-summary-status');
+    const rsdCell = row.querySelector('.ws-summary-rsd');
+    const resultCell = row.querySelector('.ws-summary-mean');
+    const loqCell = row.querySelector('.ws-summary-loq');
+    
+    // Check if we have actual test results (not just NT)
+    if (resultCell && resultCell.textContent.trim() !== 'NT' && resultCell.textContent.trim() !== '') {
+      hasResults = true;
+    }
+    
+    // Check for QC warnings (LOQ > limit)
+    if (loqCell && loqCell.classList.contains('loq-qc-warning')) {
+      qcWarnings++;
+    }
+    
+    if (statusCell && statusCell.textContent.trim() !== '-' && statusCell.textContent.trim() !== '') {
+      const cleanStatus = statusCell.textContent.replace(/[✓✗⚠–]/g, '').trim();
+      totalCount++;
+      if (cleanStatus === 'Pass') {
+        passCount++;
+      } else if (cleanStatus === 'Fail') {
+        failCount++;
+      } else if (cleanStatus === 'Warning') {
+        warningCount++;
+      }
+    }
+    
+    // Check for RSD failures
+    if (rsdCell && rsdCell.classList.contains('rsd-fail')) {
+      rsdFailures++;
+    }
+  });
+  
+  // Determine overall status
+  let overallStatus = 'pass';
+  let statusMessage = '';
+  let complianceStatus = 'compliant';
+  
+  // If compliance mode is disabled, show different messaging
+  if (!isComplianceMode()) {
+    if (!hasResults) {
+      overallStatus = 'warning';
+      statusMessage = 'No test results available';
+      complianceStatus = 'info';
+    } else if (qcWarnings > 0) {
+      overallStatus = 'warning';
+      statusMessage = `QC WARNING: ${qcWarnings} analyte(s) have LOQ > action limit - method inadequate`;
+      complianceStatus = 'info';
+    } else if (rsdFailures > 0) {
+      overallStatus = 'warning';
+      statusMessage = `WARNING: ${rsdFailures} analyte(s) have poor precision (RSD > limit)`;
+      complianceStatus = 'info';
+    } else if (totalCount > 0) {
+      overallStatus = 'pass';
+      statusMessage = `Analysis complete: ${totalCount} analyte(s) tested (compliance evaluation disabled)`;
+      complianceStatus = 'info';
+    } else {
+      overallStatus = 'warning';
+      statusMessage = 'No test results available';
+      complianceStatus = 'info';
+    }
+  } else {
+    // Normal compliance mode behavior
+    if (!hasResults) {
+      overallStatus = 'warning';
+      statusMessage = 'No test results available';
+      complianceStatus = 'pending';
+    } else if (failCount > 0) {
+      overallStatus = 'fail';
+      statusMessage = `TEST FAIL: ${failCount} analyte(s) exceed limits`;
+      complianceStatus = 'non-compliant';
+    } else if (qcWarnings > 0) {
+      overallStatus = 'warning';
+      statusMessage = `QC WARNING: ${qcWarnings} analyte(s) have LOQ > action limit - method inadequate`;
+      complianceStatus = 'pending';
+    } else if (warningCount > 0) {
+      overallStatus = 'warning';
+      statusMessage = `WARNING: ${warningCount} analyte(s) have quality issues`;
+      complianceStatus = 'pending';
+    } else if (rsdFailures > 0) {
+      overallStatus = 'warning';
+      statusMessage = `WARNING: ${rsdFailures} analyte(s) have poor precision (RSD > limit)`;
+      complianceStatus = 'pending';
+    } else if (passCount > 0 || totalCount > 0) {
+      overallStatus = 'pass';
+      const validResults = Math.max(passCount, totalCount);
+      statusMessage = `TEST PASS: All ${validResults} analyte(s) within limits`;
+      complianceStatus = 'compliant';
+    } else {
+      overallStatus = 'warning';
+      statusMessage = 'No test results available';
+      complianceStatus = 'pending';
+    }
+  }
+  
+  // Update banner
+  statusBanner.className = `overall-status-banner ${overallStatus}`;
+  statusText.innerHTML = `${getStatusIcon(overallStatus)} ${statusMessage}`;
+  
+  // Update compliance badge
+  complianceBadge.className = `compliance-badge ${complianceStatus}`;
+  if (complianceStatus === 'info') {
+    complianceBadge.textContent = 'Info';
+  } else {
+    complianceBadge.textContent = complianceStatus.charAt(0).toUpperCase() + complianceStatus.slice(1);
+  }
+}
+
+
+function wsUpdateSummary() {
+    console.log("Updating Summary Data");
+    const wsUnitConfig = JSON.parse(getElementById("ws-unit-config")?.textContent || "{}");
+    const displayUnit = getCurrentDisplayUnit();
+    const sigFigs = parseInt(getElementById("sig-fig-input")?.value) || 3;
+    const isomersMap = JSON.parse(getElementById("ws-isomers-map")?.textContent || "{}");
+  	getElements('#ws-summary-body tr').forEach(row => {
+    const analyte = row.dataset.wsAnalyte;
+    
+    const values = [];
+    const lodValues = [];
+    const loqValues = [];
+    const limitValues = [];
+    let textEval = "";
+    let isSynthetic = false;
+        
+    if (isomersMap[analyte]) {
+    	isSynthetic = true;
+    	let value = isomersMap[analyte].reduce((sum, { analyte: sub, factor }) => {
+          // Look for the specific unit cell first, fall back to legacy cell
+          const currentDisplayUnit = getCurrentDisplayUnit();
+          let subInput = getElement(`[name="ws_mean_${sub}_${currentDisplayUnit}"]`);
+          if (!subInput) {
+            subInput = getElement(`.ws-summary-mean[name="ws_mean_${sub}"]`);
+          }
+          const subVal = parseFloat(subInput?.textContent) || 0;
+          return sum + subVal * factor;
+    	}, 0);
+        values.push(value);
+        lodValues.push(0);
+        loqValues.push(0);
+        
+        // For synthetic analytes, try to find the limit from any constituent analyte's test
+        // Since all tests for the same analyte should have the same limit, we can use any test
+        let syntheticLimit = 0;
+        
+        // Find any test ID for this synthetic analyte to get the limit
+        const anyTestCheckbox = getElement(`.ws-include[name^="ws_include_${analyte}_"]`);
+        if (anyTestCheckbox) {
+          const anyTestId = anyTestCheckbox.name.split('_').pop();
+          const limitElement = getElementById(`ws_limit_${analyte}_${anyTestId}`);
+          if (limitElement) {
+            syntheticLimit = parseFloat(limitElement.dataset.wsRaw) || 0;
+          }
+        }
+        
+        limitValues.push(syntheticLimit);
+    }
+        
+	else {
+        const currentDisplayUnit = getCurrentDisplayUnit();
+        getElements(`.ws-include[name^="ws_include_${analyte}_"]`).forEach(cb => {
+          if (!cb.checked) return;
+          const testId = cb.name.split('_').pop();
+          
+          // Look for the specific unit cell first, fall back to legacy cell
+          let value = getElement(`[name="ws_final_${analyte}_${testId}_${currentDisplayUnit}"]`);
+          if (!value) {
+            value = getElement(`.ws-final[name="ws_final_${analyte}_${testId}"]`);
+          }
+          
+          const lodValue = getElementById(`ws_lod_${analyte}_${testId}`);
+          const loqValue = getElementById(`ws_loq_${analyte}_${testId}`);
+          const limitValue = getElementById(`ws_limit_${analyte}_${testId}`);
+          const val = value?.textContent === "NT" ? null : (parseFloat(value?.textContent) || 0.0);
+          const lodValueNumeric = parseFloat(lodValue?.textContent);
+          const loqValueNumeric = parseFloat(loqValue?.textContent);
+          // Use the raw data attribute for limits to avoid parsing display text like "-"
+          const limitValueNumeric = parseFloat(limitValue?.dataset.wsRaw) || 0;
+
+          if (!(val === null)) {
+              values.push(val);
+              lodValues.push(lodValueNumeric);
+              loqValues.push(loqValueNumeric);
+              limitValues.push(limitValueNumeric);
+          };
+        });
+        
+    }
+
+    const n = values.length;
+    const mean = values.reduce((a, b) => a + b, 0) / n || 0;
+    const std = Math.sqrt(values.reduce((s, x) => s + (x - mean) ** 2, 0) / (n || 1));
+    const rsd = mean !== 0 ? (std / mean) * 100 : 0;
+      
+    const lodMean = lodValues.reduce((a, b) => a + b, 0) / n || 0;
+	const loqMean = loqValues.reduce((a, b) => a + b, 0) / n || 0;
+    let limitMean = limitValues.reduce((a, b) => a + b, 0) / n || 0;
+    let status = "-";
+    let output = mean.toFixed(sigFigs);
+
+    // Only calculate Pass/Fail status if compliance mode is enabled
+    if (isComplianceMode() && limitMean > 0) {
+        let valueForComparison = mean;
+        
+        // If uncertainty mode is enabled, use (value - uncertainty) for pass/fail determination
+        if (isUncertaintyMode() && wsUnitConfig.uncertainty_data && wsUnitConfig.uncertainty_data[`${analyte}_uncertainty`]) {
+            const uncertaintyPercent = wsUnitConfig.uncertainty_data[`${analyte}_uncertainty`];
+            const uncertaintyValue = mean * uncertaintyPercent / 100;
+            valueForComparison = mean - uncertaintyValue;
+        }
+        
+        status = (valueForComparison <= limitMean) ? "Pass" : "Fail";
+    }
+    
+    // QC Check: Compare LOQ to limit for this analyte
+    let qcWarning = false;
+    if (parseFloat(limitMean) > 0 && loqMean > parseFloat(limitMean)) {
+        qcWarning = true;
+        // Only upgrade to warning if compliance mode is enabled
+        if (isComplianceMode() && status === "Pass") {
+            status = "Warning"; // Upgrade to warning if QC issue detected
+        }
+    }
+        
+    if (n === 0) {output = "NT";}
+    else if (mean < lodMean) {output = "ND";}
+    else if (mean < loqMean) {output = "<LOQ";}
+    
+    // Update all unit-specific result cells in the summary table
+    const selectedUnits = getSelectedOutputUnits();
+    const sampleInfo = JSON.parse(getElementById("ws-sample-info")?.textContent || "{}");
+    
+    selectedUnits.forEach(unit => {
+        // Prepare sample metadata for special unit conversions
+        const sampleMetadata = {
+            serving_weight: sampleInfo.serving_weight || 1,
+            servings_per_package: sampleInfo.servings_per_package || 1
+        };
+        
+        // Convert the result to this unit using enhanced conversion
+        const unitMean = wsConvertWithSample(mean, displayUnit, unit, sampleMetadata);
+        let unitOutput = unitMean.toFixed(sigFigs);
+        
+        // Apply the same logic for NT/ND/LOQ in this unit
+        const unitLodMean = wsConvertWithSample(lodMean, displayUnit, unit, sampleMetadata);
+        const unitLoqMean = wsConvertWithSample(loqMean, displayUnit, unit, sampleMetadata);
+        
+        if (n === 0) {unitOutput = "NT";}
+        else if (unitMean < unitLodMean) {unitOutput = "ND";}
+        else if (unitMean < unitLoqMean) {unitOutput = "<LOQ";}
+        
+        // Add uncertainty if enabled and uncertainty data is available
+        if (isUncertaintyMode() && wsUnitConfig.uncertainty_data && wsUnitConfig.uncertainty_data[`${analyte}_uncertainty`]) {
+            const uncertaintyPercent = wsUnitConfig.uncertainty_data[`${analyte}_uncertainty`];
+            const uncertaintyValue = unitMean * uncertaintyPercent / 100;
+            if (!["NT", "ND", "<LOQ"].includes(unitOutput)) {
+                unitOutput = `${unitMean.toFixed(sigFigs)} ± ${uncertaintyValue.toFixed(sigFigs)}`;
+            }
+        }
+        
+        // Find and update the unit-specific cell
+        const unitCell = row.querySelector(`[name="ws_mean_${analyte}_${unit}"]`);
+        if (unitCell) {
+            unitCell.textContent = unitOutput;
+            
+            // Apply result type styling to each unit cell
+            unitCell.classList.remove('result-nt', 'result-nd', 'result-loq', 'result-normal', 'limit-warning', 'critical-value');
+            unitCell.classList.add(getResultTypeClass(unitOutput));
+            
+            // Check for critical values (close to limits) for this unit
+            if (limitMean > 0 && status === 'Pass') {
+                const unitLimitValue = wsConvert(parseFloat(limitMean), displayUnit, unit);
+                let unitResultValue = unitMean; // Use the numeric value, not the formatted string
+                
+                // If uncertainty mode is enabled, use (value - uncertainty) for critical value warnings
+                if (isUncertaintyMode() && wsUnitConfig.uncertainty_data && wsUnitConfig.uncertainty_data[`${analyte}_uncertainty`]) {
+                    const uncertaintyPercent = wsUnitConfig.uncertainty_data[`${analyte}_uncertainty`];
+                    const uncertaintyValue = unitMean * uncertaintyPercent / 100;
+                    unitResultValue = unitMean - uncertaintyValue;
+                }
+                
+                if (!isNaN(unitResultValue) && !isNaN(unitLimitValue)) {
+                    const ratio = unitResultValue / unitLimitValue;
+                    if (ratio > 0.95) {
+                        unitCell.classList.add('critical-value');
+                    } else if (ratio > 0.8) {
+                        unitCell.classList.add('limit-warning');
+                    }
+                }
+            }
+        }
+    });
+    
+    // Keep the legacy single cell for backward compatibility (using display unit)
+    const legacySummaryCell = row.querySelector('.ws-summary-mean:not([data-unit])');
+    if (legacySummaryCell) {
+        let legacyOutput = output;
+        
+        // Add uncertainty to legacy cell if enabled and uncertainty data is available
+        if (isUncertaintyMode() && wsUnitConfig.uncertainty_data && wsUnitConfig.uncertainty_data[`${analyte}_uncertainty`]) {
+            const uncertaintyPercent = wsUnitConfig.uncertainty_data[`${analyte}_uncertainty`];
+            const uncertaintyValue = mean * uncertaintyPercent / 100;
+            if (!["NT", "ND", "<LOQ"].includes(output)) {
+                legacyOutput = `${mean.toFixed(sigFigs)} ± ${uncertaintyValue.toFixed(sigFigs)}`;
+            }
+        }
+        
+        legacySummaryCell.textContent = legacyOutput;
+        legacySummaryCell.classList.remove('result-nt', 'result-nd', 'result-loq', 'result-normal', 'limit-warning', 'critical-value');
+        legacySummaryCell.classList.add(getResultTypeClass(output));
+    }
+    row.querySelector('.ws-summary-lod').textContent = lodMean.toFixed(sigFigs);
+    
+    const summaryLoqCell = row.querySelector('.ws-summary-loq');
+    summaryLoqCell.textContent = loqMean.toFixed(sigFigs);
+    
+    // Apply QC warning to summary LOQ if needed
+    summaryLoqCell.classList.remove('loq-qc-warning');
+    if (qcWarning) {
+        summaryLoqCell.classList.add('loq-qc-warning');
+        summaryLoqCell.title = `QC WARNING: LOQ (${loqMean.toFixed(sigFigs)}) exceeds action limit (${limitMean}). Method detection capability insufficient for required limit.`;
+    }
+    
+    // Display limit in summary - only show if compliance mode is enabled
+    const summaryLimitCell = row.querySelector('.ws-summary-limit');
+    if (isComplianceMode() && limitMean > 0) {
+        summaryLimitCell.textContent = limitMean.toFixed(sigFigs);
+    } else {
+        summaryLimitCell.textContent = "-";
+    }
+    
+    // Enhanced status display with icons
+    const statusCell = row.querySelector('.ws-summary-status');
+    statusCell.innerHTML = `${getStatusIcon(status)}${status}`;
+    applyStatusStyling(statusCell, status);
+    
+    // Handle RSD display and status
+    const rsdCell = row.querySelector('.ws-summary-rsd');
+    if (n > 1) {
+        const rsdStatus = getRSDStatus(rsd, wsUnitConfig);
+        rsdCell.textContent = rsd.toFixed(sigFigs);
+        
+        // Remove existing RSD classes
+        rsdCell.classList.remove('rsd-pass', 'rsd-warning', 'rsd-fail');
+        // Add new RSD status class
+        if (rsdStatus.class) {
+            rsdCell.classList.add(rsdStatus.class);
+        }
+        
+        // Add status indicator
+        if (rsdStatus.indicator) {
+            rsdCell.innerHTML = `${rsd.toFixed(sigFigs)}<span class="rsd-status-indicator">${rsdStatus.indicator}</span>`;
+        }
+        
+        // Create detailed tooltip data for RSD diagnostics
+        const tooltipData = createRSDTooltipData(analyte, values, mean, std, rsd, sigFigs);
+        addRSDTooltip(rsdCell, tooltipData);
+        
+    } else {
+        rsdCell.textContent = n === 0 ? "NT" : "-";
+        rsdCell.classList.remove('rsd-pass', 'rsd-warning', 'rsd-fail');
+        rsdCell.removeAttribute('title'); // Remove any existing tooltip
+    }
+        
+    if (status === "Fail") {
+        row.style.backgroundColor = "#f8d7da";  // light red
+    } else {
+        row.style.backgroundColor = "";  // reset if status changes back
+    }
+  });
+  
+  // Generate final results after summary update
+  wsGenerateFinalResults();
+  
+  // Update statistics after summary update
+  wsUpdateStatistics();
+  
+  // Update overall status banner
+  updateOverallStatus();
+}
+
+function wsUpdateStatistics() {
+    console.log("Updating Statistics Data");
+    const wsUnitConfig = JSON.parse(getElementById("ws-unit-config")?.textContent || "{}");
+    const displayUnit = getCurrentDisplayUnit();
+    const sigFigs = parseInt(getElementById("sig-fig-input")?.value) || 3;
+    const isomersMap = JSON.parse(getElementById("ws-isomers-map")?.textContent || "{}");
+    
+    getElements('#ws-statistics-body tr').forEach(row => {
+        const analyte = row.dataset.wsAnalyte;
+        const values = [];
+        let isSynthetic = false;
+        
+        // Handle synthetic analytes
+        if (isomersMap[analyte]) {
+            isSynthetic = true;
+            let value = isomersMap[analyte].reduce((sum, { analyte: sub, factor }) => {
+                // Look for the specific unit cell first, fall back to legacy cell
+                const currentDisplayUnit = getCurrentDisplayUnit();
+                let subInput = getElement(`[name="ws_mean_${sub}_${currentDisplayUnit}"]`);
+                if (!subInput) {
+                    subInput = getElement(`.ws-summary-mean[name="ws_mean_${sub}"]`);
+                }
+                const subVal = parseFloat(subInput?.textContent) || 0;
+                return sum + subVal * factor;
+            }, 0);
+            values.push(value);
+        } else {
+            // Collect values from included tests
+            getElements(`.ws-include[name^="ws_include_${analyte}_"]`).forEach(cb => {
+                if (!cb.checked) return;
+                const testId = cb.name.split('_').pop();
+                
+                // Look for the specific unit cell first, fall back to legacy cell
+                const currentDisplayUnit = getCurrentDisplayUnit();
+                let value = getElement(`[name="ws_final_${analyte}_${testId}_${currentDisplayUnit}"]`);
+                if (!value) {
+                    value = getElement(`.ws-final[name="ws_final_${analyte}_${testId}"]`);
+                }
+                
+                const val = value?.textContent;
+                
+                // Only include numeric values (skip NT, ND, <LOQ)
+                if (val && !isNaN(parseFloat(val)) && val !== "NT" && val !== "ND" && !val.includes("<")) {
+                    values.push(parseFloat(val));
+                }
+            });
+        }
+        
+        const n = values.length;
+        
+        if (n === 0) {
+            // No data available
+            row.querySelector('.ws-stats-mean').textContent = "NT";
+            row.querySelector('.ws-stats-std').textContent = "NT";
+            row.querySelector('.ws-stats-rsd').textContent = "NT";
+            row.querySelector('.ws-stats-min').textContent = "NT";
+            row.querySelector('.ws-stats-max').textContent = "NT";
+            row.querySelector('.ws-stats-count').textContent = "0";
+            row.querySelector('.ws-stats-median').textContent = "NT";
+            row.querySelector('.ws-stats-range').textContent = "NT";
+            
+            // Clear RSD styling
+            const rsdCell = row.querySelector('.ws-stats-rsd');
+            rsdCell.classList.remove('rsd-pass', 'rsd-warning', 'rsd-fail');
+            return;
+        }
+        
+        // Calculate statistics
+        const mean = values.reduce((a, b) => a + b, 0) / n;
+        const std = Math.sqrt(values.reduce((s, x) => s + (x - mean) ** 2, 0) / (n > 1 ? n - 1 : 1));
+        const rsd = mean !== 0 ? (std / mean) * 100 : 0;
+        const min = Math.min(...values);
+        const max = Math.max(...values);
+        const range = max - min;
+        
+        // Calculate median
+        const sortedValues = [...values].sort((a, b) => a - b);
+        let median;
+        if (n % 2 === 0) {
+            median = (sortedValues[n/2 - 1] + sortedValues[n/2]) / 2;
+        } else {
+            median = sortedValues[Math.floor(n/2)];
+        }
+        
+        // Update table cells
+        row.querySelector('.ws-stats-mean').textContent = mean.toFixed(sigFigs);
+        row.querySelector('.ws-stats-std').textContent = std.toFixed(sigFigs);
+        row.querySelector('.ws-stats-min').textContent = min.toFixed(sigFigs);
+        row.querySelector('.ws-stats-max').textContent = max.toFixed(sigFigs);
+        row.querySelector('.ws-stats-count').textContent = n.toString();
+        row.querySelector('.ws-stats-median').textContent = median.toFixed(sigFigs);
+        row.querySelector('.ws-stats-range').textContent = range.toFixed(sigFigs);
+        
+        // Handle RSD display and status
+        const rsdCell = row.querySelector('.ws-stats-rsd');
+        if (n > 1) {
+            const rsdStatus = getRSDStatus(rsd, wsUnitConfig);
+            
+            // Remove existing RSD classes
+            rsdCell.classList.remove('rsd-pass', 'rsd-warning', 'rsd-fail');
+            // Add new RSD status class
+            if (rsdStatus.class) {
+                rsdCell.classList.add(rsdStatus.class);
+            }
+            
+            // Add status indicator
+            if (rsdStatus.indicator) {
+                rsdCell.innerHTML = `${rsd.toFixed(sigFigs)}%<span class="rsd-status-indicator">${rsdStatus.indicator}</span>`;
+            } else {
+                rsdCell.textContent = rsd.toFixed(sigFigs) + '%';
+            }
+        } else {
+            rsdCell.textContent = "-";
+            rsdCell.classList.remove('rsd-pass', 'rsd-warning', 'rsd-fail');
+        }
+    });
+}
+      function updateHeaders(currentDisplayUnit) {
+          getElementsByName("final-header").forEach(e => {e.textContent = `Final Result (${currentDisplayUnit})`});
+          getElementsByName("limit-header").forEach(e => {e.textContent =`Limit (${currentDisplayUnit})`});
+          getElementsByName("lod-header").forEach(e => {e.textContent =`LOD (${currentDisplayUnit})`});
+          getElementsByName("loq-header").forEach(e => {e.textContent = `LOQ (${currentDisplayUnit})`});
+          
+          // Update statistics headers
+          getElementsByName("stats-mean-header").forEach(e => {e.textContent = `Mean (${currentDisplayUnit})`});
+          getElementsByName("stats-std-header").forEach(e => {e.textContent = `Std Dev (${currentDisplayUnit})`});
+          getElementsByName("stats-min-header").forEach(e => {e.textContent = `Min (${currentDisplayUnit})`});
+          getElementsByName("stats-max-header").forEach(e => {e.textContent = `Max (${currentDisplayUnit})`});
+          getElementsByName("stats-median-header").forEach(e => {e.textContent = `Median (${currentDisplayUnit})`});
+          getElementsByName("stats-range-header").forEach(e => {e.textContent = `Range (${currentDisplayUnit})`});
+        }
+
+function wsGenerateFinalResults() {
+    console.log("Generating Final Results JSON");
+    const wsUnitConfig = JSON.parse(getElementById("ws-unit-config")?.textContent || "{}");
+    const isomersMap = JSON.parse(getElementById("ws-isomers-map")?.textContent || "{}");
+    const sampleInfo = JSON.parse(getElementById("ws-sample-info")?.textContent || "{}");
+    
+    // Get selected output units for multi-unit generation
+    const outputUnits = getSelectedOutputUnits();
+    console.log("Generating final results for units:", outputUnits);
+    
+    const sigFigs = parseInt(getElementById("sig-fig-input")?.value) || 3;
+    
+    // Get analytes from the summary table rows
+    const analyteElements = getElements('#ws-summary-body tr[data-ws-analyte]');
+    const analytes = Array.from(analyteElements).map(row => row.dataset.wsAnalyte);
+    
+    // Get sample metadata from first test (assuming all tests share same sample metadata)
+    const ext = parseFloat(getElementById('extraction')?.textContent) || 1;
+    const dil = parseFloat(getElementById('dilution')?.textContent) || 1;
+    const wt = parseFloat(getElementById('weight')?.textContent) || 1;
+    const inhalableType = getElementById('inhalable')?.textContent || 'ingested';
+    
+    // Calculate multiplication factor (extraction * dilution / weight)
+    const multFactor = (ext * dil) / wt;
+    
+    const finalResults = {
+        analysis_date: new Date().toLocaleDateString('en-US'),
+        dilution: dil,
+        extraction_volume: ext,
+        testing_weight: wt,
+        input_units: wsUnitConfig.input_unit,
+        report_units: outputUnits,  // All selected output units (greenfield multi-unit design)
+        selected_output_units: outputUnits,  // Same as report_units for consistency
+        is_compliance: getElementById('compliance-checkbox')?.checked || false,
+        use_uncertainty: getElementById('uncertainty-checkbox')?.checked || false,
+        is_inhalable: inhalableType.toLowerCase(),
+        mult_factor: multFactor,
+        sample_matrix: inhalableType === 'Inhaled' ? 'Inhalable' : 'Ingestible',
+        sample_id: sampleInfo.sample_id || '',
+        sample_name: sampleInfo.sample_name || '',
+        sample_qbn_id: sampleInfo.sample_qbn_id || null,
+        serving_weight: sampleInfo.serving_weight || 0,
+        servings_per_package: sampleInfo.servings_per_package || 0
+    };
+    
+    // Add current user settings for persistence across reloads
+    finalResults.user_settings = {
+        compliance_enabled: getElementById('compliance-checkbox')?.checked || false,
+        uncertainty_enabled: getElementById('uncertainty-checkbox')?.checked || false,
+        selected_output_units: [...outputUnits],
+        current_display_unit: getCurrentDisplayUnit(),
+        sig_figs: parseInt(getElementById("sig-fig-input")?.value) || 3,
+        rsd_warning_limit: parseInt(getElementById("rsd-warning-limit")?.value) || 15,
+        rsd_fail_limit: parseInt(getElementById("rsd-fail-limit")?.value) || 25,
+        rsd_check_enabled: getElementById("rsd-check-enabled")?.checked !== false,
+        moisture_correction_enabled: getElementById("moisture-correction-enabled")?.checked || false,
+        moisture_reporting_enabled: getElementById("moisture-reporting-enabled")?.checked || false
+    };
+    
+    let overallStatus = isComplianceMode() ? "Pass" : "N/A";
+    
+    // Process each analyte
+    analytes.forEach(analyte => {
+        // Get limit and LOD/LOQ values from the test table data attributes
+        const testRow = getElement(`tr[data-ws-analyte="${analyte}"][data-ws-test]`);
+        if (!testRow) return;
+        
+        const limitRaw = parseFloat(testRow.querySelector('.ws-limit')?.dataset.wsRaw) || 0;
+        const lodRaw = parseFloat(testRow.querySelector('.ws-lod')?.dataset.wsRaw) || 0;
+        const loqRaw = parseFloat(testRow.querySelector('.ws-loq')?.dataset.wsRaw) || 0;
+        
+        // Get summary row data (this is already in display units)
+        const summaryRow = getElement(`tr[data-ws-analyte="${analyte}"]`);
+        if (!summaryRow) return;
+        
+        const finalText = summaryRow.querySelector('.ws-summary-mean')?.textContent || "NT";
+        const statusRaw = summaryRow.querySelector('.ws-summary-status')?.textContent || "-";
+        // Clean status text by removing emojis and extra whitespace
+        const status = statusRaw.replace(/[✓✗⚠–]/g, '').trim();
+        
+        // Get raw calculated value (mean of all included test results in input units)
+        let rawCalcValue = 0;
+        let resultCount = 0;
+        
+        // Collect raw values from all included tests for this analyte
+        getElements(`.ws-include[name^="ws_include_${analyte}_"]`).forEach(cb => {
+            if (!cb.checked) return;
+            const testId = cb.name.split('_').pop();
+            const instrumentInput = getElement(`input[name="ws_instrument_${analyte}_${testId}"]`);
+            const instrumentVal = parseFloat(instrumentInput?.value) || 0;
+            
+            if (instrumentVal !== 0 || instrumentInput?.value === '0') {
+                rawCalcValue += instrumentVal;  // Keep in input units
+                resultCount++;
+            }
+        });
+        
+        if (resultCount > 0) {
+            rawCalcValue = rawCalcValue / resultCount;  // Average raw value in input units
+        }
+        
+        // Apply sample factors to get final concentration in input units  
+        const baseFinalValue = rawCalcValue * multFactor;
+        
+        // Calculate base values in input units (before unit conversion)
+        let baseLodValue = lodRaw * multFactor;
+        let baseLoqValue = loqRaw * multFactor;
+        const baseLimitValue = wsConvert(limitRaw, wsUnitConfig.limit_unit, wsUnitConfig.input_unit);
+        
+        // Apply moisture correction to base values if enabled
+        const moistureSettings = getMoistureSettings();
+        let moistureCorrectedFinalValue = baseFinalValue;
+        let moistureCorrectedLodValue = baseLodValue;
+        let moistureCorrectedLoqValue = baseLoqValue;
+        
+        if (moistureSettings.useMoistureCorrection && moistureSettings.reportingEnabled && moistureSettings.moistureFound && moistureSettings.moistureValue > 0) {
+            moistureCorrectedFinalValue = applyMoistureCorrection(baseFinalValue, moistureSettings.moistureValue);
+            moistureCorrectedLodValue = applyMoistureCorrection(baseLodValue, moistureSettings.moistureValue);
+            moistureCorrectedLoqValue = applyMoistureCorrection(baseLoqValue, moistureSettings.moistureValue);
+        }
+        
+        // Calculate RSD for this analyte (unit-independent)
+        let analyteRSD = 0;
+        let rsdStatus = 'unknown';
+        const analyteValues = [];
+        
+        getElements(`.ws-include[name^="ws_include_${analyte}_"]`).forEach(cb => {
+            if (!cb.checked) return;
+            const testId = cb.name.split('_').pop();
+            
+            // Look for the display unit specific cell first, fall back to legacy cell
+            const displayUnit = getCurrentDisplayUnit();
+            let value = getElement(`[name="ws_final_${analyte}_${testId}_${displayUnit}"]`);
+            if (!value) {
+                value = getElement(`.ws-final[name="ws_final_${analyte}_${testId}"]`);
+            }
+            
+            const val = value?.textContent;
+            
+            if (val && !isNaN(parseFloat(val)) && val !== "NT" && val !== "ND" && !val.includes("<")) {
+                analyteValues.push(parseFloat(val));
+            }
+        });
+        
+        if (analyteValues.length > 1) {
+            const analyteMean = analyteValues.reduce((a, b) => a + b, 0) / analyteValues.length;
+            const analyteStd = Math.sqrt(analyteValues.reduce((s, x) => s + (x - analyteMean) ** 2, 0) / (analyteValues.length - 1));
+            analyteRSD = analyteMean !== 0 ? (analyteStd / analyteMean) * 100 : 0;
+            
+            const rsdStatusObj = getRSDStatus(analyteRSD, wsUnitConfig);
+            rsdStatus = rsdStatusObj.status;
+        }
+        
+        // Generate results for each selected output unit
+        const prefix = analyte; // Move prefix declaration to analyte scope
+        
+        outputUnits.forEach(outputUnit => {
+            // Prepare sample metadata for special unit conversions
+            const sampleMetadata = {
+                serving_weight: sampleInfo.serving_weight || 1,
+                servings_per_package: sampleInfo.servings_per_package || 1
+            };
+            
+            // Convert values to this output unit using enhanced conversion
+            const calcValue = wsConvertWithSample(moistureCorrectedFinalValue, wsUnitConfig.input_unit, outputUnit, sampleMetadata);
+            const lodValue = wsConvertWithSample(moistureCorrectedLodValue, wsUnitConfig.input_unit, outputUnit, sampleMetadata);
+            const loqValue = wsConvertWithSample(moistureCorrectedLoqValue, wsUnitConfig.input_unit, outputUnit, sampleMetadata);
+            const limitValue = wsConvertWithSample(baseLimitValue, wsUnitConfig.input_unit, outputUnit, sampleMetadata);
+            
+            // Generate unit-specific final text
+            let unitFinalText = "NT";
+            if (resultCount > 0) {
+                if (calcValue < lodValue) {
+                    unitFinalText = "ND";
+                } else if (calcValue < loqValue) {
+                    unitFinalText = "<LOQ";
+                } else {
+                    unitFinalText = calcValue.toFixed(sigFigs);
+                }
+            }
+            
+            // Determine fail direction for this unit
+            let failDirection = "N/A";
+            if (status === "Fail" && limitValue > 0) {
+                failDirection = calcValue > limitValue ? "High" : "Low";
+            }
+            
+            // Create safe unit suffix for field names
+            const unitSuffix = outputUnit.toLowerCase().replace('%', 'percent').replace(/[^a-z0-9]/g, '_');
+
+            // Add analyte data to final results for this unit
+            finalResults[`${prefix}_calc_value_${unitSuffix}`] = calcValue;
+            finalResults[`${prefix}_final_${unitSuffix}`] = unitFinalText; // Unit-specific final text
+            finalResults[`${prefix}_limit_${unitSuffix}`] = limitValue > 0 ? limitValue : null;
+            finalResults[`${prefix}_lod_${unitSuffix}`] = lodValue.toFixed(sigFigs);
+            finalResults[`${prefix}_loq_${unitSuffix}`] = loqValue.toFixed(sigFigs);
+            finalResults[`${prefix}_lod_value_${unitSuffix}`] = lodValue;
+            finalResults[`${prefix}_loq_value_${unitSuffix}`] = loqValue;
+            finalResults[`${prefix}_fail_direction_${unitSuffix}`] = failDirection;
+            
+            // Check for QC issues (LOQ > limit) for this unit
+            if (limitValue > 0 && loqValue > limitValue) {
+                finalResults[`${prefix}_qc_warning_${unitSuffix}`] = `LOQ (${loqValue.toFixed(sigFigs)}) exceeds action limit (${limitValue.toFixed(sigFigs)})`;
+            } else {
+                finalResults[`${prefix}_qc_warning_${unitSuffix}`] = null;
+            }
+        });
+        
+        // Unit-independent status fields (shared across all units)
+        finalResults[`${prefix}_status`] = status;
+        finalResults[`${prefix}_rsd_percent`] = analyteRSD.toFixed(2);
+        finalResults[`${prefix}_rsd_status`] = rsdStatus;
+        
+        // Update overall status (only if compliance mode is enabled)
+        if (isComplianceMode()) {
+            if (status === "Fail") {
+                overallStatus = "Fail";
+            }
+        } else {
+            // In non-compliance mode, don't update overall status based on Pass/Fail
+            overallStatus = "N/A";
+        }
+    });
+    
+    finalResults.overall_status = overallStatus;
+    
+    // Add moisture correction metadata
+    const moistureSettings = getMoistureSettings();
+    const moistureCorrectionApplied = moistureSettings.useMoistureCorrection && moistureSettings.reportingEnabled && moistureSettings.moistureFound && moistureSettings.moistureValue > 0;
+    
+    finalResults.moisture_correction_enabled = moistureSettings.useMoistureCorrection;
+    finalResults.moisture_content_percent = moistureSettings.moistureValue;
+    finalResults.moisture_found = moistureSettings.moistureFound;
+    finalResults.moisture_correction_applied = moistureCorrectionApplied;
+    finalResults.assay_type = moistureSettings.assayName;
+    finalResults.results_basis = moistureCorrectionApplied ? "dry_weight" : "as_tested";
+    
+    // Save to final results field
+    const finalField = getElementsByName('ws_final_results')[0];
+    if (finalField) {
+        finalField.value = JSON.stringify(finalResults);
+    }
+    
+    return finalResults;
+}
+
+// Global function for bulk updating results - accessible from all scopes
+function bulkUpdateResults() {
+  const wsInstrumentData = JSON.parse(getElementsByName("ws_instrument_results")[0]?.value || "{}");
+  const wsUpdatedData = JSON.parse(getElementsByName("ws_live_results")[0]?.value || "{}");
+  const isomersMap = JSON.parse(getElementById("ws-isomers-map")?.textContent || "{}");
+  const updatedResults = wsUpdatedData;
+  const allAnalytes = new Set([
+    ...Object.keys(updatedResults || {}),
+    ...Object.keys(wsInstrumentData || {})
+  ]);
+
+  // First pass: set raw inputs for all direct analytes
+  for (const analyte of allAnalytes) {
+    const testIds = new Set([
+      ...Object.keys(updatedResults?.[analyte] || {}),
+      ...Object.keys(wsInstrumentData?.[analyte] || {})
+    ]);
+
+    for (const testId of testIds) {
+      const input = getElement(`input[name="ws_instrument_${analyte}_${testId}"]`);
+
+      // Skip synthetic analytes with no input field
+      if (!input) continue;
+
+      const liveVal = updatedResults?.[analyte]?.[testId];
+      const fallbackVal = wsInstrumentData?.[analyte]?.[testId];
+      const val = !isNaN(liveVal) ? liveVal : fallbackVal;
+
+      input.value = val;
+      wsRecalculate(testId, analyte);
+      // Remove wsUpdateSummary() from here - only call once at the end
+    }
+  }
+
+  // Second pass: recalculate synthetic analytes from isomers_map
+  Object.entries(isomersMap).forEach(([syntheticAnalyte, components]) => {
+    const testIds = new Set();
+
+    components.forEach(({ analyte }) => {
+      Object.keys(updatedResults?.[analyte] || {}).forEach(testId => testIds.add(testId));
+      Object.keys(wsInstrumentData?.[analyte] || {}).forEach(testId => testIds.add(testId));
+    });
+
+    for (const testId of testIds) {
+      wsRecalculate(testId, syntheticAnalyte);
+    }
+  });
+
+  wsUpdateSummary();
+}
+    
+$(document).ready(function () {
+  setTimeout(function () {
+      console.log("Loading...");
+      const wsUnitConfig = JSON.parse(getElementById("ws-unit-config")?.textContent || "{}");
+      const sampleInfo = JSON.parse(getElementById("ws-sample-info")?.textContent || "{}");
+      
+      // Check sample metadata to determine if special units should be available
+      const hasServingWeight = sampleInfo.serving_weight && sampleInfo.serving_weight > 0;
+      const hasServingsPerPackage = sampleInfo.servings_per_package && sampleInfo.servings_per_package > 0;
+      
+      console.log("Sample metadata check:", {
+          serving_weight: sampleInfo.serving_weight,
+          servings_per_package: sampleInfo.servings_per_package,
+          hasServingWeight,
+          hasServingsPerPackage
+      });
+      
+      // Filter allowed units based on available sample metadata
+      let allowedUnits = [...(wsUnitConfig.allowed_units || ['ppb'])];
+      
+      // Remove mg/serving if no serving weight data
+      if (!hasServingWeight && allowedUnits.includes('mg/serving')) {
+          allowedUnits = allowedUnits.filter(unit => unit !== 'mg/serving');
+          console.log("Removed mg/serving from allowed units - no serving weight data");
+      }
+      
+      // Remove mg/package if no serving weight OR no servings per package data
+      // (mg/package requires both serving size and package quantity)
+      if ((!hasServingWeight || !hasServingsPerPackage) && allowedUnits.includes('mg/package')) {
+          allowedUnits = allowedUnits.filter(unit => unit !== 'mg/package');
+          const reason = !hasServingWeight ? "no serving weight data" : "no servings per package data";
+          console.log(`Removed mg/package from allowed units - ${reason}`);
+      }
+      
+      console.log("Filtered allowed units:", allowedUnits);
+      
+      const reportUnits = wsUnitConfig.report_units || 'ppb';
+      const defaultUnits = wsUnitConfig.default_units || ['ppb'];
+      
+      // Check for saved user settings first
+      const savedSettings = getSavedUserSettings();
+      
+      // Multi-unit configuration storage - initialize global variable
+      if (savedSettings && savedSettings.selected_output_units && savedSettings.selected_output_units.length > 0) {
+          // Restore from saved settings, but filter to only allowed units
+          selectedOutputUnits = savedSettings.selected_output_units.filter(unit => allowedUnits.includes(unit));
+          console.log("Restored selected output units from saved settings:", selectedOutputUnits);
+      } else {
+          // Use kvstore defaults for first-time loads
+          selectedOutputUnits = [...defaultUnits]; // Initialize with default_units from kvstore
+          console.log("Using kvstore default units:", selectedOutputUnits);
+      }
+      
+      // Filter out any units that are no longer allowed due to missing sample metadata
+      const originalSelectedCount = selectedOutputUnits.length;
+      selectedOutputUnits = selectedOutputUnits.filter(unit => allowedUnits.includes(unit));
+      
+      if (selectedOutputUnits.length < originalSelectedCount) {
+          const removedUnits = originalSelectedCount > selectedOutputUnits.length ? 
+              (savedSettings ? savedSettings.selected_output_units : defaultUnits).filter(unit => !allowedUnits.includes(unit)) : [];
+          console.log("Removed unavailable units from selection:", removedUnits);
+      }
+      
+      // Validation: ensure at least one unit is selected and all are valid
+      if (selectedOutputUnits.length === 0) {
+          selectedOutputUnits = [allowedUnits[0]]; // Fallback to first allowed unit
+          console.warn("No valid units found, using first allowed unit:", selectedOutputUnits[0]);
+      }
+      
+      console.log("Final selected output units:", selectedOutputUnits);
+      
+      // Initialize display unit - check saved settings first, then report units, then fallback
+      if (savedSettings && savedSettings.current_display_unit && allowedUnits.includes(savedSettings.current_display_unit)) {
+          currentDisplayUnit = savedSettings.current_display_unit;
+          console.log("Restored display unit from saved settings:", currentDisplayUnit);
+      } else if (allowedUnits.includes(reportUnits)) {
+          currentDisplayUnit = reportUnits;
+          console.log("Using report units as display unit:", currentDisplayUnit);
+      } else {
+          currentDisplayUnit = selectedOutputUnits[0]; // Use first selected output unit as fallback
+          console.warn("Using first selected output unit as display unit:", currentDisplayUnit);
+      }
+      
+      console.log("Final initialized display unit:", currentDisplayUnit);
+      
+      // Populate sample information section
+      populateSampleInfoSection(sampleInfo, wsUnitConfig, allowedUnits, selectedOutputUnits, hasServingWeight, hasServingsPerPackage);
+      
+      // Initialize multi-unit selector UI
+      initializeMultiUnitSelector(allowedUnits, selectedOutputUnits);
+      
+      // Initialize display unit selector UI
+      initializeDisplayUnitSelector(selectedOutputUnits, currentDisplayUnit);
+      
+      // Update headers BEFORE rebuilding tables
+      updateHeaders(currentDisplayUnit);
+      
+      // Rebuild table structure for multi-unit display (but don't trigger updates yet)
+      rebuildTableHeaders();
+      rebuildTableRows();
+      
+      // Initialize RSD settings - check saved settings first, then kvstore defaults
+      if (savedSettings) {
+          // Use saved settings if available
+          getElementById("rsd-warning-limit").value = savedSettings.rsd_warning_limit || 15;
+          getElementById("rsd-fail-limit").value = savedSettings.rsd_fail_limit || 25;
+          getElementById("rsd-check-enabled").checked = savedSettings.rsd_check_enabled !== false;
+      } else {
+          // Use kvstore defaults for first-time loads
+          getElementById("rsd-warning-limit").value = wsUnitConfig.rsd_warning_limit || 15;
+          getElementById("rsd-fail-limit").value = wsUnitConfig.rsd_fail_limit || 25;
+          getElementById("rsd-check-enabled").checked = wsUnitConfig.rsd_check_enabled !== false;
+      }
+      
+      // Initialize moisture correction display
+      updateMoistureDisplay();
+      
+      // Initialize moisture correction checkboxes - auto-apply if moisture is valid (only for first-time loads)
+      if (!savedSettings && wsUnitConfig.use_moisture_correction && wsUnitConfig.moisture_found) {
+        const moistureValid = wsUnitConfig.moisture_value > 0 && wsUnitConfig.moisture_value < 100;
+        if (moistureValid) {
+          const correctionCheckbox = getElementById("moisture-correction-enabled");
+          const reportingCheckbox = getElementById("moisture-reporting-enabled");
+          
+          if (correctionCheckbox) correctionCheckbox.checked = true;
+          if (reportingCheckbox) reportingCheckbox.checked = true;
+          
+          console.log("Auto-applied moisture correction - moisture content:", wsUnitConfig.moisture_value + "%");
+        }
+      }
+      
+	const wsInstrumentData = JSON.parse(getElementsByName("ws_instrument_results")[0]?.value || "{}");
+	const wsUpdatedData = JSON.parse(getElementsByName("ws_live_results")[0]?.value || "{}");
+    const isomersMap = JSON.parse(getElementById("ws-isomers-map")?.textContent || "{}");
+    const updatedResults = wsUpdatedData;
+      
+    function updateLiveResultsField() {
+        getElementsByName("ws_live_results").forEach(textArea => {
+            if (textArea) {
+                textArea.value = JSON.stringify(updatedResults);
+            }
+        });
+    }
+    
+    function updateRSDConfig() {
+        // Update the unit config with current RSD settings
+        const wsUnitConfigElement = document.getElementById("ws-unit-config");
+        const currentConfig = JSON.parse(wsUnitConfigElement.textContent);
+        
+        currentConfig.rsd_warning_limit = parseInt(document.getElementById("rsd-warning-limit").value) || 15;
+        currentConfig.rsd_fail_limit = parseInt(document.getElementById("rsd-fail-limit").value) || 25;
+        currentConfig.rsd_check_enabled = document.getElementById("rsd-check-enabled").checked;
+        
+        wsUnitConfigElement.textContent = JSON.stringify(currentConfig);
+        
+        // Trigger update of all calculations
+        bulkUpdateResults();
+    }
+
+     getElementById("restore-batch-data-btn").addEventListener('click', () => {
+          getElementsByName("ws_live_results")[0].value = getElementsByName("ws_instrument_results")[0]?.value;
+          bulkUpdateResults();
+      });
+    
+    getElementById("generate-final-results-btn").addEventListener('click', () => {
+          const finalResults = wsGenerateFinalResults();
+          console.log("Final Results Generated:", finalResults);
+          alert("Final results generated! Check console for details.");
+      });
+    
+    getElementById("view-final-results-btn").addEventListener('click', () => {
+          const finalField = getElementsByName('ws_final_results')[0];
+          const finalResults = finalField?.value || "{}";
+          const formatted = JSON.stringify(JSON.parse(finalResults), null, 2);
+          
+          // Create a modal or popup to display results
+          const popup = window.open('', 'FinalResults', 'width=800,height=600,scrollbars=yes');
+          popup.document.write(`
+            <html>
+              <head><title>Final Results JSON</title></head>
+              <body>
+                <h2>Final Results JSON</h2>
+                <pre style="background: #f5f5f5; padding: 10px; overflow: auto;">${formatted}</pre>
+                <button onclick="window.close()">Close</button>
+              </body>
+            </html>
+          `);
+      });
+    
+    getElementById("sig-fig-input").addEventListener('change', () => {
+          bulkUpdateResults();
+      });
+    
+    getElementById("compliance-checkbox").addEventListener('change', () => {
+          console.log("Compliance mode changed:", getElementById("compliance-checkbox").checked);
+          bulkUpdateResults();
+      });
+    
+    getElementById("uncertainty-checkbox").addEventListener('change', () => {
+          console.log("Uncertainty mode changed:", getElementById("uncertainty-checkbox").checked);
+          bulkUpdateResults();
+      });
+    
+    getElementById("rsd-warning-limit").addEventListener('change', updateRSDConfig);
+    getElementById("rsd-fail-limit").addEventListener('change', updateRSDConfig);
+    getElementById("rsd-check-enabled").addEventListener('change', updateRSDConfig);
+
+    // Initialize moisture correction event listeners
+    const moistureCorrectionCheckbox = getElementById("moisture-correction-enabled");
+    const moistureReportingCheckbox = getElementById("moisture-reporting-enabled");
+    
+    if (moistureCorrectionCheckbox) {
+      moistureCorrectionCheckbox.addEventListener('change', () => {
+        updateMoistureDisplay();
+        bulkUpdateResults();
+        // Note: wsGenerateFinalResults() is called by bulkUpdateResults() -> wsUpdateSummary()
+        console.log("Moisture correction for calculations:", moistureCorrectionCheckbox.checked);
+      });
+    }
+    
+    if (moistureReportingCheckbox) {
+      moistureReportingCheckbox.addEventListener('change', () => {
+        updateMoistureDisplay();
+        // Note: For reporting-only changes, we only need to update the final results
+        // since the calculations themselves don't change, only the display
+        wsGenerateFinalResults();
+        console.log("Moisture correction for reporting:", moistureReportingCheckbox.checked);
+      });
+    }
+
+    // Initialize data integrity protection (without triggering updates)
+    setupDataIntegrityUI();
+
+        getElements('.ws-tab-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            getElements('.ws-tab-content').forEach(div => div.style.display = 'none');
+            getElements('.ws-tab-btn').forEach(myBtn => {myBtn.classList.remove("active");})
+            getElementById(`ws-tab-${btn.dataset.wsTab}`).style.display = 'block';
+            btn.classList.add('active');
+          });
+        });
+
+          getElements('.ws-instrument').forEach(input => {
+              input.addEventListener('input', () => {
+                const match = input.name.match(/^ws_instrument_(.+)_(\d+)$/);
+                if (!match) return;
+                const [, analyte, testId] = match;
+                wsRecalculate(testId, analyte);
+                
+                // Update summary and statistics after individual test changes
+                wsUpdateSummary();
+              });
+            });
+    
+    		getElements('.ws-include').forEach(cb => {
+              cb.addEventListener('change', () => {
+                const match = cb.name.match(/^ws_include_(.+)_(\d+)$/);
+                if (!match) return;
+                const [, analyte, testId] = match;
+                  console.log(`Analyte: ${analyte} | TestId: ${testId}`)
+                if (analyte === "all") return;
+                
+                // Recalculate the specific test/analyte and update summary
+                wsRecalculate(testId, analyte);
+                wsUpdateSummary();
+              });
+            });
+    
+    	document.querySelectorAll('.ws-include-all').forEach(cb => {
+              cb.addEventListener('change', () => {
+                const match = cb.name.match(/^ws_include_all_(\d+)$/);
+                if (!match) return;
+                const [, testId] = match;
+                const testIdStr = String(testId);
+                const prefix = "ws_include_";
+                const cbs = Array.from(document.querySelectorAll(`input[name^="${prefix}"]`))
+                  .filter(cb =>
+                    cb.name.endsWith(`_${testIdStr}`) &&
+                    cb.name !== `ws_include_all_${testIdStr}`
+                  );
+                
+                // Update all individual checkboxes and recalculate their tests
+                cbs.forEach(childCb => {
+                  childCb.checked = cb.checked;
+                  const childMatch = childCb.name.match(/^ws_include_(.+)_(\d+)$/);
+                  if (childMatch) {
+                    const [, analyte, testId] = childMatch;
+                    if (analyte !== "all") {
+                      wsRecalculate(testId, analyte);
+                    }
+                  }
+                });
+                
+                // Update summary once after all individual changes
+                wsUpdateSummary();
+              });
+            });
+      
+        // Restore all user settings from saved data or initialize to defaults
+        const settingsRestored = restoreUserSettings();
+        
+        // Initialize table sorting
+        initializeSorting();
+        console.log("Table sorting initialized");
+        
+        // Initialize data integrity protection (without triggering updates)
+        initializeDataIntegrityProtection();
+        
+		// Single comprehensive update at the end of initialization
+		bulkUpdateResults();
+		console.log("Initialization complete - performed single bulk update");
+    }, 0);
+});
+
+// Remove the duplicate $(document).ready block
+function setupDataIntegrityUI() {
+    // Set up data integrity UI without triggering updates
+    // This is a placeholder for any UI setup that doesn't need immediate updates
+}
+
+// Multi-unit configuration storage (global)
+let selectedOutputUnits = [];
+
+// Helper function to escape unit names for use in element IDs and CSS selectors
+function escapeUnitForId(unit) {
+    // Replace problematic characters with safe alternatives
+    return unit.replace(/[^a-zA-Z0-9\-_]/g, function(char) {
+        // Create a safe mapping for common characters
+        const charMap = {
+            '%': 'pct',
+            '/': 'per',
+            ' ': '_',
+            '.': 'dot',
+            '+': 'plus',
+            '(': 'lparen',
+            ')': 'rparen',
+            '[': 'lbracket',
+            ']': 'rbracket',
+            '{': 'lbrace',
+            '}': 'rbrace',
+            ':': 'colon',
+            ';': 'semicolon',
+            '=': 'eq',
+            '*': 'star',
+            '&': 'amp',
+            '<': 'lt',
+            '>': 'gt',
+            '?': 'q',
+            '#': 'hash',
+            '@': 'at',
+            '!': 'excl',
+            '$': 'dollar',
+            '^': 'caret',
+            '~': 'tilde',
+            '`': 'backtick',
+            '"': 'quote',
+            "'": 'apos',
+            '\\': 'bslash',
+            '|': 'pipe'
+        };
+        return charMap[char] || 'x' + char.charCodeAt(0).toString(16);
+    });
+}
+
+// Populate the sample information section
+function populateSampleInfoSection(sampleInfo, wsUnitConfig, allowedUnits, selectedOutputUnits, hasServingWeight, hasServingsPerPackage) {
+    // Sample details (including assay name)
+    getElementById("display-sample-id").textContent = sampleInfo.sample_id || "Not specified";
+    getElementById("display-sample-name").textContent = sampleInfo.sample_name || "Not specified";
+    getElementById("display-sample-qbn-id").textContent = sampleInfo.sample_qbn_id || "Not specified";
+    getElementById("display-assay-name").textContent = wsUnitConfig.assay_display_name || wsUnitConfig.assay_name || "Not specified";
+    
+    // Product information
+    const servingWeightElement = getElementById("display-serving-weight");
+    if (hasServingWeight) {
+        servingWeightElement.textContent = `${sampleInfo.serving_weight}g`;
+        servingWeightElement.className = "sample-info-value available";
+    } else {
+        servingWeightElement.textContent = "Not specified";
+        servingWeightElement.className = "sample-info-value missing";
+    }
+    
+    const servingsPerPackageElement = getElementById("display-servings-per-package");
+    if (hasServingsPerPackage) {
+        servingsPerPackageElement.textContent = sampleInfo.servings_per_package;
+        servingsPerPackageElement.className = "sample-info-value available";
+    } else {
+        servingsPerPackageElement.textContent = "Not specified";
+        servingsPerPackageElement.className = "sample-info-value missing";
+    }
+    
+    // Moisture content
+    const moistureElement = getElementById("display-moisture-content");
+    if (wsUnitConfig.moisture_found && wsUnitConfig.moisture_value > 0) {
+        moistureElement.textContent = `${parseFloat(wsUnitConfig.moisture_value).toFixed(2)}%`;
+        moistureElement.className = "sample-info-value available";
+    } else {
+        moistureElement.textContent = "Not available";
+        moistureElement.className = "sample-info-value missing";
+    }
+    
+    // Selected units
+    getElementById("display-selected-units").textContent = selectedOutputUnits.join(", ");
+    
+    // Unit availability warning
+    const warningElement = getElementById("unit-availability-warning");
+    const warningTextElement = getElementById("unit-warning-text");
+    
+    const missingMgServing = !hasServingWeight && wsUnitConfig.allowed_units?.includes('mg/serving');
+    const missingMgPackage = (!hasServingWeight || !hasServingsPerPackage) && wsUnitConfig.allowed_units?.includes('mg/package');
+    
+    if (missingMgServing || missingMgPackage) {
+        let warningText = "Some units are unavailable: ";
+        const unavailableUnits = [];
+        
+        if (missingMgServing) {
+            unavailableUnits.push("mg/serving (requires serving weight)");
+        }
+        if (missingMgPackage) {
+            const reason = !hasServingWeight ? "requires serving weight" : "requires servings per package";
+            unavailableUnits.push(`mg/package (${reason})`);
+        }
+        
+        warningText += unavailableUnits.join(", ");
+        warningTextElement.textContent = warningText;
+        warningElement.style.display = "block";
+    } else {
+        warningElement.style.display = "none";
+    }
+}
+
+// Update the sample info section when units change
+function updateSampleInfoDisplay() {
+    const selectedUnits = getSelectedOutputUnits();
+    getElementById("display-selected-units").textContent = selectedUnits.join(", ");
+}
+
+// Initialize the multi-unit selector UI
+function initializeMultiUnitSelector(allowedUnits, initialSelection) {
+    const container = getElementById("multi-unit-checkboxes");
+    if (!container) {
+        console.error("Multi-unit selector container not found");
+        return;
+    }
+    
+    container.innerHTML = ''; // Clear existing content
+    
+    allowedUnits.forEach(unit => {
+        // Create checkbox container
+        const checkboxItem = document.createElement('div');
+
+        
+        // Create checkbox
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.id = `output-unit-${escapeUnitForId(unit)}`;
+        checkbox.value = unit;
+        checkbox.checked = initialSelection.includes(unit);
+        
+        // Create label
+        const label = document.createElement('label');
+        label.htmlFor = `output-unit-${escapeUnitForId(unit)}`;
+        label.textContent = unit;
+        
+        // Add event listener
+        checkbox.addEventListener('change', (e) => {
+            handleUnitCheckboxChange(unit, e.target.checked);
+        });
+        
+        // Assemble the UI
+        checkboxItem.appendChild(checkbox);
+        checkboxItem.appendChild(label);
+        container.appendChild(checkboxItem);
+    });
+}
+
+// Handle unit checkbox change events
+function handleUnitCheckboxChange(unit, isChecked) {
+    if (isChecked) {
+        addOutputUnit(unit);
+    } else {
+        const removed = removeOutputUnit(unit);
+        if (!removed) {
+            // If removal failed (e.g., last unit), reset the checkbox
+            const checkbox = getElementById(`output-unit-${escapeUnitForId(unit)}`);
+            if (checkbox) {
+                checkbox.checked = true;
+            }
+            alert("At least one output unit must be selected.");
+            return; // Don't update anything if removal failed
+        }
+    }
+    
+    // Update display unit selector options (skip bulk update since we'll do it below)
+    updateDisplayUnitSelector(true);
+    
+    // Update sample info display with new selected units
+    updateSampleInfoDisplay();
+    
+    // Rebuild table structure with new unit columns
+    rebuildTableForMultiUnit();
+    
+    // Note: wsGenerateFinalResults() is called by rebuildTableForMultiUnit() -> bulkUpdateResults() -> wsUpdateSummary()
+    // No need to call it again here
+}
+
+// Update the sample info section when units change
+function updateSampleInfoDisplay() {
+    const selectedUnits = getSelectedOutputUnits();
+    getElementById("display-selected-units").textContent = selectedUnits.join(", ");
+}
+
+// Update the multi-unit selector UI to reflect current selection
+function updateMultiUnitSelector() {
+    const currentSelection = getSelectedOutputUnits();
+    const wsUnitConfig = JSON.parse(getElementById("ws-unit-config")?.textContent || "{}");
+    const allowedUnits = wsUnitConfig.allowed_units || ['ppb'];
+    
+    allowedUnits.forEach(unit => {
+        const checkbox = getElementById(`output-unit-${escapeUnitForId(unit)}`);
+        if (checkbox) {
+            checkbox.checked = currentSelection.includes(unit);
+        }
+    });
+}
+
+// Multi-unit configuration management
+function getSelectedOutputUnits() {
+    // Return the current selected output units
+    return selectedOutputUnits || [];
+}
+
+function setSelectedOutputUnits(units) {
+    // Validate and set selected output units
+    const wsUnitConfig = JSON.parse(getElementById("ws-unit-config")?.textContent || "{}");
+    const allowedUnits = wsUnitConfig.allowed_units || ['ppb'];
+    
+    // Filter to only valid units
+    const validUnits = units.filter(unit => allowedUnits.includes(unit));
+    
+    // Ensure at least one unit is selected
+    if (validUnits.length === 0) {
+        console.warn("Cannot set empty unit selection, keeping current selection");
+        return false;
+    }
+    
+    selectedOutputUnits = [...validUnits];
+    console.log("Selected output units updated:", selectedOutputUnits);
+    
+    // Update the UI to reflect the new selection
+    updateMultiUnitSelector();
+    updateDisplayUnitSelector();
+    
+    return true;
+}
+
+function addOutputUnit(unit) {
+    // Add a unit to the selected output units
+    const wsUnitConfig = JSON.parse(getElementById("ws-unit-config")?.textContent || "{}");
+    const allowedUnits = wsUnitConfig.allowed_units || ['ppb'];
+    
+    if (!allowedUnits.includes(unit)) {
+        console.warn("Cannot add invalid unit:", unit);
+        return false;
+    }
+    
+    if (!selectedOutputUnits.includes(unit)) {
+        selectedOutputUnits.push(unit);
+        console.log("Added output unit:", unit, "Current selection:", selectedOutputUnits);
+    }
+    return true;
+}
+
+function removeOutputUnit(unit) {
+    // Remove a unit from selected output units (with minimum validation)
+    if (selectedOutputUnits.length <= 1) {
+        console.warn("Cannot remove last remaining output unit");
+        return false;
+    }
+    
+    const index = selectedOutputUnits.indexOf(unit);
+    if (index > -1) {
+        selectedOutputUnits.splice(index, 1);
+        console.log("Removed output unit:", unit, "Current selection:", selectedOutputUnits);
+        return true;
+    }
+    return false;
+}
+
+function isOutputUnitSelected(unit) {
+    // Check if a unit is currently selected for output
+    return selectedOutputUnits.includes(unit);
+}
+
+// Display unit management for table headers and display
+let currentDisplayUnit = 'ppb'; // Fallback - will be properly set during initialization
+
+function initializeDisplayUnitSelector(allowedUnits, defaultUnit) {
+    const selector = getElementById("display-unit-selector");
+    if (!selector) {
+        console.error("Display unit selector not found");
+        return;
+    }
+    
+    selector.innerHTML = ''; // Clear existing options
+    
+    allowedUnits.forEach(unit => {
+        const option = document.createElement('option');
+        option.value = unit;
+        option.textContent = unit;
+        option.selected = unit === defaultUnit;
+        selector.appendChild(option);
+    });
+    
+    // Set current display unit
+    currentDisplayUnit = defaultUnit;
+    
+    // Add event listener
+    selector.addEventListener('change', (e) => {
+        handleDisplayUnitChange(e.target.value);
+    });
+}
+
+function updateDisplayUnitSelector(skipBulkUpdate = false) {
+    const selector = getElementById("display-unit-selector");
+    if (!selector) {
+        console.error("Display unit selector not found");
+        return;
+    }
+    
+    const selectedUnits = getSelectedOutputUnits();
+    
+    // Clear existing options
+    selector.innerHTML = '';
+    
+    // Add options for all selected output units
+    selectedUnits.forEach(unit => {
+        const option = document.createElement('option');
+        option.value = unit;
+        option.textContent = unit;
+        option.selected = unit === currentDisplayUnit;
+        selector.appendChild(option);
+    });
+    
+    // If current display unit is no longer selected, switch to first available
+    if (!selectedUnits.includes(currentDisplayUnit)) {
+        currentDisplayUnit = selectedUnits[0];
+        selector.value = currentDisplayUnit;
+        updateHeaders(currentDisplayUnit);
+        
+        // Only call bulkUpdateResults if we're not skipping it (i.e., this is a standalone call)
+        if (!skipBulkUpdate) {
+            bulkUpdateResults();
+        }
+    }
+}
+
+function handleDisplayUnitChange(newDisplayUnit) {
+    currentDisplayUnit = newDisplayUnit;
+    console.log("Display unit changed to:", newDisplayUnit);
+    
+    // Update headers
+    updateHeaders(currentDisplayUnit);
+    
+    // Recalculate and update all displays
+    bulkUpdateResults();
+}
+
+function getCurrentDisplayUnit() {
+    return currentDisplayUnit;
+}
+
+// Check if compliance mode is enabled
+function isComplianceMode() {
+    const complianceCheckbox = getElementById("compliance-checkbox");
+    return complianceCheckbox ? complianceCheckbox.checked : true; // Default to true if checkbox not found
+}
+
+// Check if uncertainty mode is enabled
+function isUncertaintyMode() {
+    const uncertaintyCheckbox = getElementById("uncertainty-checkbox");
+    return uncertaintyCheckbox ? uncertaintyCheckbox.checked : false; // Default to false if checkbox not found
+}
+
+// Rebuild table headers with multiple Final Result columns
+function rebuildTableHeaders() {
+    const selectedUnits = getSelectedOutputUnits();
+    const displayUnit = getCurrentDisplayUnit();
+    
+    // Find all table headers that need to be updated
+    const tableHeaders = getElements('thead tr');
+    
+    tableHeaders.forEach(headerRow => {
+        // Check if this is a summary table or test table
+        const summaryTable = headerRow.closest('#ws-tab-summary');
+        const testTable = headerRow.closest('[id^="ws-tab-"]:not(#ws-tab-summary):not(#ws-tab-statistics):not(#ws-tab-settings):not(#ws-tab-sample-info)');
+        
+        if (summaryTable) {
+            // Handle summary table - rebuild with multi-unit columns
+            rebuildSummaryTableHeaders(headerRow, selectedUnits);
+        } else if (testTable) {
+            // Handle test table - rebuild with multi-unit columns  
+            rebuildTestTableHeaders(headerRow, selectedUnits);
+        }
+    });
+}
+
+function rebuildSummaryTableHeaders(headerRow, selectedUnits) {
+    // Find the position of the result header
+    const resultHeader = headerRow.querySelector('[name="final-header"]') || 
+                        headerRow.querySelector('th:nth-child(4)'); // Result column
+    if (!resultHeader) return;
+    
+    // Remove all existing result headers
+    const existingResultHeaders = headerRow.querySelectorAll('[name^="final-header"]');
+    existingResultHeaders.forEach(header => header.remove());
+    
+    // Find the position where to insert new headers (before limit-header)
+    const limitHeader = headerRow.querySelector('[name="limit-header"]') ||
+                       headerRow.querySelector('th:nth-child(5)'); // Limit column
+    
+    // Create new result headers for each selected unit
+    selectedUnits.forEach((unit, index) => {
+        const newHeader = document.createElement('th');
+        newHeader.setAttribute('name', `final-header-${unit}`);
+        newHeader.setAttribute('class', 'summary-sortable');
+        newHeader.textContent = `Result (${unit})`;
+        
+        // Insert before the limit header
+        if (limitHeader) {
+            headerRow.insertBefore(newHeader, limitHeader);
+        } else {
+            headerRow.appendChild(newHeader);
+        }
+    });
+}
+
+function rebuildTestTableHeaders(headerRow, selectedUnits) {
+    // Find the position of the final-header
+    const finalHeader = headerRow.querySelector('[name="final-header"]') || 
+                        headerRow.querySelector('th:nth-child(6)'); // Result column;
+    if (!finalHeader) return;
+    
+    // Remove all existing final result headers (more thorough cleanup)
+    const existingFinalHeaders = headerRow.querySelectorAll('[name^="final-header"]');
+    existingFinalHeaders.forEach(header => header.remove());
+    
+    // Find the position where to insert new headers (before limit-header)
+    const limitHeader = headerRow.querySelector('[name="limit-header"]') ||
+                       headerRow.querySelector('th:nth-child(7)'); // Limit column;
+    
+    // Create new final result headers for each selected unit
+    selectedUnits.forEach((unit, index) => {
+        const newHeader = document.createElement('th');
+        newHeader.setAttribute('name', `final-header-${unit}`);
+        newHeader.setAttribute('class', 'test-sortable');
+        newHeader.setAttribute('data-column', `4-${index}`);
+        newHeader.textContent = `Final Result (${unit})`;
+        
+        // Insert before the limit header
+        if (limitHeader) {
+            headerRow.insertBefore(newHeader, limitHeader);
+        } else {
+            headerRow.appendChild(newHeader);
+        }
+    });
+}
+
+// Rebuild table rows with multiple Final Result columns
+function rebuildTableRows() {
+    const selectedUnits = getSelectedOutputUnits();
+    
+    // Find summary table rows
+    const summaryRows = getElements('#ws-summary-body tr[data-ws-analyte]');
+    summaryRows.forEach(row => rebuildSummaryTableRow(row, selectedUnits));
+    
+    // Find test table rows - look in all test tabs for rows with analyte data
+    const testRows = getElements('tr[data-ws-analyte][data-ws-test]');
+    console.log("Found", testRows.length, "test rows");
+    testRows.forEach(row => rebuildTestTableRow(row, selectedUnits));
+}
+
+function rebuildSummaryTableRow(row, selectedUnits) {
+    // Remove all existing result cells (but keep other cells)
+    const existingResultCells = row.querySelectorAll('[name^="ws_mean_"]');
+    existingResultCells.forEach(cell => cell.remove());
+    
+    // Find the position where to insert new cells (before limit cell)
+    const limitCell = row.querySelector('.ws-summary-limit');
+    const analyte = row.getAttribute('data-ws-analyte');
+    
+    // Create new result cells for each selected unit
+    selectedUnits.forEach(unit => {
+        const newCell = document.createElement('td');
+        newCell.setAttribute('class', 'ws-summary-mean');
+        newCell.setAttribute('name', `ws_mean_${analyte}_${unit}`);
+        newCell.setAttribute('data-unit', unit);
+        newCell.textContent = 'NT';
+        
+        // Insert before the limit cell
+        if (limitCell) {
+            row.insertBefore(newCell, limitCell);
+        } else {
+            row.appendChild(newCell);
+        }
+    });
+}
+
+function rebuildTestTableRow(row, selectedUnits) {
+    // Remove all existing final result cells
+    const existingFinalCells = row.querySelectorAll('[name^="ws_final_"]');
+    existingFinalCells.forEach(cell => cell.remove());
+    
+    // Find the position where to insert new cells (before ws-limit)
+    const limitCell = row.querySelector('.ws-limit');
+    
+    // Get analyte and test info from the row
+    const analyte = row.getAttribute('data-ws-analyte');
+    const testId = row.getAttribute('data-ws-test');
+    
+    // Create new final result cells for each selected unit
+    selectedUnits.forEach(unit => {
+        const newCell = document.createElement('td');
+        newCell.setAttribute('class', 'ws-final');
+        newCell.setAttribute('name', `ws_final_${analyte}_${testId}_${unit}`);
+        newCell.setAttribute('data-unit', unit);
+        newCell.textContent = 'NT';
+        
+        // Insert before the limit cell
+        if (limitCell) {
+            row.insertBefore(newCell, limitCell);
+        } else {
+            row.appendChild(newCell);
+        }
+    });
+}
+
+// Main function to rebuild tables for multi-unit output
+function rebuildTableForMultiUnit() {
+    console.log("Rebuilding tables for multi-unit output");
+    
+    // First rebuild headers to accommodate multiple unit columns
+    rebuildTableHeaders();
+    
+    // Then rebuild rows to match the new header structure
+    rebuildTableRows();
+    
+    // Recalculate all results with the new table structure
+    bulkUpdateResults();
+    
+    console.log("Table rebuild complete");
+}
+
+function applyDataProtection(enable) {
+    // Protect instrument result inputs
+    const instrumentInputs = document.querySelectorAll('.ws-instrument');
+    instrumentInputs.forEach(input => {
+        if (enable) {
+            input.readOnly = true;
+            input.classList.add('data-locked');
+            input.title = "Field is locked for data integrity. Click 'Request Data Unlock' to modify.";
+        } else {
+            input.readOnly = false;
+            input.classList.remove('data-locked');
+            input.title = "Field is unlocked for editing - deviation logged.";
+        }
+    });
+    
+    // Protect include checkboxes
+    // Clear existing options
+    selector.innerHTML = '';
+    
+    // Add options for all selected output units
+    selectedUnits.forEach(unit => {
+        const option = document.createElement('option');
+        option.value = unit;
+        option.textContent = unit;
+        option.selected = unit === currentDisplayUnit;
+        selector.appendChild(option);
+    });
+    
+    // If current display unit is no longer selected, switch to first available
+    if (!selectedUnits.includes(currentDisplayUnit)) {
+        currentDisplayUnit = selectedUnits[0];
+        selector.value = currentDisplayUnit;
+        updateHeaders(currentDisplayUnit);
+        
+        // Only call bulkUpdateResults if we're not skipping it (i.e., this is a standalone call)
+        if (!skipBulkUpdate) {
+            bulkUpdateResults();
+        }
+    }
+}
+
+// Data Integrity Protection System
+let dataIntegrityState = {
+    isLocked: true,
+    deviations: [],
+    currentDeviation: null
+};
+
+function initializeDataIntegrityProtection() {
+    // Load existing deviations from storage
+    loadExistingDeviations();
+    
+    // Apply protection by default
+    applyDataProtection(true);
+    
+    // Setup event handlers
+    getElementById('data-protection-enabled').addEventListener('change', function() {
+        if (this.checked) {
+            applyDataProtection(true);
+            dataIntegrityState.isLocked = true;
+        } else {
+            applyDataProtection(false);
+            dataIntegrityState.isLocked = false;
+        }
+        updateProtectionUI();
+    });
+    
+    getElementById('unlock-data-btn').addEventListener('click', function() {
+        if (dataIntegrityState.isLocked) {
+            showDeviationModal();
+        }
+    });
+    
+    getElementById('lock-data-btn').addEventListener('click', function() {
+        // Log the re-locking if there was an active deviation
+        if (dataIntegrityState.currentDeviation && !dataIntegrityState.isLocked) {
+            dataIntegrityState.currentDeviation.relockTime = new Date().toISOString();
+            dataIntegrityState.currentDeviation = null;
+            updateDeviationStorage();
+        }
+        
+        applyDataProtection(true);
+        dataIntegrityState.isLocked = true;
+        updateProtectionUI();
+        console.log("Data protection re-enabled");
+    });
+    
+    // Setup deviation modal handlers
+    setupDeviationModal();
+    
+    // Setup deviation review modal handlers
+    setupDeviationReviewModal();
+    
+    console.log("Data integrity protection initialized");
+}
+
+function loadExistingDeviations() {
+    const deviationField = document.getElementsByName('ws_deviations')[0];
+    if (deviationField && deviationField.value) {
+        try {
+            dataIntegrityState.deviations = JSON.parse(deviationField.value) || [];
+            // Find the most recent deviation if data is currently unlocked
+            if (dataIntegrityState.deviations.length > 0 && !dataIntegrityState.isLocked) {
+                dataIntegrityState.currentDeviation = dataIntegrityState.deviations[dataIntegrityState.deviations.length - 1];
+            }
+        } catch (e) {
+            console.warn('Failed to load existing deviations:', e);
+            dataIntegrityState.deviations = [];
+        }
+    }
+    
+    // Ensure UI is updated after loading
+    updateProtectionUI();
+}
+
+function applyDataProtection(enable) {
+    // Protect instrument result inputs
+    const instrumentInputs = document.querySelectorAll('.ws-instrument');
+    instrumentInputs.forEach(input => {
+        if (enable) {
+            input.readOnly = true;
+            input.classList.add('data-locked');
+            input.title = "Field is locked for data integrity. Click 'Request Data Unlock' to modify.";
+        } else {
+            input.readOnly = false;
+            input.classList.remove('data-locked');
+            input.title = "Field is unlocked for editing - deviation logged.";
+        }
+    });
+    
+    // Protect include checkboxes
+    const includeCheckboxes = document.querySelectorAll('.ws-include, .ws-include-all');
+    includeCheckboxes.forEach(checkbox => {
+        if (enable) {
+            checkbox.disabled = true;
+            checkbox.classList.add('data-locked');
+            checkbox.title = "Checkbox is locked for data integrity. Excluding analytes requires deviation logging.";
+        } else {
+            checkbox.disabled = false;
+            checkbox.classList.remove('data-locked');
+            checkbox.title = "Checkbox is unlocked - deviation logged for analyte inclusion changes.";
+        }
+    });
+    
+    // Also apply to any future inputs (if dynamically added)
+    const observer = new MutationObserver(function(mutations) {
+        if (enable) {
+            mutations.forEach(function(mutation) {
+                mutation.addedNodes.forEach(function(node) {
+                    if (node.nodeType === 1) {
+                        // Apply protection to any new instrument inputs
+                        const newInputs = node.querySelectorAll ? node.querySelectorAll('.ws-instrument') : [];
+                        newInputs.forEach(input => {
+                            input.readOnly = true;
+                            input.classList.add('data-locked');
+                            input.title = "Field is locked for data integrity. Click 'Request Data Unlock' to modify.";
+                        });
+                        
+                        // Apply protection to any new checkboxes
+                        const newCheckboxes = node.querySelectorAll ? node.querySelectorAll('.ws-include, .ws-include-all') : [];
+                        newCheckboxes.forEach(checkbox => {
+                            checkbox.disabled = true;
+                            checkbox.classList.add('data-locked');
+                            checkbox.title = "Checkbox is locked for data integrity. Excluding analytes requires deviation logging.";
+                        });
+                    }
+                });
+            });
+        }
+    });
+    
+    // Add click handlers for locked field warnings
+    if (enable) {
+        instrumentInputs.forEach(input => {
+            input.addEventListener('click', handleLockedFieldClick);
+        });
+        includeCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('click', handleLockedCheckboxClick);
+        });
+    } else {
+        instrumentInputs.forEach(input => {
+            input.removeEventListener('click', handleLockedFieldClick);
+        });
+        includeCheckboxes.forEach(checkbox => {
+            checkbox.removeEventListener('click', handleLockedCheckboxClick);
+        });
+    }
+    
+    // Only observe when protection is enabled
+    if (enable) {
+        observer.observe(document.body, { childList: true, subtree: true });
+    }
+}
+
+function handleLockedFieldClick(e) {
+    if (e.target.readOnly && e.target.classList.contains('data-locked')) {
+        e.preventDefault();
+        const proceed = confirm(
+            "⚠️ DATA INTEGRITY PROTECTION ACTIVE\n\n" +
+            "This field contains instrument data and is protected from unauthorized changes.\n\n" +
+            "To edit this field, you must log a deviation explaining why manual entry is necessary.\n\n" +
+            "Would you like to request data unlock permission?"
+        );
+        
+        if (proceed) {
+            showDeviationModal();
+        }
+    }
+}
+
+function handleLockedCheckboxClick(e) {
+    if (e.target.disabled && e.target.classList.contains('data-locked')) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        const isIncludeAll = e.target.classList.contains('ws-include-all');
+        const checkboxType = isIncludeAll ? "bulk selection" : "individual analyte inclusion";
+        
+        const proceed = confirm(
+            "⚠️ DATA INTEGRITY PROTECTION ACTIVE\n\n" +
+            `This ${checkboxType} checkbox is protected to prevent unauthorized exclusion of analytes from calculations.\n\n` +
+            "Excluding analytes can affect:\n" +
+            "• RSD calculations and statistics\n" +
+            "• Sample compliance status\n" +
+            "• Reporting accuracy\n\n" +
+            "To modify analyte inclusion, you must log a deviation explaining the scientific justification.\n\n" +
+            "Would you like to request data unlock permission?"
+        );
+        
+        if (proceed) {
+            showDeviationModal();
+        }
+        
+        return false;
+    }
+}
+
+function updateProtectionUI() {
+    const statusBadge = document.getElementById('protection-status');
+    const lockBtn = document.getElementById('lock-data-btn');
+    const unlockBtn = document.getElementById('unlock-data-btn');
+    const protectionCheckbox = document.getElementById('data-protection-enabled');
+    
+    if (dataIntegrityState.isLocked) {
+        statusBadge.textContent = 'LOCKED';
+        statusBadge.className = 'protection-status locked';
+        lockBtn.disabled = true;
+        unlockBtn.disabled = false;
+        protectionCheckbox.checked = true;
+    } else {
+        statusBadge.textContent = 'UNLOCKED';
+        statusBadge.className = 'protection-status unlocked';
+        lockBtn.disabled = false;
+        unlockBtn.disabled = true;
+        protectionCheckbox.checked = false;
+    }
+    
+    updateDeviationSummary();
+}
+
+function showDeviationModal() {
+    document.getElementById('deviation-modal').style.display = 'block';
+    // Clear previous form data
+    document.getElementById('deviation-form').reset();
+}
+
+function hideDeviationModal() {
+    document.getElementById('deviation-modal').style.display = 'none';
+}
+
+function setupDeviationModal() {
+    // Close button
+    getElement('.deviation-close').addEventListener('click', hideDeviationModal);
+    
+    // Cancel button
+    document.getElementById('cancel-deviation').addEventListener('click', hideDeviationModal);
+    
+    // Click outside modal to close
+    window.addEventListener('click', function(event) {
+        const modal = document.getElementById('deviation-modal');
+        if (event.target === modal) {
+            hideDeviationModal();
+        }
+    });
+    
+    // Form submission
+    document.getElementById('deviation-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        handleDeviationSubmission();
+    });
+}
+
+function setupDeviationReviewModal() {
+    // Review Deviations button
+    const reviewBtn = document.getElementById('review-deviations-btn');
+    if (reviewBtn) {
+        reviewBtn.addEventListener('click', showDeviationReview);
+    }
+    
+    // Close button
+    const closeBtn = getElement('.deviation-review-close');
+    if (closeBtn) {
+        closeBtn.addEventListener('click', hideDeviationReview);
+    }
+    
+    // Close button (alternative)
+    const closeBtn2 = document.getElementById('close-deviation-review');
+    if (closeBtn2) {
+        closeBtn2.addEventListener('click', hideDeviationReview);
+    }
+    
+    // Export button
+    const exportBtn = document.getElementById('export-deviations-btn');
+    if (exportBtn) {
+        exportBtn.addEventListener('click', exportDeviations);
+    }
+    
+    // Click outside modal to close
+    window.addEventListener('click', function(event) {
+        const modal = document.getElementById('deviation-review-modal');
+        if (event.target === modal) {
+            hideDeviationReview();
+        }
+    });
+}
+
+function handleDeviationSubmission() {
+    const form = document.getElementById('deviation-form');
+    
+    // Validate required fields
+    const analystName = document.getElementById('analyst-name').value.trim();
+    const reason = document.getElementById('deviation-reason').value;
+    const description = document.getElementById('deviation-description').value.trim();
+    
+    // Detailed validation with specific error messages
+    if (!analystName) {
+        alert('❌ Analyst name is required.');
+        document.getElementById('analyst-name').focus();
+        return;
+    }
+    
+    if (!reason) {
+        alert('❌ Please select a reason for data modification.');
+        document.getElementById('deviation-reason').focus();
+        return;
+    }
+    
+    if (!description || description.length < 10) {
+        alert('❌ Please provide a detailed description (minimum 10 characters).');
+        document.getElementById('deviation-description').focus();
+        return;
+    }
+    
+    // Create deviation record
+    const deviation = {
+        id: `DEV-${Date.now()}`,
+        timestamp: new Date().toISOString(),
+        analyst: analystName,
+        reason: reason,
+        description: description,
+        unlockTime: new Date().toISOString(),
+        relockTime: null
+    };
+    
+    // Store deviation
+    dataIntegrityState.deviations.push(deviation);
+    dataIntegrityState.currentDeviation = deviation;
+    
+    // Save to hidden field for persistence
+    updateDeviationStorage();
+    
+    // Unlock data
+    applyDataProtection(false);
+    dataIntegrityState.isLocked = false;
+    
+    // Update UI
+    updateProtectionUI();
+    hideDeviationModal();
+    
+    console.log('Deviation logged and data unlocked:', deviation);
+    
+    // Show success message with deviation details
+    alert(
+        `✅ DEVIATION LOGGED SUCCESSFULLY\n\n` +
+        `Deviation ID: ${deviation.id}\n` +
+        `Analyst: ${analystName}\n` +
+        `Reason: ${reason}\n` +
+        `Time: ${new Date().toLocaleString()}\n\n` +
+        `⚠️ Data is now unlocked for editing. Remember to lock data when finished.`
+    );
+}
+
+function updateDeviationStorage() {
+    // Store deviations in a hidden field for persistence
+    let deviationField = document.getElementsByName('ws_deviations')[0];
+    if (!deviationField) {
+        deviationField = document.createElement('textarea');
+        deviationField.name = 'ws_deviations';
+        deviationField.style.display = 'none';
+        document.body.appendChild(deviationField);
+    }
+    deviationField.value = JSON.stringify(dataIntegrityState.deviations);
+}
+
+function updateDeviationSummary() {
+    const summaryDiv = document.getElementById('deviation-summary');
+    const deviationCount = dataIntegrityState.deviations.length;
+    
+    if (deviationCount === 0) {
+        summaryDiv.innerHTML = `
+            <span style="color: #28a745;">✅ No deviations logged.</span><br>
+            <small>All instrument data remains unmodified.</small>
+        `;
+    } else {
+        const currentDeviation = dataIntegrityState.currentDeviation;
+        if (currentDeviation && !dataIntegrityState.isLocked) {
+            summaryDiv.innerHTML = `
+                <div style="padding: 8px; background-color: #fff3cd; border: 1px solid #ffc107; border-radius: 4px;">
+                    <strong style="color: #856404;">🔓 ACTIVE DEVIATION</strong><br>
+                    <strong>ID:</strong> ${currentDeviation.id}<br>
+                    <strong>Analyst:</strong> ${currentDeviation.analyst}<br>
+                    <strong>Reason:</strong> ${currentDeviation.reason}<br>
+                    <strong>Unlocked:</strong> ${new Date(currentDeviation.timestamp).toLocaleString()}<br>
+                    <small style="color: #dc3545;">⚠️ Data is currently unlocked for editing</small>
+                </div>
+            `;
+        } else {
+            const lastDeviation = dataIntegrityState.deviations[deviationCount-1];
+            summaryDiv.innerHTML = `
+                <div style="padding: 8px; background-color: #d4edda; border: 1px solid #28a745; border-radius: 4px;">
+                    <strong style="color: #155724;">📋 Deviations Summary</strong><br>
+                    <strong>Total Logged:</strong> ${deviationCount}<br>
+                    <strong>Last:</strong> ${lastDeviation.id}<br>
+                    <strong>Time:</strong> ${new Date(lastDeviation.timestamp).toLocaleString()}<br>
+                    <strong>Analyst:</strong> ${lastDeviation.analyst}
+                </div>
+            `;
+        }
+    }
+    
+    // Update tab indicators if data is unlocked
+    updateTabIndicators();
+}
+
+function updateTabIndicators() {
+    const testTabs = document.querySelectorAll('.ws-tab-btn[data-ws-tab]');
+    testTabs.forEach(tab => {
+        const tabText = tab.textContent;
+        const baseText = tabText.replace(' 🔓', '').replace(' 🔒', '');
+        
+        if (!dataIntegrityState.isLocked && dataIntegrityState.currentDeviation) {
+            // Add unlock indicator (keep original tab styling)
+            tab.textContent = baseText + ' 🔓';
+            tab.title = 'Data is unlocked for editing - deviation active';
+        } else {
+            // Add lock indicator (keep original tab styling)
+            tab.textContent = baseText + ' 🔒';
+            tab.title = 'Data is protected by integrity controls';
+        }
+    });
+}
+
+// Deviation Review Functions
+function showDeviationReview() {
+    const modal = document.getElementById('deviation-review-modal');
+    const content = document.getElementById('deviation-review-content');
+    
+    // Load and display current deviations
+    const deviations = dataIntegrityState.deviations || [];
+    
+    if (deviations.length === 0) {
+        content.innerHTML = `
+            <div style="text-align: center; padding: 40px; color: #666;">
+                <h4>✅ No Deviations Found</h4>
+                <p>No data integrity deviations have been logged for this worksheet.</p>
+                <p><small>This indicates that all instrument data and analyte inclusions remain unmodified.</small></p>
+            </div>
+        `;
+    } else {
+        content.innerHTML = generateDeviationReviewHTML(deviations);
+    }
+    
+    modal.style.display = 'block';
+}
+
+function generateDeviationReviewHTML(deviations) {
+    let html = `
+        <div style="margin-bottom: 15px;">
+            <strong>Total Deviations:</strong> ${deviations.length}
+            <span style="margin-left: 20px; color: #666;">Click any deviation for full details</span>
+        </div>
+        <div class="deviation-list">
+    `;
+    
+    deviations.forEach((deviation, index) => {
+        const unlockTime = new Date(deviation.unlockTime).toLocaleString();
+        const relockTime = deviation.relockTime ? new Date(deviation.relockTime).toLocaleString() : 'Still Unlocked';
+        const duration = deviation.relockTime 
+            ? Math.round((new Date(deviation.relockTime) - new Date(deviation.unlockTime)) / (1000 * 60)) + ' minutes'
+            : 'Ongoing';
+        
+        const statusClass = deviation.relockTime ? 'deviation-completed' : 'deviation-active';
+        const statusText = deviation.relockTime ? 'Completed' : 'Active';
+        
+        html += `
+            <div class="deviation-item ${statusClass}" onclick="toggleDeviationDetails(${index})">
+                <div class="deviation-header">
+                    <span class="deviation-id">${deviation.id}</span>
+                    <span class="deviation-status">${statusText}</span>
+                    <span class="deviation-time">${unlockTime}</span>
+                </div>
+                <div class="deviation-summary">
+                    <strong>Analyst:</strong> ${deviation.analyst} | 
+                    <strong>Reason:</strong> ${deviation.reason} | 
+                    <strong>Duration:</strong> ${duration}
+                </div>
+                <div class="deviation-details" id="deviation-details-${index}" style="display: none;">
+                    <div style="margin: 10px 0; padding: 10px; background: #f8f9fa; border-radius: 4px;">
+                        <h5>Detailed Description:</h5>
+                        <p style="margin: 5px 0; white-space: pre-wrap;">${deviation.description}</p>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0;">
+                        <div><strong>Unlock Time:</strong><br>${unlockTime}</div>
+                        <div><strong>Relock Time:</strong><br>${relockTime}</div>
+                        <div><strong>Duration:</strong><br>${duration}</div>
+                        <div></div>
+                    </div>
+                </div>
+            </div>
+        `;
+    });
+    
+    html += '</div>';
+    return html;
+}
+
+function toggleDeviationDetails(index) {
+    const details = document.getElementById(`deviation-details-${index}`);
+    const isVisible = details.style.display !== 'none';
+    details.style.display = isVisible ? 'none' : 'block';
+}
+
+function hideDeviationReview() {
+    document.getElementById('deviation-review-modal').style.display = 'none';
+}
+
+function exportDeviations() {
+    const deviations = dataIntegrityState.deviations || [];
+    
+    if (deviations.length === 0) {
+        alert('No deviations to export.');
+        return;
+    }
+    
+    // Get sample ID and assay display name for traceability
+    const sampleInfo = JSON.parse(getElementById("ws-sample-info")?.textContent || "{}");
+    const wsUnitConfig = JSON.parse(getElementById("ws-unit-config")?.textContent || "{}");
+    const sampleId = sampleInfo.sample_id || "Not specified";
+    const assayDisplayName = wsUnitConfig.assay_display_name || wsUnitConfig.assay_name || "Not specified";
+    
+    // Create CSV content
+    let csvContent = 'Sample ID,Assay Display Name,Deviation ID,Timestamp,Analyst,Reason,Description,Unlock Time,Relock Time,Duration (minutes)\n';
+    
+    deviations.forEach(deviation => {
+        const unlockTime = new Date(deviation.unlockTime).toISOString();
+        const relockTime = deviation.relockTime ? new Date(deviation.relockTime).toISOString() : '';
+        const duration = deviation.relockTime 
+            ? Math.round((new Date(deviation.relockTime) - new Date(deviation.unlockTime)) / (1000 * 60))
+            : '';
+        
+        // Escape CSV fields
+        const escapeCSV = (str) => str.toString().replace(/"/g, '""');
+        
+        csvContent += [
+            escapeCSV(sampleId),
+            escapeCSV(assayDisplayName),
+            deviation.id,
+            deviation.timestamp,
+            escapeCSV(deviation.analyst),
+            escapeCSV(deviation.reason),
+            `"${escapeCSV(deviation.description)}"`,
+            unlockTime,
+            relockTime,
+            duration
+        ].join(',') + '\n';
+    });
+    
+    // Download CSV
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `deviations_${new Date().toISOString().split('T')[0]}.csv`;
+    link.style.display = 'none';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    
+    console.log('Deviations exported successfully');
+}
+
+// Table sorting functionality
+let sortStates = {}; // Track sort state for each table
+
+function getSortValue(cell) {
+    // Extract text content, removing HTML tags for sorting
+    const text = cell.textContent.trim();
+    
+    // Handle empty/no data cases
+    if (text === '' || text === '-' || text === 'NT') {
+        return { type: 'empty', value: text, sortOrder: 9999 };
+    }
+    
+    // Handle special analytical values
+    if (text === 'ND') {
+        return { type: 'special', value: text, sortOrder: -9999 };
+    }
+    
+    if (text.startsWith('<') || text.includes('LOQ')) {
+        // Extract numeric part for sorting, e.g., "<LOQ" or "<0.1"
+        const numMatch = text.match(/[\d.]+/);
+        const numValue = numMatch ? parseFloat(numMatch[0]) : 0;
+        return { type: 'special', value: text, sortOrder: numValue - 0.001 }; // Sort just below the actual value
+    }
+    
+    // Handle percentage values
+    if (text.endsWith('%')) {
+        const numValue = parseFloat(text.replace('%', ''));
+        return { type: 'numeric', value: isNaN(numValue) ? 0 : numValue, sortOrder: numValue };
+    }
+    
+    // Handle numeric values
+    const numValue = parseFloat(text);
+    if (!isNaN(numValue)) {
+        return { type: 'numeric', value: numValue, sortOrder: numValue };
+    }
+    
+    // Handle status values (Pass/Fail) - custom order, ignore icons
+    const cleanText = text.replace(/[✓✗⚠–]/g, '').trim();
+    if (cleanText === 'Pass') {
+        return { type: 'status', value: cleanText, sortOrder: 1 };
+    }
+    if (cleanText === 'Fail') {
+        return { type: 'status', value: cleanText, sortOrder: 2 };
+    }
+    
+    // Handle text values
+    return { type: 'text', value: text, sortOrder: text.toLowerCase() };
+}
+
+function sortTable(tableBody, columnIndex, ascending = true) {
+    const rows = Array.from(tableBody.querySelectorAll('tr'));
+    
+    rows.sort((a, b) => {
+        const cellA = a.cells[columnIndex];
+        const cellB = b.cells[columnIndex];
+        
+        if (!cellA || !cellB) return 0;
+        
+        const valueA = getSortValue(cellA);
+        const valueB = getSortValue(cellB);
+        
+        // Compare sort orders
+        let comparison = 0;
+        
+        if (typeof valueA.sortOrder === 'string' && typeof valueB.sortOrder === 'string') {
+            comparison = valueA.sortOrder.localeCompare(valueB.sortOrder);
+        } else {
+            comparison = valueA.sortOrder - valueB.sortOrder;
+        }
+        
+        return ascending ? comparison : -comparison;
+    });
+    
+    // Re-append sorted rows
+    rows.forEach(row => tableBody.appendChild(row));
+}
+
+function initializeSorting() {
+    // Initialize sorting for Summary table
+    const summaryHeaders = document.querySelectorAll('#ws-tab-summary .summary-sortable');
+    summaryHeaders.forEach((header, index) => {
+        header.addEventListener('click', () => {
+            const tableBody = document.querySelector('#ws-summary-body');
+            const tableId = 'summary';
+            
+            // Toggle sort direction
+            if (!sortStates[tableId]) sortStates[tableId] = {};
+            if (!sortStates[tableId][index]) sortStates[tableId][index] = 'none';
+            
+            let newDirection;
+            if (sortStates[tableId][index] === 'none' || sortStates[tableId][index] === 'desc') {
+                newDirection = 'asc';
+            } else {
+                newDirection = 'desc';
+            }
+            
+            sortStates[tableId][index] = newDirection;
+            
+            // Clear other column sort indicators
+            summaryHeaders.forEach((h, i) => {
+                if (i !== index) {
+                    h.classList.remove('sort-asc', 'sort-desc');
+                    if (sortStates[tableId][i]) sortStates[tableId][i] = 'none';
+                }
+            });
+            
+            // Update visual indicators
+            header.classList.remove('sort-asc', 'sort-desc');
+            header.classList.add(newDirection === 'asc' ? 'sort-asc' : 'sort-desc');
+            
+            // Sort the table
+            sortTable(tableBody, index, newDirection === 'asc');
+        });
+    });
+    
+    // Initialize sorting for Statistics table
+    const statsHeaders = document.querySelectorAll('#ws-tab-statistics .stats-sortable');
+    statsHeaders.forEach((header, index) => {
+        header.addEventListener('click', () => {
+            const tableBody = document.querySelector('#ws-statistics-body');
+            const tableId = 'statistics';
+            
+            // Toggle sort direction
+            if (!sortStates[tableId]) sortStates[tableId] = {};
+            if (!sortStates[tableId][index]) sortStates[tableId][index] = 'none';
+            
+            let newDirection;
+            if (sortStates[tableId][index] === 'none' || sortStates[tableId][index] === 'desc') {
+                newDirection = 'asc';
+            } else {
+                newDirection = 'desc';
+            }
+            
+            sortStates[tableId][index] = newDirection;
+            
+            // Clear other column sort indicators
+            statsHeaders.forEach((h, i) => {
+                if (i !== index) {
+                    h.classList.remove('sort-asc', 'sort-desc');
+                    if (sortStates[tableId][i]) sortStates[tableId][i] = 'none';
+                }
+            });
+            
+            // Update visual indicators
+            header.classList.remove('sort-asc', 'sort-desc');
+            header.classList.add(newDirection === 'asc' ? 'sort-asc' : 'sort-desc');
+            
+            // Sort the table
+            sortTable(tableBody, index, newDirection === 'asc');
+        });
+    });
+}
+
+// Initialize compliance checkbox based on saved settings or kvstore default
+function initializeComplianceCheckbox() {
+    const complianceCheckbox = getElementById("compliance-checkbox");
+    if (!complianceCheckbox) return;
+    
+    // Try to restore from saved user settings first
+    const savedSettings = getSavedUserSettings();
+    if (savedSettings && savedSettings.compliance_enabled !== undefined) {
+        complianceCheckbox.checked = savedSettings.compliance_enabled;
+        console.log("Compliance checkbox restored from saved settings:", savedSettings.compliance_enabled);
+        return;
+    }
+    
+    // Fallback to kvstore default value for first-time loads
+    const wsUnitConfig = JSON.parse(getElementById("ws-unit-config")?.textContent || "{}");
+    const defaultCompliance = wsUnitConfig.default_compliance !== undefined ? wsUnitConfig.default_compliance : true;
+    
+    complianceCheckbox.checked = defaultCompliance;
+    console.log("Compliance checkbox initialized to kvstore default:", defaultCompliance);
+}
+
+// Get saved user settings from final results (if available)
+function getSavedUserSettings() {
+    try {
+        const finalField = getElementsByName('ws_final_results')[0];
+        if (!finalField || !finalField.value) return null;
+        
+        const finalResults = JSON.parse(finalField.value);
+        return finalResults.user_settings || null;
+    } catch (e) {
+        console.log("No saved user settings found or parse error:", e.message);
+        return null;
+    }
+}
+
+// Restore all user settings from saved data or use defaults
+function restoreUserSettings() {
+    const savedSettings = getSavedUserSettings();
+    const wsUnitConfig = JSON.parse(getElementById("ws-unit-config")?.textContent || "{}");
+    
+    if (!savedSettings) {
+        console.log("No saved settings found, using kvstore defaults");
+        
+        // Initialize compliance checkbox to kvstore default for first-time loads
+        const complianceCheckbox = getElementById("compliance-checkbox");
+        if (complianceCheckbox) {
+            const defaultCompliance = wsUnitConfig.default_compliance !== undefined ? wsUnitConfig.default_compliance : true;
+            complianceCheckbox.checked = defaultCompliance;
+            console.log("Compliance checkbox initialized to kvstore default:", defaultCompliance);
+        }
+        
+        // Initialize uncertainty checkbox to kvstore default (or false if no default)
+        const uncertaintyCheckbox = getElementById("uncertainty-checkbox");
+        if (uncertaintyCheckbox) {
+            const defaultUncertainty = wsUnitConfig.default_uncertainty !== undefined ? wsUnitConfig.default_uncertainty : false;
+            uncertaintyCheckbox.checked = defaultUncertainty;
+            console.log("Uncertainty checkbox initialized to kvstore default:", defaultUncertainty);
+        }
+        
+        return false; // Indicate we're using defaults
+    }
+    
+    console.log("Restoring saved user settings:", savedSettings);
+    
+    // Restore compliance mode
+    const complianceCheckbox = getElementById("compliance-checkbox");
+    if (complianceCheckbox && savedSettings.compliance_enabled !== undefined) {
+        complianceCheckbox.checked = savedSettings.compliance_enabled;
+    }
+    
+    // Restore uncertainty mode
+    const uncertaintyCheckbox = getElementById("uncertainty-checkbox");
+    if (uncertaintyCheckbox && savedSettings.uncertainty_enabled !== undefined) {
+        uncertaintyCheckbox.checked = savedSettings.uncertainty_enabled;
+    }
+    
+    // Restore sig figs
+    const sigFigInput = getElementById("sig-fig-input");
+    if (sigFigInput && savedSettings.sig_figs !== undefined) {
+        sigFigInput.value = savedSettings.sig_figs;
+    }
+    
+    // Restore RSD settings
+    const rsdWarningInput = getElementById("rsd-warning-limit");
+    const rsdFailInput = getElementById("rsd-fail-limit");
+    const rsdEnabledCheckbox = getElementById("rsd-check-enabled");
+    
+    if (rsdWarningInput && savedSettings.rsd_warning_limit !== undefined) {
+        rsdWarningInput.value = savedSettings.rsd_warning_limit;
+    }
+    if (rsdFailInput && savedSettings.rsd_fail_limit !== undefined) {
+        rsdFailInput.value = savedSettings.rsd_fail_limit;
+    }
+    if (rsdEnabledCheckbox && savedSettings.rsd_check_enabled !== undefined) {
+        rsdEnabledCheckbox.checked = savedSettings.rsd_check_enabled;
+    }
+    
+    // Restore moisture correction settings
+    const moistureCorrectionCheckbox = getElementById("moisture-correction-enabled");
+    const moistureReportingCheckbox = getElementById("moisture-reporting-enabled");
+    
+    if (moistureCorrectionCheckbox && savedSettings.moisture_correction_enabled !== undefined) {
+        moistureCorrectionCheckbox.checked = savedSettings.moisture_correction_enabled;
+    }
+    if (moistureReportingCheckbox && savedSettings.moisture_reporting_enabled !== undefined) {
+        moistureReportingCheckbox.checked = savedSettings.moisture_reporting_enabled;
+    }
+    
+    // Update moisture display to reflect restored settings
+    updateMoistureDisplay();
+    
+    return true; // Indicate we restored from saved settings
+}
+
+// Initialization completed in main $(document).ready block above
+</script>
+</div>
+<!-- End QBench Worksheet Container -->

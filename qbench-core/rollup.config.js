@@ -1,4 +1,4 @@
-import { terser } from 'rollup-plugin-terser';
+import terser from '@rollup/plugin-terser';
 import copy from 'rollup-plugin-copy';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 
@@ -16,6 +16,7 @@ export default [
       copy({
         targets: [
           { src: 'src/styles/*.css', dest: 'dist/styles' },
+          { src: 'src/styles/qbench-core.css', dest: 'dist', rename: 'qbench-core.css' },
           { src: 'examples/*', dest: 'dist/examples' }
         ]
       })
@@ -69,21 +70,6 @@ export default [
         compress: {
           drop_console: true
         }
-      })
-    ]
-  },
-
-  // Standalone CSS bundle
-  {
-    input: 'src/styles/qbench-core.css',
-    output: {
-      file: 'dist/qbench-core.css'
-    },
-    plugins: [
-      copy({
-        targets: [
-          { src: 'src/styles/qbench-core.css', dest: 'dist', rename: 'qbench-core.css' }
-        ]
       })
     ]
   }

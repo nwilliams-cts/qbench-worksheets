@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QBench CDN Test</title>
+    <!-- Test loading from jsDelivr CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/nwilliams-cts/qbench-worksheet-core@main/dist/qbench-core.css">
+</head>
+<body>
+    <div class="qbench-worksheet">
+        <h1>QBench CDN Test</h1>
+        <p>If this page loads with proper styling, your CDN is working!</p>
+        
+        <div class="qbench-container">
+            <div class="qbench-header">
+                <h2>Test Worksheet</h2>
+            </div>
+            
+            <div class="qbench-tabs">
+                <button class="qbench-tab active">Test Tab</button>
+            </div>
+            
+            <div class="qbench-content">
+                <table class="qbench-table">
+                    <thead>
+                        <tr>
+                            <th>Analyte</th>
+                            <th>Result</th>
+                            <th>Unit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Test Analyte</td>
+                            <td>123.45</td>
+                            <td>ppm</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Test loading JavaScript from CDN -->
+    <script type="module">
+        import { QBenchWorksheet } from 'https://cdn.jsdelivr.net/gh/nwilliams-cts/qbench-worksheet-core@main/dist/qbench-worksheet.esm.min.js';
+        
+        console.log('QBench loaded from CDN:', QBenchWorksheet);
+        
+        // Test basic functionality
+        try {
+            const worksheet = new QBenchWorksheet({
+                containerId: 'test-worksheet',
+                config: {
+                    fieldMappings: {
+                        analytes: ['test-analyte'],
+                        units: ['ppm']
+                    }
+                }
+            });
+            console.log('QBench worksheet instance created successfully!');
+            document.body.innerHTML += '<div style="background: green; color: white; padding: 10px; margin: 10px;">✅ CDN Test Successful! QBench loaded and initialized.</div>';
+        } catch (error) {
+            console.error('Error initializing QBench:', error);
+            document.body.innerHTML += '<div style="background: red; color: white; padding: 10px; margin: 10px;">❌ CDN Test Failed: ' + error.message + '</div>';
+        }
+    </script>
+</body>
+</html>

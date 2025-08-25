@@ -1880,10 +1880,10 @@ td input[type="checkbox"].data-locked::after {
     </div>
   </div>
 </div>
-    
+
 {% for t in tests %}
   {% set test_id = t.id %}
-  <div class="ws-tab-content" id="ws-tab-{{ test_id }}" style="display:none">    
+  <div class="ws-tab-content" id="ws-tab-{{ test_id }}" style="display:none">
     <!--Test Info Table-->
     <table>
         <tr style="display:none"><th>Test Status</th><td id="test-status">{{ t.state }}</td></tr>
@@ -2021,8 +2021,6 @@ __(textarea, cc_export_metadata, html_style="display:none;")__
 
 <!-- Overall Homogeneity Pass/Fail Field -->
 __(input, cc_overall_homogeneity_pass, html_style="display:none;")__
-
-
 
 <script>
 
@@ -3422,7 +3420,6 @@ function wsGenerateFinalResults() {
         dilution: { average: dil, count: validDilutionCount }, 
         weight: { average: wt, count: validWeightCount }
     });
-    
     // Calculate multiplication factor (extraction * dilution / weight)
     const multFactor = (ext * dil) / wt;
     
@@ -4039,7 +4036,7 @@ $(document).ready(function () {
 	const wsUpdatedData = JSON.parse(getElementsByName("ws_live_results")[0]?.value || "{}");
     const isomersMap = JSON.parse(getElementById("ws-isomers-map")?.textContent || "{}");
     const updatedResults = wsUpdatedData;
-      
+    
     function updateRSDConfig() {
         // Update the unit config with current RSD settings
         const wsUnitConfigElement = document.getElementById("ws-unit-config");
@@ -5199,7 +5196,6 @@ function rebuildSummaryTableHeaders(headerRow, selectedUnits) {
             headerRow.appendChild(newHeader);
         }
     });
-
 }
 
 function rebuildTestTableHeaders(headerRow, selectedUnits) {

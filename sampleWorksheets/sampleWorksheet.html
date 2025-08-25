@@ -1555,7 +1555,8 @@ td input[type="checkbox"].data-locked::after {
     </thead>
     <tbody id="ws-statistics-body">
       {% for analyte in analytes %}
-        {% set display_name = kvstore.get(analyte ~ '_display_name') %}
+        {% set analyte_info = kvstore.get("analyte_info")[analyte] or {} %}
+        {% set display_name = analyte_info.get('display_name', "") %}
         <tr data-ws-analyte="{{ analyte }}">
           <td>{{ display_name }}</td>
           <td class="ws-stats-mean" name="ws_stats_mean_{{ analyte }}"></td>

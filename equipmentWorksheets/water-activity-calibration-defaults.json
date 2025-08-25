@@ -1,0 +1,13 @@
+{
+  "water_activity_calibration_defaults": {
+    "standard_name": "Rotronic Salt Solutions",
+    "standard_vendor": "Rotronic Instrument Corp.",
+    "lot_number": "LOT-2024-001",
+    "lot_expiration_date": "2025-12-31",
+    "calibrator_aw_value": 0.750,
+    "calibrator_weight": 2.500,
+    "tolerance_percentage": 10.0,
+    "description": "Default values for water activity meter calibration verification",
+    "last_updated": "2024-08-22"
+  }
+}

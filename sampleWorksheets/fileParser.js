@@ -1,11 +1,28 @@
 importScripts("https://d30nr38ylt5b32.cloudfront.net/v1.0.0/file_parser.js");
 importScripts("https://d731z7k534aiw.cloudfront.net/v2.4.0/qbjs.js");
 
+// Documentation for QBJS: https://qbjs.docs.qbench.net
+function fetchTestWorksheet(qbService, testId) {
+    return new Promise((resolve, reject) => {
+        qbService.ajaxCall({
+            url: "/tests/worksheets/getdata",
+            data: {},
+            urlParams: {
+                ids: testId
+            },
+            success: (data) => resolve(data),
+            error: (error) => reject(error),
+            type: "GET"
+        });
+    });
+}
+
 run(async () => {
     const qbConsole = QB.console; // Object to write to the console
     const qbProgressBar = QB.progressBar; // Object to control the progress bar
     const files = QB.files; // Array of files selected to upload
 
+    const Service = new QBService();
     const BatchService = new QBBatchService();
     const TestService = new QBTestService();
     const SampleService = new QBSampleService();
@@ -14,12 +31,12 @@ run(async () => {
     qbConsole.clear();
     qbConsole.log("Begin process...");
 
-    // var worksheetData = {'testing_file_order': [], 'control_data': {}};
+    var worksheetData = {'testing_file_order': [], 'control_data': {}};
     var kvstoreAssayMapping = {};
 
     for (let file of files) {
         let worksheetData = {'testing_file_order': [], 'control_data': {}};
-        let batchID = file.name.toLowerCase().replace(".txt", "");
+        let batchID = file.name.toLowerCase().replace(".csv", "");
 
         try {
             // Fetch Batch
@@ -41,7 +58,7 @@ run(async () => {
                 kvstoreData = kvstoreAssayMapping[assay.id];
             } else {
                 try {
-                    let assayParamID = "2b220be3-5c3f-4fe0-9b41-f41cd8b751ad" //batch.data.assay.assay_params;
+                    let assayParamID = batch.data.assay.assay_params;
                     let kvstore = await KVStorageService.get({
                         id: assayParamID,
                         success: () => {
@@ -117,33 +134,13 @@ run(async () => {
             let fileSampleID = "";
             let processSample = false;
             let isSample = false;
-            // let qcCounters = {};
-            // qcTypes.forEach(function(type) {qcCounters[type] = 0})
+            let qcCounters = {};
+            qcTypes.forEach(function(type) {qcCounters[type] = 0})
             let i = 0;
-            
-            dataColumnsToAnalytesMap = {
-                "CBDVA": "cbdva",
-                "CBDV": "cbdv",
-                "CBDA": "cbda",
-                "CBD": "cbd",
-                "CBGA": "cbga",
-                "CBG": "cbg",
-                "CBN": "cbn",
-                "THCV": "thcv",
-                "THCA": "thca",
-                "THCVA": "thcva",
-                "D9 THCV": "d9_thcv",
-                "D9-THC": "d9_thc",
-                "D8-THC": "d8_thc",
-                "D10THC9S": "d10thc9s",
-                "D10THC9R": "d10thc9r",
-                "CBC": "cbc",
-                "CBCA": "cbca"
-            }
             
             for (let row of fileData) {
                 let currentTestID = null;
-                if (i === 0) {
+                if (i === 3) {
                     let j = 0;
                     for (let col of row) {
                         if (dataColumnsToAnalytesMap[col.toString().trim()]) {
@@ -155,31 +152,32 @@ run(async () => {
                 } else if (!row[0].replace("\r", "")) {
                     // skip if no value in first column
                 } else {
-                	fileSampleID = row[1].split('_')[0];
+                	fileSampleID = row[0].split('_')[0];
                     let foundQCType = null;
                     if (testArray.includes(parseInt(fileSampleID))) {
                         isSample = true;
                         worksheetData['testing_file_order'].push(parseInt(fileSampleID));
                     } else {
-                        // isSample = false;
-                        // foundQCType = qcTypes.find(qcType => fileSampleID.toLowerCase().includes(qcType));
-                        // if (foundQCType != null) {
-                        //     qcCounters[foundQCType] += 1;
-                        //     let qcName = `${foundQCType}_${qcCounters[foundQCType]}`
-                        //     worksheetData['testing_file_order'].push(qcName);
-                        //     worksheetData['control_data'][qcName] = {"qc_type": foundQCType}
-                        // }
+                        isSample = false;
+                        foundQCType = qcTypes.find(qcType => fileSampleID.toLowerCase().includes(qcType));
+                        if (foundQCType != null) {
+                            qcCounters[foundQCType] += 1;
+                            let qcName = `${foundQCType}_${qcCounters[foundQCType]}`
+                            worksheetData['testing_file_order'].push(qcName);
+                            worksheetData['control_data'][qcName] = {"qc_type": foundQCType}
+                        }
                     }
-                    
+
                     let k = 0;
                     for (let col of row) {
                         let analyte = orderedAnalytes[k];
                         if (isSample && analyte) {
                             let testID = worksheetData['testing_file_order'][worksheetData['testing_file_order'].length-1]
-                            worksheetData[`${analyte}_${testId}_instrument_findings`] = toFloat(row[k]);
+                            worksheetData[`${analyte}_${testID}_raw`] = toFloat(row[k]);
+                           
                         } else if (analyte && foundQCType != null) {
-                            // let qcID = worksheetData['testing_file_order'][worksheetData['testing_file_order'].length-1]
-                            // worksheetData['control_data'][qcID][`${analyte}_raw`] = toFloat(row[k]);
+                            let qcID = worksheetData['testing_file_order'][worksheetData['testing_file_order'].length-1]
+                            worksheetData['control_data'][qcID][`${analyte}_raw`] = toFloat(row[k]);
                         }
                         k += 1;
                     }
@@ -187,31 +185,64 @@ run(async () => {
                 i += 1;
             }
 
-            // worksheetData['testing_file_order'] = JSON.stringify(worksheetData['testing_file_order']);
-            // worksheetData['control_data'] = JSON.stringify(worksheetData['control_data']);
+            worksheetData['testing_file_order'] = JSON.stringify(worksheetData['testing_file_order']);
+            worksheetData['control_data'] = JSON.stringify(worksheetData['control_data']);
             
-            // analytes = kvstoreData.worksheet_analytes;
+            analytes = kvstoreData.worksheet_analytes;
+            
+            
+            for (sampleId in sampleTestMap) {
+                targetTestId = sampleTestMap[sampleId][0];
+                if (worksheetData['testing_file_order'].includes(targetTestId)) {
+                    data = await fetchTestWorksheet(Service, targetTestId);
+                    let baseData = JSON.parse(data)[targetTestId.toString()]["data"] || {};
+                    let updateData = Object.hasOwn(baseData, "ws_instrument_results") ? JSON.parse(baseData['ws_instrument_results']['value']) : {};
+                    console.log(updateData)
+                    if (Object.keys(updateData).length === 0) {
+                        await TestService.update({
+                            data: {"id": targetTestId, "worksheet_json": JSON.stringify({"ws_instrument_results": {"value": JSON.stringify(updateData)}})},
+                            urlParams: {"run_worksheet_calculations": true},
+                            success: () => {
+                                qbConsole.log(`Sample ID: ${sampleId} worksheet has been initialized!`)
+                            },
+                            error: QB.error
+                        });
+                    };
+                    analytes.forEach(function(analyte) {
+                        if (!analyte.includes('total')) {
+                            if (!updateData[analyte]) { updateData[analyte] = {};}
+                            
+                            sampleTestMap[sampleId].forEach(function(testId) {
+                                if (!updateData[analyte][testId]) { updateData[analyte][testId] = worksheetData[`${analyte}_${testId}_raw`]; }
+                                else { updateData[analyte][testId] = worksheetData[`${analyte}_${testId}_raw`]; }
+                                delete worksheetData[`${analyte}_${testId}_raw`]
+                            });
+                        }
+                	});
+                   
+                    finalData = JSON.stringify({"ws_instrument_results": {"value": JSON.stringify(updateData)}});
+					console.log(`Sample: ${sampleId} - ${finalData}`)
 
-            analytes = Object.keys(dataColumnsToAnalytesMap).map(function(key) {
-                return dataColumnsToAnalytesMap[key];
-            });
-            
-            qbConsole.log(testArray);
-            testArray.forEach(async (testId) => {
-                analytes.forEach((analyte) => {
-                    if (!analyte.includes('total')) {
-                    	updateData[`${analyte}_instrument_findings`] = worksheetData[`${analyte}_${testId}_instrument_findings`];
-                    	delete worksheetData[`${analyte}_${testId}_instrument_findings`];
-                	}
-                });
-                
-                await TestService.update({
-                    data: {"id": testId, "worksheet_json": JSON.stringify(updateData)},             
-                    success: () => {
-                    	qbConsole.log(`Sample ID: ${sampleId} worksheet has been updated!`)
-                	},
-                    error: QB.error
-                });
+                    await TestService.update({
+                        data: {"id": sampleTestMap[sampleId][0], "worksheet_json": finalData},
+                        urlParams: {"run_worksheet_calculations": true},
+                        success: () => {
+                            qbConsole.log(`Sample ID: ${sampleId} worksheet has been updated!`)
+                        },
+                        error: QB.error
+                    });
+                }
+            }
+
+            r = await BatchService.patchWorksheet({
+                batchId: batchID,
+                data: worksheetData,
+                success: () => {
+                    qbConsole.log(`Batch ID: ${batchID} worksheet has been updated!`);
+                    qbConsole.log(`Finished!`);
+
+                },
+                error: QB.error
             });
 
         } catch (e) {
@@ -233,7 +264,7 @@ const parseCsvFile = (file) => {
 
             var list = data.split("\n");
             var result = list.map(function (item) {
-                return item.split("\t");
+                return item.split(",");
             });
 
             resolve(result);

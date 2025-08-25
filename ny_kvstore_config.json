@@ -1,0 +1,474 @@
+{
+  "action_limit_units": "%",
+  "allowed_units": [
+    "%",
+    "mg/g",
+    "mg/serving"
+  ],
+  "analyte_info": {
+    "cbc": {
+      "batch_qc": 1,
+      "ccv_1_target": 10,
+      "ccv_target": 10,
+      "ccv_tolerence": 0.2,
+      "display_name": "Cannabichromene (CBC)",
+      "instrument_name": "CBC",
+      "lod_in_vial": 0.5,
+      "loq_in_vial": 0.5,
+      "homogeneity_limit": 0.25,
+      "homogeneity_default": false,
+      "msmsd_rsd_limit": 0.2,
+      "msmsd_target": 10,
+      "msmsd_tolerence": 0.2
+    },
+    "cbca": {
+      "batch_qc": 1,
+      "ccv_1_target": 10,
+      "ccv_target": 10,
+      "ccv_tolerence": 0.2,
+      "display_name": "Cannabichromene acid(CBCA)",
+      "instrument_name": "CBCA",
+      "lod_in_vial": 0.5,
+      "loq_in_vial": 0.5,
+      "homogeneity_limit": 0.25,
+      "homogeneity_default": false,
+      "msmsd_rsd_limit": 0.2,
+      "msmsd_target": 10,
+      "msmsd_tolerence": 0.2
+    },
+    "cbd": {
+      "batch_qc": 1,
+      "ccv_1_target": 10,
+      "ccv_target": 10,
+      "ccv_tolerence": 0.2,
+      "display_name": "Cannabidiol (CBD)",
+      "instrument_name": "CBD",
+      "lod_in_vial": 0.5,
+      "loq_in_vial": 0.5,
+      "homogeneity_limit": 0.25,
+      "homogeneity_default": false,
+      "msmsd_rsd_limit": 0.2,
+      "msmsd_target": 10,
+      "msmsd_tolerence": 0.2
+    },
+    "cbda": {
+      "batch_qc": 1,
+      "ccv_1_target": 10,
+      "ccv_target": 10,
+      "ccv_tolerence": 0.2,
+      "display_name": "Cannabinadiolic acid (CBDA)",
+      "instrument_name": "CBDA",
+      "lod_in_vial": 0.5,
+      "loq_in_vial": 0.5,
+      "homogeneity_limit": 0.25,
+      "homogeneity_default": false,
+      "msmsd_rsd_limit": 0.2,
+      "msmsd_target": 10,
+      "msmsd_tolerence": 0.2
+    },
+    "cbdv": {
+      "batch_qc": 1,
+      "ccv_1_target": 10,
+      "ccv_target": 10,
+      "ccv_tolerence": 0.2,
+      "display_name": "Cannabidivarin (CBDV)",
+      "instrument_name": "CBDV",
+      "lod_in_vial": 0.5,
+      "loq_in_vial": 0.5,
+      "homogeneity_limit": 0.25,
+      "homogeneity_default": false,
+      "msmsd_rsd_limit": 0.2,
+      "msmsd_target": 10,
+      "msmsd_tolerence": 0.2
+    },
+    "cbdva": {
+      "batch_qc": 1,
+      "ccv_1_target": 10,
+      "ccv_target": 10,
+      "ccv_tolerence": 0.2,
+      "display_name": "Cannabidivarin acid (CBDVA)",
+      "instrument_name": "CBDVA",
+      "lod_in_vial": 0.5,
+      "loq_in_vial": 0.5,
+      "homogeneity_limit": 0.25,
+      "homogeneity_default": false,
+      "msmsd_rsd_limit": 0.2,
+      "msmsd_target": 10,
+      "msmsd_tolerence": 0.2
+    },
+    "cbg": {
+      "batch_qc": 1,
+      "ccv_1_target": 10,
+      "ccv_target": 10,
+      "ccv_tolerence": 0.2,
+      "display_name": "Cannabigerol (CBG)",
+      "instrument_name": "CBG",
+      "lod_in_vial": 0.5,
+      "loq_in_vial": 0.5,
+      "homogeneity_limit": 0.25,
+      "homogeneity_default": false,
+      "msmsd_rsd_limit": 0.2,
+      "msmsd_target": 10,
+      "msmsd_tolerence": 0.2
+    },
+    "cbga": {
+      "batch_qc": 1,
+      "ccv_1_target": 10,
+      "ccv_target": 10,
+      "ccv_tolerence": 0.2,
+      "display_name": "Cannabigerolic acid (CBGA)",
+      "instrument_name": "CBGA",
+      "lod_in_vial": 0.5,
+      "loq_in_vial": 0.5,
+      "homogeneity_limit": 0.25,
+      "homogeneity_default": false,
+      "msmsd_rsd_limit": 0.2,
+      "msmsd_target": 10,
+      "msmsd_tolerence": 0.2
+    },
+    "cbn": {
+      "batch_qc": 1,
+      "ccv_1_target": 10,
+      "ccv_target": 10,
+      "ccv_tolerence": 0.2,
+      "display_name": "Cannabinol (CBN)",
+      "instrument_name": "CBN",
+      "lod_in_vial": 0.5,
+      "loq_in_vial": 0.5,
+      "homogeneity_limit": 0.25,
+      "homogeneity_default": false,
+      "msmsd_rsd_limit": 0.2,
+      "msmsd_target": 10,
+      "msmsd_tolerence": 0.2
+    },
+    "d10_thc_9r": {
+      "batch_qc": 1,
+      "ccv_1_target": 10,
+      "ccv_target": 10,
+      "ccv_tolerence": 0.2,
+      "display_name": "Δ10-THC-RR",
+      "instrument_name": "D10THC9R",
+      "lod_in_vial": 0.5,
+      "loq_in_vial": 0.5,
+      "homogeneity_limit": 0.25,
+      "homogeneity_default": false,
+      "msmsd_rsd_limit": 0.2,
+      "msmsd_target": 10,
+      "msmsd_tolerence": 0.2
+    },
+    "d10_thc_9s": {
+      "batch_qc": 1,
+      "ccv_1_target": 10,
+      "ccv_target": 10,
+      "ccv_tolerence": 0.2,
+      "display_name": "Δ10-THC-RS",
+      "instrument_name": "D10THC9S",
+      "lod_in_vial": 0.5,
+      "loq_in_vial": 0.5,
+      "homogeneity_limit": 0.25,
+      "homogeneity_default": false,
+      "msmsd_rsd_limit": 0.2,
+      "msmsd_target": 10,
+      "msmsd_tolerence": 0.2
+    },
+    "d8_thc": {
+      "batch_qc": 1,
+      "ccv_1_target": 10,
+      "ccv_target": 10,
+      "ccv_tolerence": 0.2,
+      "display_name": "Δ8-THC",
+      "instrument_name": "D8-THC",
+      "lod_in_vial": 0.5,
+      "loq_in_vial": 0.5,
+      "homogeneity_limit": 0.25,
+      "homogeneity_default": false,
+      "msmsd_rsd_limit": 0.2,
+      "msmsd_target": 10,
+      "msmsd_tolerence": 0.2
+    },
+    "d9_thc": {
+      "batch_qc": 1,
+      "ccv_1_target": 10,
+      "ccv_target": 10,
+      "ccv_tolerence": 0.2,
+      "display_name": "Δ9-THC",
+      "instrument_name": "D9-THC",
+      "lod_in_vial": 0.5,
+      "loq_in_vial": 0.5,
+      "homogeneity_limit": 0.25,
+      "homogeneity_default": false,
+      "msmsd_rsd_limit": 0.2,
+      "msmsd_target": 10,
+      "msmsd_tolerence": 0.2
+    },
+    "thca": {
+      "batch_qc": 1,
+      "ccv_1_target": 10,
+      "ccv_target": 10,
+      "ccv_tolerence": 0.2,
+      "display_name": "Tetrahydrocannabinolic acid (THCA)",
+      "instrument_name": "THCA",
+      "lod_in_vial": 0.5,
+      "loq_in_vial": 0.5,
+      "homogeneity_limit": 0.25,
+      "homogeneity_default": false,
+      "msmsd_rsd_limit": 0.2,
+      "msmsd_target": 10,
+      "msmsd_tolerence": 0.2
+    },
+    "thcv": {
+      "batch_qc": 1,
+      "ccv_1_target": 10,
+      "ccv_target": 10,
+      "ccv_tolerence": 0.2,
+      "display_name": "Δ9-THCV",
+      "instrument_name": "D9 THCV",
+      "lod_in_vial": 0.5,
+      "loq_in_vial": 0.5,
+      "homogeneity_limit": 0.25,
+      "homogeneity_default": false,
+      "msmsd_rsd_limit": 0.2,
+      "msmsd_target": 10,
+      "msmsd_tolerence": 0.2
+    },
+    "thcva": {
+      "batch_qc": 1,
+      "ccv_1_target": 10,
+      "ccv_target": 10,
+      "ccv_tolerence": 0.2,
+      "display_name": "Tetrahydrocannabivarinic Acid (THCVA)",
+      "instrument_name": "THCVA",
+      "lod_in_vial": 0.5,
+      "loq_in_vial": 0.5,
+      "homogeneity_limit": 0.25,
+      "homogeneity_default": false,
+      "msmsd_rsd_limit": 0.2,
+      "msmsd_target": 10,
+      "msmsd_tolerence": 0.2
+    },
+    "total_cbd": {
+      "display_name": "Total Cannabidiol (CBD)",
+      "homogeneity_limit": 0.25,
+      "homogeneity_default": true
+    },
+    "total_cbg": {
+      "display_name": "Total Active Cannabigerol (CBG)",
+      "homogeneity_limit": 0.25,
+      "homogeneity_default": true
+    },
+    "total_thcv": {
+      "display_name": "Total Active Tetrahydrocannabivarin (THCV)",
+      "homogeneity_limit": 0.25,
+      "homogeneity_default": true
+    },
+    "total_thc": {
+      "display_name": "Total Tetrahydrocannabinol (THC)",
+      "homogeneity_limit": 0.25,
+      "homogeneity_default": true
+    },
+    "total_cannabinoids": {
+      "display_name": "Total Cannabinoids",
+      "homogeneity_limit": 0.25,
+      "homogeneity_default": false
+    }
+  },
+  "data_columns_to_analytes": {
+    "CBC": "cbc",
+    "CBD": "cbd",
+    "CBDA": "cbda",
+    "CBDV": "cbdv",
+    "CBG": "cbg",
+    "CBGA": "cbga",
+    "CBN": "cbn",
+    "D10THC9R": "d10_thc_rr",
+    "D10THC9S": "d10_thc_rs",
+    "D8-THC": "d8_thc",
+    "D9 THCV": "thcv",
+    "D9-THC": "d9_thc",
+    "THCA": "thca",
+    "THCVA": "thcva"
+  },
+  "default_compliance": false,
+  "default_lod_display": false,
+  "default_number_format": "significant_figures",
+  "default_uncertainty": false,
+  "default_units": [
+    "%",
+    "mg/g",
+    "mg/serving"
+  ],
+  "exceedances": 1,
+  "homogeneity_min_replicates": 5,
+  "instrument_units": "µg/mL",
+  "isomers_map": {
+    "total_cannabinoids": [
+      {
+        "analyte": "cbdv",
+        "factor": 1
+      },
+      {
+        "analyte": "cbn",
+        "factor": 1
+      },
+      {
+        "analyte": "cbc",
+        "factor": 1
+      },
+      {
+        "analyte": "thca",
+        "factor": 0.877
+      },
+      {
+        "analyte": "d9_thc",
+        "factor": 1
+      },
+      {
+        "analyte": "d8_thc",
+        "factor": 1
+      },
+      {
+        "analyte": "d10_thc_rr",
+        "factor": 1
+      },
+      {
+        "analyte": "d10_thc_rs",
+        "factor": 1
+      },
+      {
+        "analyte": "cbda",
+        "factor": 0.877
+      },
+      {
+        "analyte": "cbd",
+        "factor": 1
+      },
+      {
+        "analyte": "cbga",
+        "factor": 0.877
+      },
+      {
+        "analyte": "cbg",
+        "factor": 1
+      },
+      {
+        "analyte": "thcva",
+        "factor": 0.877
+      },
+      {
+        "analyte": "thcv",
+        "factor": 1
+      }
+    ],
+    "total_cbd": [
+      {
+        "analyte": "cbda",
+        "factor": 0.877
+      },
+      {
+        "analyte": "cbd",
+        "factor": 1
+      }
+    ],
+    "total_cbg": [
+      {
+        "analyte": "cbga",
+        "factor": 0.877
+      },
+      {
+        "analyte": "cbg",
+        "factor": 1
+      }
+    ],
+    "total_thc": [
+      {
+        "analyte": "thca",
+        "factor": 0.877
+      },
+      {
+        "analyte": "d9_thc",
+        "factor": 1
+      },
+      {
+        "analyte": "d8_thc",
+        "factor": 1
+      },
+      {
+        "analyte": "d10_thc_rr",
+        "factor": 1
+      },
+      {
+        "analyte": "d10_thc_rs",
+        "factor": 1
+      }
+    ],
+    "total_thcv": [
+      {
+        "analyte": "thcva",
+        "factor": 0.877
+      },
+      {
+        "analyte": "thcv",
+        "factor": 1
+      }
+    ]
+  },
+  "moisture_assay_id": 10,
+  "qc_types": {
+    "ccv": {
+      "count": 2,
+      "display_name": "CCV"
+    },
+    "mb": {
+      "display_name": "Matrix Blank"
+    },
+    "ms": {
+      "display_name": "Matrix Spike"
+    },
+    "msd": {
+      "display_name": "Martix Spike Duplicate"
+    }
+  },
+  "report_analytes": [
+    "cbc",
+    "cbdv",
+    "cbd",
+    "cbda",
+    "cbg",
+    "cbga",
+    "cbn",
+    "d8_thc",
+    "d9_thc",
+    "d10_thc_rs",
+    "d10_thc_rr",
+    "thcv",
+    "thcva",
+    "thca",
+    "total_thc",
+    "total_cbd",
+    "total_thcv",
+    "total_cbg",
+    "total_cannabinoids"
+  ],
+  "use_moisture_correction": true,
+  "worksheet_analytes": [
+    "cbc",
+    "cbdv",
+    "cbd",
+    "cbda",
+    "cbg",
+    "cbga",
+    "cbn",
+    "d8_thc",
+    "d9_thc",
+    "d10_thc_rs",
+    "d10_thc_rr",
+    "thcv",
+    "thcva",
+    "thca",
+    "total_thc",
+    "total_cbd",
+    "total_thcv",
+    "total_cbg",
+    "total_cannabinoids"
+  ]
+}

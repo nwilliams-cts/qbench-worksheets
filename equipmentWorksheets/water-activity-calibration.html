@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Water Activity Meter Calibration Verification - QBench Equipment Worksheet</title>
+    <style>
+        /* Equipment Worksheet Styles - Scoped */
+        .water-activity-calibration-worksheet {
+            font-family: Arial, sans-serif;
+            line-height: 1.4;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .water-activity-calibration-worksheet .equipment-worksheet-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .water-activity-calibration-worksheet .worksheet-header {
+            background: linear-gradient(135deg, #2c5aa0 0%, #4a90e2 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .water-activity-calibration-worksheet .worksheet-header h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .water-activity-calibration-worksheet .worksheet-header .form-number {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+        
+        .water-activity-calibration-worksheet .worksheet-content {
+            padding: 30px;
+        }
+        
+        .water-activity-calibration-worksheet .info-section {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .water-activity-calibration-worksheet .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        
+        .water-activity-calibration-worksheet .info-field {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .water-activity-calibration-worksheet .info-field label {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        
+        .water-activity-calibration-worksheet .info-field input, .water-activity-calibration-worksheet .info-field select {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        .water-activity-calibration-worksheet .info-field input:focus, .water-activity-calibration-worksheet .info-field select:focus {
+            border-color: #4a90e2;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+        }
+        
+        .water-activity-calibration-worksheet .calibration-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .water-activity-calibration-worksheet .calibration-table th {
+            background: #2c5aa0;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .water-activity-calibration-worksheet .calibration-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #e9ecef;
+            font-size: 14px;
+        }
+        
+        .water-activity-calibration-worksheet .calibration-table tbody tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        .water-activity-calibration-worksheet .calibration-table tbody tr:hover {
+            background: #e3f2fd;
+        }
+        
+        .water-activity-calibration-worksheet .calibration-table input[type="number"], .water-activity-calibration-worksheet .calibration-table input[type="text"] {
+            width: 100%;
+            padding: 6px 8px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            font-size: 13px;
+        }
+        
+        .water-activity-calibration-worksheet .result-cell {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            white-space: nowrap;
+        }
+        
+        .water-activity-calibration-worksheet .result-cell input {
+            flex: 1;
+            min-width: 80px;
+        }
+        
+        .water-activity-calibration-worksheet .result-cell .aw-unit {
+            font-size: 12px;
+            color: #6c757d;
+            flex-shrink: 0;
+        }
+        
+        .water-activity-calibration-worksheet .status-indicator {
+            padding: 4px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: bold;
+            text-align: center;
+            min-width: 50px;
+        }
+        
+        .water-activity-calibration-worksheet .status-pass {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .water-activity-calibration-worksheet .status-fail {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .water-activity-calibration-worksheet .status-pending {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+        
+        .water-activity-calibration-worksheet .confirm-recalibration {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 10px 0;
+        }
+        
+        .water-activity-calibration-worksheet .confirm-recalibration:hover {
+            background: #c82333;
+        }
+        
+        .water-activity-calibration-worksheet .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #2c5aa0;
+            margin: 25px 0 15px 0;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #e9ecef;
+        }
+        
+        .water-activity-calibration-worksheet .notes-section {
+            margin-top: 25px;
+        }
+        
+        .water-activity-calibration-worksheet .notes-section textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 14px;
+            resize: vertical;
+        }
+        
+        .water-activity-calibration-worksheet .signature-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .water-activity-calibration-worksheet .signature-field {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .water-activity-calibration-worksheet .signature-field label {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .water-activity-calibration-worksheet .signature-field input {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 5px;
+        }
+        
+        .water-activity-calibration-worksheet .alert {
+            padding: 12px 16px;
+            border-radius: 4px;
+            margin: 15px 0;
+            font-size: 14px;
+        }
+        
+        .water-activity-calibration-worksheet .alert-warning {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+        }
+        
+        .water-activity-calibration-worksheet .alert-info {
+            background-color: #d1ecf1;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+        }
+        
+        .water-activity-calibration-worksheet .readonly {
+            background-color: #f8f9fa !important;
+            color: #6c757d;
+        }
+        
+        @media print {
+            .water-activity-calibration-worksheet { 
+                background: white; 
+                padding: 0; 
+            }
+            .water-activity-calibration-worksheet .equipment-worksheet-container { 
+                box-shadow: none; 
+                border-radius: 0; 
+            }
+            .water-activity-calibration-worksheet .worksheet-header { 
+                background: #2c5aa0 !important; 
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+    </style>
+    {% set worksheet = tmp_worksheet_data if tmp_worksheet_data else record.get_worksheet_data() if record else {} %}
+    {% set worksheet = worksheet if worksheet else {} %}
+    {% set equipment_data = worksheet.get('ws_equipment_results') or {} %}
+    {% set kvstore_id = "c39ebdf2-07ac-46ae-9c5f-12e75c9e5a75" %}
+    {% set kvstore = kvstore_id|get_kvstore_json if kvstore_id else {} %}
+    {% set calibration_defaults = kvstore.get('water_activity_calibration_defaults') or {} %}
+</head>
+<body>
+    <div class="equipment-worksheet-container water-activity-calibration-worksheet">
+        <!-- QBench Data Storage -->
+        <div style="display:none;">__(textarea, ws_equipment_results, default_value="{}")__</div>
+        
+        <!-- KV Store Configuration Values (hidden inputs for JavaScript access) -->
+        <input type="hidden" id="tolerance-percentage" value="{{calibration_defaults.get('tolerance_percentage', 10.0)}}">
+        
+        <!-- Header -->
+        <div class="worksheet-header">
+            <h1>FORM 433A – ROTRONIC WEEKLY WATER ACTIVITY METER CALIBRATION VERIFICATION</h1>
+            <div class="form-number">QBench Equipment Verification Worksheet</div>
+        </div>
+
+        <div class="worksheet-content">
+            <!-- Equipment Information Section -->
+            <div class="info-section">
+                <div class="info-grid">
+                    <div class="info-field">
+                        <label for="equipment-id">Equipment ID #:</label>
+                        <input type="text" id="equipment-id" name="equipment_id" value="{{record.equipment[0].serial_number or record.equipment[0].name or ''}}" readonly class="readonly">
+                    </div>
+                    <div class="info-field">
+                        <label for="equipment-model">Equipment Model:</label>
+                        <input type="text" id="equipment-model" name="equipment_model" value="{{record.equipment[0].model_number or ''}}" readonly class="readonly">
+                    </div>
+                    <div class="info-field">
+                        <label for="calibration-date">Calibration Date:</label>
+                        <input type="date" id="calibration-date" name="calibration_date">
+                    </div>
+                    <div class="info-field">
+                        <label for="calibration-exp">Calibration Exp:</label>
+                        <input type="date" id="calibration-exp" name="calibration_exp_date" readonly class="readonly">
+                        <small style="color: #6c757d; font-size: 12px; margin-top: 2px;">1 week from calibration date</small>
+                    </div>
+                </div>
+                
+                <div class="info-grid" style="margin-top: 15px;">
+                    <div class="info-field">
+                        <label for="cal-standard-name">Calibration Standard Name:</label>
+                        <input type="text" id="cal-standard-name" name="calibration_standard_name" value="{{calibration_defaults.get('standard_name', '') or equipment_data.get('calibration_standard_name', '')}}">
+                    </div>
+                    <div class="info-field">
+                        <label for="cal-standard-vendor">Calibration Standard Vendor:</label>
+                        <input type="text" id="cal-standard-vendor" name="calibration_standard_vendor" value="{{calibration_defaults.get('standard_vendor', '') or equipment_data.get('calibration_standard_vendor', '')}}">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Calibration Standard Information -->
+            <div class="section-title">Calibration Standard Information</div>
+            <table class="calibration-table">
+                <thead>
+                    <tr>
+                        <th>Lot Number</th>
+                        <th>Expiration Date</th>
+                        <th>Calibrator a<sub>w</sub> Value</th>
+                        <th>Acceptable Range</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text" name="lot_number" value="{{calibration_defaults.get('lot_number', '') or equipment_data.get('lot_number', '')}}"></td>
+                        <td><input type="date" name="lot_expiration_date" value="{{calibration_defaults.get('lot_expiration_date', '') or equipment_data.get('lot_expiration_date', '')}}"></td>
+                        <td><input type="number" step="0.001" name="calibrator_aw_value" id="calibrator-aw" value="{{calibration_defaults.get('calibrator_aw_value', '') or equipment_data.get('calibrator_aw_value', '')}}"></td>
+                        <td><span id="acceptable-range">±0.000</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Water Activity Cell Calibration -->
+            <div class="section-title">Water Activity Cell Calibration</div>
+            <table class="calibration-table">
+                <thead>
+                    <tr>
+                        <th>Equipment #</th>
+                        <th>Calibrator Weight (g)</th>
+                        <th>Calibrator Result</th>
+                        <th>Results</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{record.equipment[0].asset_tag or record.equipment[0].serial_number or record.equipment[0].name or 'Equipment'}}</td>
+                        <td><input type="number" step="0.001" name="calibrator_weight_1" value="{{calibration_defaults.get('calibrator_weight', '') or equipment_data.get('calibrator_weight_1', '')}}"></td>
+                        <td>
+                            <div class="result-cell">
+                                <input type="number" step="0.001" name="calibrator_result_1" class="calibrator-result">
+                                <span class="aw-unit">a<sub>w</sub></span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="status-indicator status-pending" data-status="result_1">Pending</div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="alert alert-info">
+                <strong>Instructions:</strong> Fill in the calibrator weight and result. The system will automatically determine pass/fail based on the acceptable range (configurable tolerance percentage of calibrator a<sub>w</sub> value).
+            </div>
+            
+            <!-- Conditional Re-calibration Button -->
+            <div id="recalibration-prompt" style="display: none;">
+                <div class="alert alert-warning">
+                    <strong>Calibration failed.</strong> Click below to document cleaning and re-calibration:
+                </div>
+                <button class="confirm-recalibration" onclick="showRecalibrationSection()">Begin Re-calibration Process</button>
+            </div>
+
+            <!-- Re-calibration Section (Initially Hidden) -->
+            <div id="recalibration-section" style="display: none;">
+                <div class="alert alert-warning">
+                    <strong>Initial calibration failed.</strong> Document cleaning and re-calibration below:
+                </div>
+                
+                <div class="section-title">Re-calibration After Cleaning</div>
+                <div class="info-field" style="margin-bottom: 15px;">
+                    <label for="cleaned-by">Cleaned:</label>
+                    <input type="text" id="cleaned-by" name="cleaned_by" placeholder="Technician name and date">
+                </div>
+                
+                <table class="calibration-table">
+                    <thead>
+                        <tr>
+                            <th>Equipment #</th>
+                            <th>Calibrator Weight (g)</th>
+                            <th>Calibrator Result</th>
+                            <th>Results</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{record.equipment[0].asset_tag or record.equipment[0].serial_number or record.equipment[0].name or 'Equipment'}} ____</td>
+                            <td><input type="number" step="0.001" name="recal_weight_1"></td>
+                            <td>
+                                <div class="result-cell">
+                                    <input type="number" step="0.001" name="recal_result_1" class="calibrator-result">
+                                    <span class="aw-unit">a<sub>w</sub></span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="status-indicator status-pending" data-status="recal_status_1">Pending</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{record.equipment[0].asset_tag or record.equipment[0].serial_number or record.equipment[0].name or 'Equipment'}} ____</td>
+                            <td><input type="number" step="0.001" name="recal_weight_2"></td>
+                            <td>
+                                <div class="result-cell">
+                                    <input type="number" step="0.001" name="recal_result_2" class="calibrator-result">
+                                    <span class="aw-unit">a<sub>w</sub></span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="status-indicator status-pending" data-status="recal_status_2">Pending</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{record.equipment[0].asset_tag or record.equipment[0].serial_number or record.equipment[0].name or 'Equipment'}} ____</td>
+                            <td><input type="number" step="0.001" name="recal_weight_3"></td>
+                            <td>
+                                <div class="result-cell">
+                                    <input type="number" step="0.001" name="recal_result_3" class="calibrator-result">
+                                    <span class="aw-unit">a<sub>w</sub></span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="status-indicator status-pending" data-status="recal_status_3">Pending</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{record.equipment[0].asset_tag or record.equipment[0].serial_number or record.equipment[0].name or 'Equipment'}} ____</td>
+                            <td><input type="number" step="0.001" name="recal_weight_4"></td>
+                            <td>
+                                <div class="result-cell">
+                                    <input type="number" step="0.001" name="recal_result_4" class="calibrator-result">
+                                    <span class="aw-unit">a<sub>w</sub></span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="status-indicator status-pending" data-status="recal_status_4">Pending</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Notes Section -->
+            <div class="notes-section">
+                <div class="section-title">Notes</div>
+                <textarea name="notes" placeholder="Enter any additional notes or observations..."></textarea>
+            </div>
+
+            <!-- Signature Section -->
+            <div class="signature-section">
+                <div class="signature-field">
+                    <label>Performed By Name / Date:</label>
+                    <input type="text" name="performed_by_name" placeholder="Technician Name">
+                    <input type="date" name="performed_by_date">
+                </div>
+                <div class="signature-field">
+                    <label>Reviewed By Name / Date:</label>
+                    <input type="text" name="reviewed_by_name" placeholder="Supervisor Name">
+                    <input type="date" name="reviewed_by_date">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Equipment Verification JavaScript -->
+    <script>
+        // QBench JSON field management for equipment calibration data
+        function getEquipmentData() {
+            const dataField = getElementsByName('ws_equipment_results')[0];
+            if (dataField) {
+                try {
+                    return JSON.parse(dataField.value || '{}');
+                } catch (e) {
+                    console.warn('Error parsing equipment data, returning empty object:', e);
+                    return {};
+                }
+            }
+            return {};
+        }
+
+        function saveEquipmentData(data) {
+            const dataField = getElementsByName('ws_equipment_results')[0];
+            if (dataField) {
+                dataField.value = JSON.stringify(data);
+                console.log('Equipment data saved:', data);
+            }
+        }
+
+        function getElementsByName(name) {
+            const container = document.querySelector('.equipment-worksheet-container');
+            return container ? container.querySelectorAll(`[name="${name}"]`) : document.getElementsByName(name);
+        }
+
+        function updateEquipmentField(fieldName, value) {
+            const data = getEquipmentData();
+            data[fieldName] = value;
+            saveEquipmentData(data);
+        }
+
+        function debugFormCapture() {
+            console.log('=== FORM FIELD CAPTURE DEBUG ===');
+            const data = getEquipmentData();
+            console.log('Current saved data:', data);
+            
+            const formElements = document.querySelectorAll('input, textarea, select');
+            console.log('\nAll form elements and their capture status:');
+            
+            const capturedFields = [];
+            const skippedFields = [];
+            
+            formElements.forEach(element => {
+                if (element.type === 'hidden' || element.readOnly || !element.name) {
+                    skippedFields.push({
+                        name: element.name || '(no name)',
+                        type: element.type || element.tagName.toLowerCase(),
+                        reason: element.type === 'hidden' ? 'hidden' : element.readOnly ? 'readonly' : 'no name'
+                    });
+                } else {
+                    capturedFields.push({
+                        name: element.name,
+                        type: element.type || element.tagName.toLowerCase(),
+                        currentValue: element.value,
+                        savedValue: data[element.name] || '(not saved)'
+                    });
+                }
+            });
+            
+            console.log('\nCAPTURED FIELDS (' + capturedFields.length + '):');
+            capturedFields.forEach(field => {
+                console.log(`  ${field.name} (${field.type}): "${field.currentValue}" | saved: "${field.savedValue}"`);
+            });
+            
+            console.log('\nSKIPPED FIELDS (' + skippedFields.length + '):');
+            skippedFields.forEach(field => {
+                console.log(`  ${field.name} (${field.type}): ${field.reason}`);
+            });
+            
+            console.log('\n=== END DEBUG ===');
+        }
+
+        function updateEquipmentField(fieldName, value) {
+            const data = getEquipmentData();
+            data[fieldName] = value;
+            saveEquipmentData(data);
+        }
+
+        function loadFormValues() {
+            const data = getEquipmentData();
+            console.log('Loading form values from equipment data:', data);
+            
+            // Load all form values from saved equipment data
+            const formElements = document.querySelectorAll('input, textarea, select');
+            console.log('Found', formElements.length, 'form elements to potentially load');
+            
+            formElements.forEach(element => {
+                if (element.type === 'hidden' || element.readOnly || !element.name) {
+                    console.log('Skipping load for:', element.name || element.type, '(readonly:', element.readOnly, ')');
+                    return;
+                }
+                
+                if (data.hasOwnProperty(element.name)) {
+                    const savedValue = data[element.name];
+                    
+                    if (element.type === 'radio') {
+                        if (element.value === savedValue) {
+                            element.checked = true;
+                        }
+                    } else if (element.type === 'checkbox') {
+                        element.checked = savedValue === true || savedValue === 'true';
+                    } else {
+                        // Check if the value is a raw Jinja template
+                        if (isRawJinjaTemplate(savedValue)) {
+                            console.warn(`Field '${element.name}' contains raw Jinja template: '${savedValue}' - clearing field`);
+                            element.value = ''; // Clear the raw template
+                            element.style.backgroundColor = '#fff3cd'; // Highlight in yellow
+                            element.title = 'This field contained a template rendering error and was cleared';
+                        } else {
+                            element.value = savedValue;
+                        }
+                    }
+                    
+                    console.log(`Loaded '${savedValue}' for field '${element.name}' (type: ${element.type || element.tagName})`);
+                } else {
+                    console.log(`No saved value found for field '${element.name}'`);
+                }
+            });
+
+            // Check form field values for raw Jinja templates (in case they're in the HTML value attributes)
+            checkFormFieldsForRawJinja();
+
+            // Apply KV store defaults to any empty fields that should have defaults
+            applyKVStoreDefaultsToEmptyFields();
+
+            // Load status indicators
+            if (data.result_1) {
+                updateStatusDisplay('result_1', data.result_1);
+            }
+            ['recal_status_1', 'recal_status_2', 'recal_status_3', 'recal_status_4'].forEach(statusName => {
+                if (data[statusName]) {
+                    updateStatusDisplay(statusName, data[statusName]);
+                }
+            });
+
+            // Show re-calibration section if needed
+            if (data.recalibration_shown) {
+                document.getElementById('recalibration-section').style.display = 'block';
+            }
+            if (data.recalibration_prompt_shown) {
+                document.getElementById('recalibration-prompt').style.display = 'block';
+            }
+            
+            console.log('Form loading complete');
+        }
+
+        function setupAutoSave() {
+            const formElements = document.querySelectorAll('input, textarea, select');
+            console.log('Setting up auto-save for', formElements.length, 'form elements');
+            
+            formElements.forEach(element => {
+                if (element.type === 'hidden' || element.readOnly || !element.name) {
+                    console.log('Skipping element:', element.name || element.type, '(readonly:', element.readOnly, ')');
+                    return;
+                }
+                
+                console.log('Adding auto-save to:', element.name, element.type);
+                
+                element.addEventListener('change', function() {
+                    saveFormValue(element);
+                });
+                
+                // Also save on input for real-time updates
+                if (element.type === 'number' || element.type === 'text' || element.type === 'date' || element.type === 'textarea') {
+                    element.addEventListener('input', function() {
+                        saveFormValue(element);
+                    });
+                }
+                
+                // For textarea elements specifically
+                if (element.tagName.toLowerCase() === 'textarea') {
+                    element.addEventListener('input', function() {
+                        saveFormValue(element);
+                    });
+                }
+            });
+        }
+
+        function saveFormValue(element) {
+            let value = '';
+            if (element.type === 'radio') {
+                if (element.checked) {
+                    value = element.value;
+                } else {
+                    return; // Skip unchecked radio buttons
+                }
+            } else if (element.type === 'checkbox') {
+                value = element.checked;
+            } else {
+                value = element.value;
+            }
+            
+            // Check if the value contains raw Jinja template code (indicates template rendering failure)
+            if (isRawJinjaTemplate(value)) {
+                console.warn(`Skipping save for field '${element.name}' - contains raw Jinja template: '${value}'`);
+                return; // Don't save raw template strings
+            }
+            
+            console.log(`Saving field '${element.name}' = '${value}' (type: ${element.type || element.tagName})`);
+            updateEquipmentField(element.name, value);
+        }
+
+        function checkFormFieldsForRawJinja() {
+            console.log('Checking form field values for raw Jinja templates...');
+            const formElements = document.querySelectorAll('input, textarea, select');
+            let foundRawJinja = false;
+            
+            formElements.forEach(element => {
+                if (element.type === 'hidden' || element.readOnly || !element.name) return;
+                
+                if (isRawJinjaTemplate(element.value)) {
+                    console.warn(`Form field '${element.name}' contains raw Jinja template: '${element.value}' - clearing field`);
+                    element.value = ''; // Clear the raw template
+                    element.style.backgroundColor = '#fff3cd'; // Highlight in yellow
+                    element.style.border = '2px solid #856404'; // Add warning border
+                    element.title = 'This field contained a template rendering error and was cleared';
+                    foundRawJinja = true;
+                }
+            });
+            
+            if (foundRawJinja) {
+                console.warn('Raw Jinja templates found in form fields - this indicates the worksheet template failed to render properly');
+                applyKVStoreDefaultsToEmptyFields(); // Apply defaults after clearing raw templates
+            }
+            
+            return foundRawJinja; // Return whether any raw templates were found
+        }
+
+        function applyKVStoreDefaultsToEmptyFields() {
+            console.log('Checking for empty fields that need KV store defaults...');
+            
+            // Check if we have valid KV store data (meaning Jinja is working now)
+            const hasValidKVStore = '{{calibration_defaults.standard_name or ""}}' !== '';
+            
+            if (!hasValidKVStore) {
+                console.log('KV store data not available - skipping default application');
+                return;
+            }
+            
+            console.log('KV store data is available - checking for empty fields to populate');
+            
+            // Define the defaults using individual Jinja expressions that will be rendered when available
+            const kvDefaults = {
+                'calibration_standard_name': '{{calibration_defaults.standard_name or ""}}',
+                'calibration_standard_vendor': '{{calibration_defaults.standard_vendor or ""}}',
+                'lot_number': '{{calibration_defaults.lot_number or ""}}',
+                'lot_expiration_date': '{{calibration_defaults.lot_expiration_date or ""}}',
+                'calibrator_aw_value': '{{calibration_defaults.calibrator_aw_value or ""}}',
+                'calibrator_weight': '{{calibration_defaults.calibrator_weight or ""}}'
+            };
+            
+            // Apply KV store defaults to fields that are empty (saved as "")
+            Object.keys(kvDefaults).forEach(fieldName => {
+                const element = document.querySelector(`[name="${fieldName}"]`);
+                const defaultValue = kvDefaults[fieldName];
+                
+                if (element && (!element.value || element.value.trim() === '') && defaultValue && defaultValue !== '') {
+                    element.value = defaultValue;
+                    console.log(`Applied KV store default for '${fieldName}': '${defaultValue}'`);
+                    
+                    // Save the default value to the data store so it persists
+                    updateEquipmentField(fieldName, defaultValue);
+                }
+            });
+        }
+
+        function cleanupRawJinjaValues() {
+            console.log('Checking for and cleaning up raw Jinja template values...');
+            const data = getEquipmentData();
+            let hasRawJinja = false;
+            const cleanedData = {};
+            
+            for (const [key, value] of Object.entries(data)) {
+                if (isRawJinjaTemplate(value)) {
+                    console.warn(`Found raw Jinja template in saved data for '${key}': '${value}' - removing`);
+                    hasRawJinja = true;
+                    // Don't copy this value to cleanedData (effectively deleting it)
+                } else {
+                    cleanedData[key] = value;
+                }
+            }
+            
+            if (hasRawJinja) {
+                console.log('Cleaned data:', cleanedData);
+                saveEquipmentData(cleanedData);
+                return true; // Indicates cleanup was performed
+            }
+            
+            return false; // No cleanup needed
+        }
+
+        function isRawJinjaTemplate(value) {
+            if (typeof value !== 'string') return false;
+            
+            // Check for common Jinja template patterns that indicate failed rendering
+            const jinjaPatterns = [
+                /calibration_defaults/,  // calibration_defaults
+                /equipment_data/,        // equipment_data
+                /record\.equipment/,          // record.equipment
+                /\.get\(['"][^'"]*['"][^)]*\)/  // .get('...') or .get("...")
+            ];
+            
+            return jinjaPatterns.some(pattern => pattern.test(value));
+        }
+
+        function updateStatusDisplay(statusName, status) {
+            const statusElement = document.querySelector(`[data-status="${statusName}"]`);
+            if (statusElement) {
+                statusElement.textContent = status.charAt(0).toUpperCase() + status.slice(1);
+                statusElement.className = `status-indicator status-${status}`;
+                
+                // Update row background
+                const row = statusElement.closest('tr');
+                if (row) {
+                    if (status === 'pass') {
+                        row.style.backgroundColor = '#d4edda';
+                    } else if (status === 'fail') {
+                        row.style.backgroundColor = '#f8d7da';
+                    } else {
+                        row.style.backgroundColor = '';
+                    }
+                }
+            }
+        }
+
+        // Equipment Worksheet Functions
+        function calculateAcceptableRange() {
+            const calibratorAw = parseFloat(document.getElementById('calibrator-aw').value) || 0;
+            
+            // Get tolerance percentage from hidden input (populated from KV store)
+            const tolerancePercent = parseFloat(document.getElementById('tolerance-percentage').value) || 10.0;
+            const tolerance = calibratorAw * (tolerancePercent / 100);
+            
+            const rangeElement = document.getElementById('acceptable-range');
+            
+            if (calibratorAw > 0) {
+                rangeElement.textContent = `±${tolerance.toFixed(3)} (${tolerancePercent}%)`;
+            } else {
+                rangeElement.textContent = `±0.000 (${tolerancePercent}%)`;
+            }
+        }
+
+        function checkCalibrationResult(inputElement) {
+            const calibratorAw = parseFloat(document.getElementById('calibrator-aw').value) || 0;
+            const result = parseFloat(inputElement.value) || 0;
+            
+            // Get tolerance percentage from hidden input (populated from KV store)
+            const tolerancePercent = parseFloat(document.getElementById('tolerance-percentage').value) || 10.0;
+            const tolerance = calibratorAw * (tolerancePercent / 100);
+            
+            // Find the status indicator for this row
+            const row = inputElement.closest('tr');
+            const statusElement = row.querySelector('.status-indicator');
+            const statusName = statusElement.getAttribute('data-status');
+            
+            if (calibratorAw > 0 && result > 0) {
+                const difference = Math.abs(result - calibratorAw);
+                
+                if (difference <= tolerance) {
+                    // PASS
+                    updateStatusDisplay(statusName, 'pass');
+                    updateEquipmentField(statusName, 'pass');
+                    
+                    // If this is the main calibration and it passes, hide the re-calibration prompt
+                    if (statusName === 'result_1') {
+                        hideRecalibrationPrompt();
+                    }
+                } else {
+                    // FAIL
+                    updateStatusDisplay(statusName, 'fail');
+                    updateEquipmentField(statusName, 'fail');
+                    
+                    // If this is the main calibration and it fails, show the re-calibration prompt
+                    if (statusName === 'result_1') {
+                        showRecalibrationPrompt();
+                    }
+                }
+            } else {
+                // PENDING - no values entered yet
+                updateStatusDisplay(statusName, 'pending');
+                updateEquipmentField(statusName, 'pending');
+                
+                // If main calibration is cleared, hide re-calibration prompt
+                if (statusName === 'result_1') {
+                    hideRecalibrationPrompt();
+                }
+            }
+        }
+
+        function showRecalibrationPrompt() {
+            document.getElementById('recalibration-prompt').style.display = 'block';
+            updateEquipmentField('recalibration_prompt_shown', true);
+        }
+
+        function hideRecalibrationPrompt() {
+            document.getElementById('recalibration-prompt').style.display = 'none';
+            updateEquipmentField('recalibration_prompt_shown', false);
+        }
+
+        function showRecalibrationSection() {
+            document.getElementById('recalibration-section').style.display = 'block';
+            hideRecalibrationPrompt();
+            updateEquipmentField('recalibration_shown', true);
+        }
+
+        function updateCalibrationExpiration() {
+            const calibrationDate = document.getElementById('calibration-date').value;
+            const expDateField = document.getElementById('calibration-exp');
+            
+            if (calibrationDate) {
+                const calDate = new Date(calibrationDate);
+                calDate.setDate(calDate.getDate() + 7); // Add 7 days (1 week)
+                expDateField.value = calDate.toISOString().split('T')[0];
+            }
+        }
+
+        function calculateOverallStatus() {
+            const data = getEquipmentData();
+            
+            if (data.result_1 === 'pass') {
+                return 'pass';
+            } else if (data.result_1 === 'fail') {
+                // Check if any recalibration passed
+                const recalStatuses = ['recal_status_1', 'recal_status_2', 'recal_status_3', 'recal_status_4'];
+                for (let statusName of recalStatuses) {
+                    if (data[statusName] === 'pass') {
+                        return 'pass_after_recalibration';
+                    }
+                }
+                return 'fail';
+            } else {
+                return 'pending';
+            }
+        }
+
+        // Initialize worksheet - iframe compatible
+        setTimeout(function() {
+            console.log("Loading equipment worksheet...");
+            
+            // Clean up any raw Jinja template values that may have been saved
+            const cleanupPerformed = cleanupRawJinjaValues();
+            if (cleanupPerformed) {
+                console.log("Raw Jinja template cleanup completed");
+            }
+            
+            // Load saved values first
+            loadFormValues();
+            
+            // Setup auto-save for all form elements
+            setupAutoSave();
+            
+            // Debug: Show what fields are being captured
+            debugFormCapture();
+            
+            // Calculate acceptable range when calibrator aw value changes
+            const calibratorAwInput = document.getElementById('calibrator-aw');
+            if (calibratorAwInput) {
+                calibratorAwInput.addEventListener('input', calculateAcceptableRange);
+            }
+            
+            // Check calibration results when values are entered
+            document.querySelectorAll('.calibrator-result').forEach(input => {
+                input.addEventListener('input', function() {
+                    checkCalibrationResult(this);
+                });
+            });
+            
+            // Update expiration date when calibration date changes
+            const calibrationDateInput = document.getElementById('calibration-date');
+            if (calibrationDateInput) {
+                calibrationDateInput.addEventListener('change', updateCalibrationExpiration);
+            }
+            
+            // Initialize calculations with any pre-loaded values
+            calculateAcceptableRange();
+            if (calibrationDateInput && calibrationDateInput.value) {
+                updateCalibrationExpiration();
+            }
+            
+            // Save overall status
+            const overallStatus = calculateOverallStatus();
+            updateEquipmentField('overall_status', overallStatus);
+            updateEquipmentField('last_updated', new Date().toISOString());
+            
+            console.log("Equipment worksheet loaded successfully");
+        }, 100);
+
+        // Auto-save functionality
+        let autoSaveTimer;
+        document.addEventListener('input', function() {
+            clearTimeout(autoSaveTimer);
+            autoSaveTimer = setTimeout(function() {
+                const overallStatus = calculateOverallStatus();
+                updateEquipmentField('overall_status', overallStatus);
+                updateEquipmentField('last_updated', new Date().toISOString());
+            }, 100);
+        });
+    </script>
+</body>
+</html>

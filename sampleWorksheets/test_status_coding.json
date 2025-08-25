@@ -1,0 +1,10 @@
+{
+    "NOT STARTED": "#ffbd4a",
+    "IN PROGRESS": "#34d3eb",
+    "COMPLETED": "#81c868",
+    "FOR REVIEW": "#0cf4ee",
+    "CANCELLED": "#f05050",
+    "QC CONFIRMATION": "#f05050",
+    "OOS": "e14913"
+
+}

@@ -1373,9 +1373,21 @@ td input[type="checkbox"].data-locked::after {
 }
 </style>
 
+{% set ns = namespace() %}
+{% set ns.worksheet_assay_id = 51 %}
+{% set assay_key = "cannabinoids"%}
+
+{% set temp_tests = [] %}
+{% for test in tests %}
+	{% if test.assay_id == ns.worksheet_assay_id %}
+		{% set _x = temp_tests.append(test) %}
+	{% endif %}
+{% endfor %}
+{% set tests = temp_tests %}
 
 {% set worksheet = tmp_worksheet_data if tmp_worksheet_data else tests[0].get_worksheet_data() %}
 {% set worksheet = worksheet if worksheet else {} %}
+
 {% set assay = tests[0].assay %}
 {% set kvstore_id = assay.assay_params or "" %}
 {% set kvstore = kvstore_id|get_kvstore_json if kvstore_id else {} %}
@@ -1383,15 +1395,14 @@ td input[type="checkbox"].data-locked::after {
 {% set allowed_units = kvstore.get('allowed_units') %}
 {% set input_unit = assay.qc_units %}
 {% set limit_unit = kvstore.get('action_limit_units') %}
-{% set instrument_data = worksheet.get('ws_instrument_results') or {} %}
-{% set live_data = worksheet.get('ws_live_results') or {} %}
+{% set instrument_data = worksheet.get('ws_instrument_results_' + assay_key) or {} %}
+{% set live_data = worksheet.get('ws_live_results_' + assay_key) or {} %}
 
 <!-- Moisture Correction Setup -->
 {% set use_moisture_correction = kvstore.get('use_moisture_correction') or false %}
 {% set moisture_assay_id = kvstore.get('moisture_assay_id') %}
 {% set assay_name = kvstore.get('assay_name') or '' %}
 {% set assay_display_name = assay.title or ''%}
-{% set ns = namespace() %}
 {% set ns.moisture_value = 0.0 %}
 {% set ns.moisture_found = false %}
 
@@ -1409,10 +1420,13 @@ td input[type="checkbox"].data-locked::after {
 <div class="qbench-worksheet-container">
 
 <!-- Data Fields for LIMS Save -->
-<div style="display:none;">__(textarea, ws_instrument_results, default_value="{}")__</div>
-<div style="display:none;">__(textarea, ws_live_results, default_value="{}")__</div>
-<div style="display:none;">__(textarea, ws_final_results, default_value="{}")__</div>
-<div style="display:none;">__(textarea, ws_deviations, default_value="[]")__</div>
+<div style="display:none;">__(textarea, ws_instrument_results_{{ assay_key }}, default_value="{}")__</div>
+<div style="display:none;">__(textarea, ws_live_results_{{ assay_key }}, default_value="{}")__</div>
+<div style="display:none;">__(textarea, ws_final_results_{{ assay_key }}, default_value="{}")__</div>
+<div style="display:none;">__(textarea, ws_deviations_{{ assay_key }}, default_value="[]")__</div>
+
+<!-- Assay Key Helper for JavaScript -->
+<div style="display:none" id="ws-assay-key">{{ assay_key }}</div>
 
 <br><br>
 <!-- JSON Config -->
@@ -1436,6 +1450,8 @@ td input[type="checkbox"].data-locked::after {
     "default_compliance": {{ (kvstore.get('default_compliance') if kvstore.get('default_compliance') is not none else true) | tojson }},
     "default_uncertainty": {{ (kvstore.get('default_uncertainty') if kvstore.get('default_uncertainty') is not none else false) | tojson }},
     "default_lod_display": {{ (kvstore.get('default_lod_display') if kvstore.get('default_lod_display') is not none else true) | tojson }},
+    "default_homogeneity": {{ (kvstore.get('default_homogeneity') if kvstore.get('default_homogeneity') is not none else false) | tojson }},
+    "default_decimal_places": {{ kvstore.get('default_decimal_places', 3) }},
     "homogeneity_min_replicates": {{ kvstore.get('homogeneity_min_replicates', 3) }},
     "uncertainty_data": {
       {% for analyte in analytes %}
@@ -1555,8 +1571,7 @@ td input[type="checkbox"].data-locked::after {
     </thead>
     <tbody id="ws-statistics-body">
       {% for analyte in analytes %}
-        {% set analyte_info = kvstore.get("analyte_info")[analyte] or {} %}
-        {% set display_name = analyte_info.get('display_name', "") %}
+        {% set display_name = kvstore.get(analyte ~ '_display_name') %}
         <tr data-ws-analyte="{{ analyte }}">
           <td>{{ display_name }}</td>
           <td class="ws-stats-mean" name="ws_stats_mean_{{ analyte }}"></td>
@@ -1686,7 +1701,7 @@ td input[type="checkbox"].data-locked::after {
       
       <div>
       	<label for="sig-fig-input">Displayed Sig Figs:</label>
-    	<input type="number" id="sig-fig-input" min="0" max="5" step="1" value="3" style="margin-left: 20px; width: 100px;">
+    	<input type="number" id="sig-fig-input" min="0" max="5" step="1" style="margin-left: 20px; width: 100px;">
       </div>
       <br>
       <div>
@@ -2280,7 +2295,7 @@ function updateMoistureDisplay() {
 }
     
 function wsRecalculate(testId, analyte) {
-  const liveField = getElementsByName('ws_live_results')[0];
+  const liveField = getLiveField();
   const wsUpdatedData = JSON.parse(liveField?.value || "{}");
   const wsUnitConfig = JSON.parse(getElementById("ws-unit-config")?.textContent || "{}");
   const isomersMap = JSON.parse(getElementById("ws-isomers-map")?.textContent || "{}");
@@ -3561,6 +3576,17 @@ function wsGenerateFinalResults() {
         finalResults[`${prefix}_rsd_percent`] = analyteRSD.toFixed(2);
         finalResults[`${prefix}_rsd_status`] = rsdStatus;
         
+        // Get homogeneity status for this analyte
+        const homogeneityStatus = getAnalyteHomogeneityStatus(analyte);
+        finalResults[`${prefix}_homogeneity_status`] = homogeneityStatus;
+        
+        // Get uncertainty data for this analyte
+        let uncertaintyPercent = 0;
+        if (isUncertaintyMode() && wsUnitConfig.uncertainty_data && wsUnitConfig.uncertainty_data[`${analyte}_uncertainty`]) {
+            uncertaintyPercent = wsUnitConfig.uncertainty_data[`${analyte}_uncertainty`];
+        }
+        finalResults[`${prefix}_uncertainty_percent`] = uncertaintyPercent;
+        
         // Update overall status (only if compliance mode is enabled)
         if (isComplianceMode()) {
             if (status === "Fail") {
@@ -3574,6 +3600,9 @@ function wsGenerateFinalResults() {
     
     finalResults.overall_status = overallStatus;
     
+    // Add overall homogeneity status
+    finalResults.overall_homogeneity_status = getHomogeneityStatus();
+    
     // Add moisture correction metadata
     const moistureSettings = getMoistureSettings();
     const moistureCorrectionApplied = moistureSettings.useMoistureCorrection && moistureSettings.reportingEnabled && moistureSettings.moistureFound && moistureSettings.moistureValue > 0;
@@ -3586,7 +3615,7 @@ function wsGenerateFinalResults() {
     finalResults.results_basis = moistureCorrectionApplied ? "dry_weight" : "as_tested";
     
     // Save to final results field
-    const finalField = getElementsByName('ws_final_results')[0];
+    const finalField = getFinalField();
     if (finalField) {
         finalField.value = JSON.stringify(finalResults);
     }
@@ -3846,8 +3875,8 @@ function getValueForStrategy(rawValue, sigFigs, strategy) {
 
 // Global function for bulk updating results - accessible from all scopes
 function bulkUpdateResults() {
-  const wsInstrumentData = JSON.parse(getElementsByName("ws_instrument_results")[0]?.value || "{}");
-  const wsUpdatedData = JSON.parse(getElementsByName("ws_live_results")[0]?.value || "{}");
+  const wsInstrumentData = JSON.parse(getInstrumentField()?.value || "{}");
+  const wsUpdatedData = JSON.parse(getLiveField()?.value || "{}");
   const isomersMap = JSON.parse(getElementById("ws-isomers-map")?.textContent || "{}");
   const updatedResults = wsUpdatedData;
   const allAnalytes = new Set([
@@ -3897,10 +3926,42 @@ function bulkUpdateResults() {
   // Update tab indicators after bulk data changes
   updateTabIndicators();
 }
-    
+
+
+// Assay-scoped field helper functions
+function getAssayKey() {
+    const assayKeyElement = getElementById('ws-assay-key');
+    return assayKeyElement ? assayKeyElement.textContent : 'unknown';
+}
+
+function getFieldName(baseName) {
+    const assayKey = getAssayKey();
+    return baseName + '_' + assayKey;
+}
+
+function getInstrumentField() {
+    return getElementsByName(getFieldName('ws_instrument_results'))[0];
+}
+
+function getLiveField() {
+    return getElementsByName(getFieldName('ws_live_results'))[0];
+}
+
+function getFinalField() {
+    return getElementsByName(getFieldName('ws_final_results'))[0];
+}
+
+function getDeviationField() {
+    return getElementsByName(getFieldName('ws_deviations'))[0];
+}
+
+console.log("Assay-scoped worksheet loaded for:", getAssayKey());
+
 $(document).ready(function () {
   setTimeout(function () {
       console.log("Loading...");
+      
+      
       const wsUnitConfig = JSON.parse(getElementById("ws-unit-config")?.textContent || "{}");
       const sampleInfo = JSON.parse(getElementById("ws-sample-info")?.textContent || "{}");
       
@@ -4012,7 +4073,7 @@ $(document).ready(function () {
           getElementById("rsd-warning-limit").value = wsUnitConfig.rsd_warning_limit || 15;
           getElementById("rsd-fail-limit").value = wsUnitConfig.rsd_fail_limit || 25;
           getElementById("rsd-check-enabled").checked = wsUnitConfig.rsd_check_enabled !== false;
-          getElementById("sig-fig-input").value = wsUnitConfig.default_sig_figs || 3;
+          getElementById("sig-fig-input").value = wsUnitConfig.default_decimal_places || 3;
           getElementById("number-format-strategy").value = wsUnitConfig.default_number_format || "fixed_decimals";
       }
       
@@ -4033,8 +4094,8 @@ $(document).ready(function () {
         }
       }
       
-	const wsInstrumentData = JSON.parse(getElementsByName("ws_instrument_results")[0]?.value || "{}");
-	const wsUpdatedData = JSON.parse(getElementsByName("ws_live_results")[0]?.value || "{}");
+	const wsInstrumentData = JSON.parse(getInstrumentField()?.value || "{}");
+	const wsUpdatedData = JSON.parse(getLiveField()?.value || "{}");
     const isomersMap = JSON.parse(getElementById("ws-isomers-map")?.textContent || "{}");
     const updatedResults = wsUpdatedData;
     
@@ -4054,8 +4115,48 @@ $(document).ready(function () {
     }
 
      getElementById("restore-batch-data-btn").addEventListener('click', () => {
-          getElementsByName("ws_live_results")[0].value = getElementsByName("ws_instrument_results")[0]?.value;
+          // Smart Replace Batch Data - only restore data for current assay tests
+          const instrumentField = getInstrumentField();
+          const liveField = getLiveField();
+          
+          if (!instrumentField || !liveField) {
+              console.error('Could not find assay-scoped data fields for:', getAssayKey());
+              alert('Error: Could not find data fields for this assay.');
+              return;
+          }
+          
+          const wsInstrumentData = JSON.parse(instrumentField.value || "{}");
+          const currentLiveData = JSON.parse(liveField.value || "{}");
+          
+          // Get the test IDs that are actually in this worksheet (filtered by assay)
+          const currentTestIds = new Set();
+          getElements('tr[data-ws-test]').forEach(row => {
+              const testId = row.getAttribute('data-ws-test');
+              if (testId) currentTestIds.add(testId);
+          });
+          
+          console.log(`Restoring batch data for ${currentTestIds.size} tests in ${getAssayKey()} assay`);
+          
+          // Only replace data for tests that are actually in this worksheet
+          const updatedLiveData = { ...currentLiveData }; // Start with current data
+          
+          Object.entries(wsInstrumentData).forEach(([analyte, tests]) => {
+              if (!updatedLiveData[analyte]) updatedLiveData[analyte] = {};
+              
+              Object.entries(tests).forEach(([testId, value]) => {
+                  // Only update if this test is in the current worksheet
+                  if (currentTestIds.has(testId)) {
+                      updatedLiveData[analyte][testId] = value;
+                  }
+                  // Leave other test data untouched
+              });
+          });
+          
+          // Update the live field with filtered restoration
+          liveField.value = JSON.stringify(updatedLiveData);
+          
           bulkUpdateResults();
+          console.log(`✓ Batch data restored for ${getAssayKey()} assay only`);
       });
     
     getElementById("generate-final-results-btn").addEventListener('click', () => {
@@ -4065,7 +4166,7 @@ $(document).ready(function () {
       });
     
     getElementById("view-final-results-btn").addEventListener('click', () => {
-          const finalField = getElementsByName('ws_final_results')[0];
+          const finalField = getFinalField();
           const finalResults = finalField?.value || "{}";
           const formatted = JSON.stringify(JSON.parse(finalResults), null, 2);
           
@@ -4073,9 +4174,9 @@ $(document).ready(function () {
           const popup = window.open('', 'FinalResults', 'width=800,height=600,scrollbars=yes');
           popup.document.write(`
             <html>
-              <head><title>Final Results JSON</title></head>
+              <head><title>Final Results JSON - ${getAssayKey()} Assay</title></head>
               <body>
-                <h2>Final Results JSON</h2>
+                <h2>Final Results JSON - ${getAssayKey()} Assay</h2>
                 <pre style="background: #f5f5f5; padding: 10px; overflow: auto;">${formatted}</pre>
                 <button onclick="window.close()">Close</button>
               </body>
@@ -4762,6 +4863,9 @@ function toggleHomogeneityTab() {
             }
         }
     }
+
+    // Persist settings changes
+    bulkUpdateResults();
 }
 
 // Generate the homogeneity analysis table
@@ -5019,75 +5123,6 @@ function generateHomogeneityTable() {
     updateHomogeneitySummaryColumn();
     
     console.log("Homogeneity table populated");
-}
-
-// Toggle homogeneity tab visibility and update checkbox state
-function toggleHomogeneityTab() {
-    const homogeneityTab = document.querySelector('[data-ws-tab="homogeneity"]');
-    const homogeneityContent = getElementById("ws-tab-homogeneity");
-    const homogeneityCheckbox = getElementById("homogeneity-enabled");
-    
-    const hasMinReplicates = hasMinimumReplicatesForHomogeneity();
-    const isEnabled = isHomogeneityEnabled();
-    
-    if (!homogeneityCheckbox) return;
-    
-    // Disable checkbox if not enough replicates
-    if (!hasMinReplicates) {
-        homogeneityCheckbox.disabled = true;
-        homogeneityCheckbox.checked = false;
-        
-        // Update label to show why it's disabled
-        const label = document.querySelector('label[for="homogeneity-enabled"]');
-        if (label) {
-            const wsUnitConfig = JSON.parse(getElementById("ws-unit-config")?.textContent || "{}");
-            const minReplicates = wsUnitConfig.homogeneity_min_replicates || 5;
-            const currentCount = getElements('[id^="ws-tab-"]:not(#ws-tab-summary):not(#ws-tab-statistics):not(#ws-tab-settings):not(#ws-tab-sample-info):not(#ws-tab-homogeneity)').length;
-            
-            label.style.color = '#999';
-            label.title = `Homogeneity analysis requires at least ${minReplicates} replicates. Current count: ${currentCount}`;
-        }
-    } else {
-        // Re-enable checkbox if enough replicates
-        homogeneityCheckbox.disabled = false;
-        
-        // Restore label styling
-        const label = document.querySelector('label[for="homogeneity-enabled"]');
-        if (label) {
-            label.style.color = '';
-            label.title = '';
-        }
-    }
-    
-    // Show/hide tab based on enabled state and minimum replicates
-    const shouldShow = isEnabled && hasMinReplicates;
-    
-    if (homogeneityTab && homogeneityContent) {
-        homogeneityTab.style.display = shouldShow ? '' : 'none';
-        
-        const tableContainer = getElementById("homogeneity-table-container");
-        const placeholder = getElementById("homogeneity-placeholder");
-        
-        if (shouldShow) {
-            console.log("Showing homogeneity tab - generating table");
-            generateHomogeneityTable();
-        } else {
-            console.log("Hiding homogeneity tab - requirements not met");
-            // Hide table, show placeholder
-            if (tableContainer) tableContainer.style.display = 'none';
-            if (placeholder) {
-                placeholder.style.display = 'block';
-                placeholder.innerHTML = `
-                    <p style="text-align: center; color: #999; font-style: italic;">
-                        ${!isEnabled ? 
-                            'Homogeneity analysis is disabled. Enable in Settings to analyze replicate variation.' :
-                            `Insufficient replicates for homogeneity analysis. Minimum ${JSON.parse(getElementById("ws-unit-config")?.textContent || "{}").homogeneity_min_replicates || 5} tests required.`
-                        }
-                    </p>
-                `;
-            }
-        }
-    }
 }
 
 // Helper function to get homogeneity status for a specific analyte
@@ -5412,7 +5447,7 @@ function initializeDataIntegrityProtection() {
 }
 
 function loadExistingDeviations() {
-    const deviationField = document.getElementsByName('ws_deviations')[0];
+    const deviationField = getDeviationField();
     if (deviationField && deviationField.value) {
         try {
             dataIntegrityState.deviations = JSON.parse(deviationField.value) || [];
@@ -5709,10 +5744,10 @@ function handleDeviationSubmission() {
 
 function updateDeviationStorage() {
     // Store deviations in a hidden field for persistence
-    let deviationField = document.getElementsByName('ws_deviations')[0];
+    let deviationField = getDeviationField();
     if (!deviationField) {
         deviationField = document.createElement('textarea');
-        deviationField.name = 'ws_deviations';
+        deviationField.name = getFieldName('ws_deviations');
         deviationField.style.display = 'none';
         document.body.appendChild(deviationField);
     }
@@ -6204,7 +6239,7 @@ function initializeComplianceCheckbox() {
 // Get saved user settings from final results (if available)
 function getSavedUserSettings() {
     try {
-        const finalField = getElementsByName('ws_final_results')[0];
+        const finalField = getFinalField();
         if (!finalField || !finalField.value) return null;
         
         const finalResults = JSON.parse(finalField.value);
@@ -6237,6 +6272,22 @@ function restoreUserSettings() {
             const defaultUncertainty = wsUnitConfig.default_uncertainty !== undefined ? wsUnitConfig.default_uncertainty : false;
             uncertaintyCheckbox.checked = defaultUncertainty;
             console.log("Uncertainty checkbox initialized to kvstore default:", defaultUncertainty);
+        }
+        
+        // Initialize homogeneity checkbox to kvstore default (or false if no default)
+        const homogeneityCheckbox = getElementById("homogeneity-enabled");
+        if (homogeneityCheckbox) {
+            const defaultHomogeneity = wsUnitConfig.default_homogeneity !== undefined ? wsUnitConfig.default_homogeneity : false;
+            homogeneityCheckbox.checked = defaultHomogeneity;
+            console.log("Homogeneity checkbox initialized to kvstore default:", defaultHomogeneity);
+        }
+        
+        // Initialize decimal places input to kvstore default (or 3 if no default)
+        const sigFigInput = getElementById("sig-fig-input");
+        if (sigFigInput) {
+            const defaultDecimalPlaces = wsUnitConfig.default_decimal_places !== undefined ? wsUnitConfig.default_decimal_places : 3;
+            sigFigInput.value = defaultDecimalPlaces;
+            console.log("Decimal places input initialized to kvstore default:", defaultDecimalPlaces);
         }
         
         // Initialize LOD display checkbox to kvstore default (or true if no default)
@@ -6277,6 +6328,12 @@ function restoreUserSettings() {
     }
     if (rsdEnabledCheckbox && savedSettings.rsd_check_enabled !== undefined) {
         rsdEnabledCheckbox.checked = savedSettings.rsd_check_enabled;
+    }
+    
+    // Restore decimal places setting
+    const sigFigInput = getElementById("sig-fig-input");
+    if (sigFigInput && savedSettings.sig_figs !== undefined) {
+        sigFigInput.value = savedSettings.sig_figs;
     }
     
     // Restore moisture correction settings

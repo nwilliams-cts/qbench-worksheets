@@ -1,3 +1,7 @@
+{% set ns = namespace() %}
+{# Residual Solvents - Assay ID: 52 #}
+{% set ns.worksheet_assay_id = 52 %}
+
 <style>
 /* Smithers Corporate Color Scheme */
 :root {
@@ -1373,10 +1377,6 @@ td input[type="checkbox"].data-locked::after {
 }
 </style>
 
-{% set ns = namespace() %}
-{% set ns.worksheet_assay_id = 51 %}
-{% set assay_key = "cannabinoids"%}
-
 {% set temp_tests = [] %}
 {% for test in tests %}
 	{% if test.assay_id == ns.worksheet_assay_id %}
@@ -1389,6 +1389,7 @@ td input[type="checkbox"].data-locked::after {
 {% set worksheet = worksheet if worksheet else {} %}
 
 {% set assay = tests[0].assay %}
+{% set assay_key = assay.title.lower().replace('[sample] ', '').replace(" ", "_") %}
 {% set kvstore_id = assay.assay_params or "" %}
 {% set kvstore = kvstore_id|get_kvstore_json if kvstore_id else {} %}
 {% set analytes = kvstore.get('worksheet_analytes') or [] %}
@@ -1419,11 +1420,15 @@ td input[type="checkbox"].data-locked::after {
 <!-- QBench Worksheet Container - Scoped for multi-instance support -->
 <div class="qbench-worksheet-container">
 
+    {% set instrument_res = "ws_instrument_results_{}".format(assay_key) %}
+    {% set live_res = "ws_live_results_{}".format(assay_key) %}
+    {% set final_res = "ws_final_results_{}".format(assay_key) %}
+    {% set dev_res = "ws_deviations_{}".format(assay_key) %}
 <!-- Data Fields for LIMS Save -->
-<div style="display:none;">__(textarea, ws_instrument_results_{{ assay_key }}, default_value="{}")__</div>
-<div style="display:none;">__(textarea, ws_live_results_{{ assay_key }}, default_value="{}")__</div>
-<div style="display:none;">__(textarea, ws_final_results_{{ assay_key }}, default_value="{}")__</div>
-<div style="display:none;">__(textarea, ws_deviations_{{ assay_key }}, default_value="[]")__</div>
+<div style="display:none;">__(textarea, {{instrument_res}}, default_value="{}")__</div>
+<div style="display:none;">__(textarea, {{live_res}}, default_value="{}")__</div>
+<div style="display:none;">__(textarea, {{final_res}}, default_value="{}")__</div>
+<div style="display:none;">__(textarea, {{dev_res}}, default_value="[]")__</div>
 
 <!-- Assay Key Helper for JavaScript -->
 <div style="display:none" id="ws-assay-key">{{ assay_key }}</div>
@@ -2166,6 +2171,7 @@ const wsScaling = {
   'ppb': 1,
   'ng/mL': 1,
   'µg/mL': 1e3,
+  'µg': 1e3,
   'ppm': 1e3,
   '%': 1e7,
   'cfu/g': 1,
@@ -3927,7 +3933,6 @@ function bulkUpdateResults() {
   updateTabIndicators();
 }
 
-
 // Assay-scoped field helper functions
 function getAssayKey() {
     const assayKeyElement = getElementById('ws-assay-key');
@@ -3945,6 +3950,7 @@ function getInstrumentField() {
 
 function getLiveField() {
     return getElementsByName(getFieldName('ws_live_results'))[0];
+    
 }
 
 function getFinalField() {
@@ -3956,7 +3962,7 @@ function getDeviationField() {
 }
 
 console.log("Assay-scoped worksheet loaded for:", getAssayKey());
-
+    
 $(document).ready(function () {
   setTimeout(function () {
       console.log("Loading...");

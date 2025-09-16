@@ -32,11 +32,11 @@
             animation: fadeIn 1s ease-in;
         `;
         helloDiv.innerHTML = `
-            🎉 Hello World from External Script! 🎉<br>
+            🎉 Hello World from External Script! The Script has been Updated!!! 🎉<br>
             <small style="font-size: 14px; opacity: 0.9;">
                 Loaded from: ${window.QBenchWorksheetConfig?.scriptUrl || 'External source'}<br>
                 Assay ID: ${window.QBenchWorksheetConfig?.assayId || 'Not specified'}<br>
-                Version: ${window.QBenchWorksheetConfig?.version || '1.0.0'}
+                Version: ${window.QBenchWorksheetConfig?.version || '1.0.1'}
             </small>
         `;
         

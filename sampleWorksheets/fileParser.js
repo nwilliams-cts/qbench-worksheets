@@ -196,18 +196,20 @@ run(async () => {
                 if (worksheetData['testing_file_order'].includes(targetTestId)) {
                     data = await fetchTestWorksheet(Service, targetTestId);
                     let baseData = JSON.parse(data)[targetTestId.toString()]["data"] || {};
+                    console.log(baseData);
                     let updateData = Object.hasOwn(baseData, "ws_instrument_results") ? JSON.parse(baseData['ws_instrument_results']['value']) : {};
                     console.log(updateData)
-                    if (Object.keys(updateData).length === 0) {
-                        await TestService.update({
-                            data: {"id": targetTestId, "worksheet_json": JSON.stringify({"ws_instrument_results": {"value": JSON.stringify(updateData)}})},
+                    /*if (updateData === {}) {
+                        await TestService.patchWorksheet({
+                            testId: targetTestId,
+                            data: {},
                             urlParams: {"run_worksheet_calculations": true},
                             success: () => {
                                 qbConsole.log(`Sample ID: ${sampleId} worksheet has been initialized!`)
                             },
                             error: QB.error
                         });
-                    };
+                    };*/
                     analytes.forEach(function(analyte) {
                         if (!analyte.includes('total')) {
                             if (!updateData[analyte]) { updateData[analyte] = {};}
@@ -222,9 +224,10 @@ run(async () => {
                    
                     finalData = JSON.stringify({"ws_instrument_results": {"value": JSON.stringify(updateData)}});
 					console.log(`Sample: ${sampleId} - ${finalData}`)
+                    baseData['ws_instrument_results'] = {"value": JSON.stringify(updateData)};
 
-                    await TestService.update({
-                        data: {"id": sampleTestMap[sampleId][0], "worksheet_json": finalData},
+                     await TestService.update({
+                        data: {"id": targetTestId, "worksheet_json": baseData},
                         urlParams: {"run_worksheet_calculations": true},
                         success: () => {
                             qbConsole.log(`Sample ID: ${sampleId} worksheet has been updated!`)
